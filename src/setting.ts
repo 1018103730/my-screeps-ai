@@ -1,4 +1,4 @@
-import { calcBodyPart } from './utils'
+import {calcBodyPart} from './utils'
 
 /**
  * 设置项
@@ -7,11 +7,11 @@ import { calcBodyPart } from './utils'
 
 /**
  * 快速生成 creep 身体部件配置项
- * 
+ *
  * @param bodySets 1 - 8 级时对应的身体部件配置
  */
-const getBodyConfig = function(...bodySets: [ BodySet, BodySet, BodySet, BodySet, BodySet, BodySet, BodySet, BodySet]): BodyConfig {
-    let config = { 300: [], 550: [], 800: [], 1300: [], 1800: [], 2300: [], 5600: [], 10000: [] }
+const getBodyConfig = function (...bodySets: [BodySet, BodySet, BodySet, BodySet, BodySet, BodySet, BodySet, BodySet]): BodyConfig {
+    let config = {300: [], 550: [], 800: [], 1300: [], 1800: [], 2300: [], 5600: [], 10000: []}
     // 遍历空配置项，用传入的 bodySet 依次生成配置项
     Object.keys(config).map((level, index) => {
         config[level] = calcBodyPart(bodySets[index])
@@ -26,28 +26,28 @@ const getBodyConfig = function(...bodySets: [ BodySet, BodySet, BodySet, BodySet
  */
 export const bodyConfigs: BodyConfigs = {
     harvester: getBodyConfig(
-        { [WORK]: 2, [CARRY]: 1, [MOVE]: 1 },
-        { [WORK]: 4, [CARRY]: 1, [MOVE]: 2 },
-        { [WORK]: 6, [CARRY]: 1, [MOVE]: 3 },
-        { [WORK]: 8, [CARRY]: 1, [MOVE]: 4 },
-        { [WORK]: 10, [CARRY]: 1, [MOVE]: 5 },
-        { [WORK]: 12, [CARRY]: 1, [MOVE]: 6 },
-        { [WORK]: 12, [CARRY]: 1, [MOVE]: 6 },
-        { [WORK]: 12, [CARRY]: 1, [MOVE]: 6 }
+        {[WORK]: 2, [CARRY]: 1, [MOVE]: 1},
+        {[WORK]: 4, [CARRY]: 1, [MOVE]: 2},
+        {[WORK]: 6, [CARRY]: 1, [MOVE]: 3},
+        {[WORK]: 8, [CARRY]: 1, [MOVE]: 4},
+        {[WORK]: 10, [CARRY]: 1, [MOVE]: 5},
+        {[WORK]: 12, [CARRY]: 1, [MOVE]: 6},
+        {[WORK]: 12, [CARRY]: 1, [MOVE]: 6},
+        {[WORK]: 12, [CARRY]: 1, [MOVE]: 6}
     ),
     /**
      * 工作单位
      * 诸如 harvester、builder 之类的
      */
     worker: getBodyConfig(
-        { [WORK]: 1, [CARRY]: 1, [MOVE]: 1 },
-        { [WORK]: 2, [CARRY]: 2, [MOVE]: 2 },
-        { [WORK]: 3, [CARRY]: 3, [MOVE]: 3 },
-        { [WORK]: 4, [CARRY]: 4, [MOVE]: 4 },
-        { [WORK]: 6, [CARRY]: 6, [MOVE]: 6 },
-        { [WORK]: 7, [CARRY]: 7, [MOVE]: 7 },
-        { [WORK]: 12, [CARRY]: 6, [MOVE]: 9 },
-        { [WORK]: 20, [CARRY]: 8, [MOVE]: 14 }
+        {[WORK]: 1, [CARRY]: 1, [MOVE]: 1},
+        {[WORK]: 2, [CARRY]: 2, [MOVE]: 2},
+        {[WORK]: 3, [CARRY]: 3, [MOVE]: 3},
+        {[WORK]: 4, [CARRY]: 4, [MOVE]: 4},
+        {[WORK]: 6, [CARRY]: 6, [MOVE]: 6},
+        {[WORK]: 7, [CARRY]: 7, [MOVE]: 7},
+        {[WORK]: 12, [CARRY]: 6, [MOVE]: 9},
+        {[WORK]: 20, [CARRY]: 8, [MOVE]: 14}
     ),
 
     /**
@@ -55,14 +55,14 @@ export const bodyConfigs: BodyConfigs = {
      * 最大的身体部件只包含 12 个 WORK
      */
     upgrader: getBodyConfig(
-        { [WORK]: 1, [CARRY]: 1, [MOVE]: 1 },
-        { [WORK]: 2, [CARRY]: 2, [MOVE]: 2 },
-        { [WORK]: 3, [CARRY]: 3, [MOVE]: 3 },
-        { [WORK]: 4, [CARRY]: 4, [MOVE]: 4 },
-        { [WORK]: 6, [CARRY]: 6, [MOVE]: 6 },
-        { [WORK]: 9, [CARRY]: 9, [MOVE]: 9 },
-        { [WORK]: 17, [CARRY]: 9, [MOVE]: 17 },
-        { [WORK]: 12, [CARRY]: 12, [MOVE]: 12 }
+        {[WORK]: 1, [CARRY]: 1, [MOVE]: 1},
+        {[WORK]: 2, [CARRY]: 2, [MOVE]: 2},
+        {[WORK]: 3, [CARRY]: 3, [MOVE]: 3},
+        {[WORK]: 4, [CARRY]: 4, [MOVE]: 4},
+        {[WORK]: 6, [CARRY]: 6, [MOVE]: 6},
+        {[WORK]: 9, [CARRY]: 9, [MOVE]: 9},
+        {[WORK]: 17, [CARRY]: 9, [MOVE]: 17},
+        {[WORK]: 12, [CARRY]: 12, [MOVE]: 12}
     ),
 
     /**
@@ -70,14 +70,14 @@ export const bodyConfigs: BodyConfigs = {
      * 负责转移基地资源的 creep
      */
     manager: getBodyConfig(
-        { [CARRY]: 2, [MOVE]: 1 },
-        { [CARRY]: 3, [MOVE]: 2 },
-        { [CARRY]: 4, [MOVE]: 2 },
-        { [CARRY]: 5, [MOVE]: 3 },
-        { [CARRY]: 8, [MOVE]: 4 },
-        { [CARRY]: 14, [MOVE]: 7 },
-        { [CARRY]: 20, [MOVE]: 10 },
-        { [CARRY]: 32, [MOVE]: 16 }
+        {[CARRY]: 2, [MOVE]: 1},
+        {[CARRY]: 3, [MOVE]: 2},
+        {[CARRY]: 4, [MOVE]: 2},
+        {[CARRY]: 5, [MOVE]: 3},
+        {[CARRY]: 8, [MOVE]: 4},
+        {[CARRY]: 14, [MOVE]: 7},
+        {[CARRY]: 20, [MOVE]: 10},
+        {[CARRY]: 32, [MOVE]: 16}
     ),
 
     /**
@@ -85,28 +85,28 @@ export const bodyConfigs: BodyConfigs = {
      * 负责转移中央物流的 creep（下面其实前 4 级都用不到，因为中央物流管理员只会在 5 级有了 centerLink 之后才会孵化）
      */
     processor: getBodyConfig(
-        { [CARRY]: 2, [MOVE]: 1 },
-        { [CARRY]: 3, [MOVE]: 1 },
-        { [CARRY]: 5, [MOVE]: 1 },
-        { [CARRY]: 7, [MOVE]: 1 },
-        { [CARRY]: 11, [MOVE]: 1 },
-        { [CARRY]: 14, [MOVE]: 1 },
-        { [CARRY]: 26, [MOVE]: 1 },
-        { [CARRY]: 39, [MOVE]: 1 }
+        {[CARRY]: 2, [MOVE]: 1},
+        {[CARRY]: 3, [MOVE]: 1},
+        {[CARRY]: 5, [MOVE]: 1},
+        {[CARRY]: 7, [MOVE]: 1},
+        {[CARRY]: 11, [MOVE]: 1},
+        {[CARRY]: 14, [MOVE]: 1},
+        {[CARRY]: 26, [MOVE]: 1},
+        {[CARRY]: 39, [MOVE]: 1}
     ),
 
     /**
      * 外矿预定单位
      */
     reserver: getBodyConfig(
-        { [MOVE]: 1, [CLAIM]: 1 },
-        { [MOVE]: 1, [CLAIM]: 1 },
-        { [MOVE]: 1, [CLAIM]: 1 },
-        { [MOVE]: 1, [CLAIM]: 1 },
-        { [MOVE]: 2, [CLAIM]: 2 },
-        { [MOVE]: 2, [CLAIM]: 2 },
-        { [MOVE]: 3, [CLAIM]: 3 },
-        { [MOVE]: 5, [CLAIM]: 5 }
+        {[MOVE]: 1, [CLAIM]: 1},
+        {[MOVE]: 1, [CLAIM]: 1},
+        {[MOVE]: 1, [CLAIM]: 1},
+        {[MOVE]: 1, [CLAIM]: 1},
+        {[MOVE]: 2, [CLAIM]: 2},
+        {[MOVE]: 2, [CLAIM]: 2},
+        {[MOVE]: 3, [CLAIM]: 3},
+        {[MOVE]: 5, [CLAIM]: 5}
     ),
 
     /**
@@ -114,42 +114,42 @@ export const bodyConfigs: BodyConfigs = {
      * 使用 attack 身体部件的攻击单位
      */
     attacker: getBodyConfig(
-        { [MOVE]: 2, [ATTACK]: 2 },
-        { [MOVE]: 3, [ATTACK]: 3 },
-        { [MOVE]: 4, [ATTACK]: 4 },
-        { [MOVE]: 5, [ATTACK]: 5 },
-        { [MOVE]: 6, [ATTACK]: 6 },
-        { [MOVE]: 7, [ATTACK]: 7 },
-        { [MOVE]: 8, [ATTACK]: 8 },
-        { [MOVE]: 9, [ATTACK]: 9 }
+        {[MOVE]: 2, [ATTACK]: 2},
+        {[MOVE]: 3, [ATTACK]: 3},
+        {[MOVE]: 4, [ATTACK]: 4},
+        {[MOVE]: 5, [ATTACK]: 5},
+        {[MOVE]: 6, [ATTACK]: 6},
+        {[MOVE]: 7, [ATTACK]: 7},
+        {[MOVE]: 8, [ATTACK]: 8},
+        {[MOVE]: 9, [ATTACK]: 9}
     ),
 
     /**
      * 基础治疗单位
      */
     healer: getBodyConfig(
-        { [MOVE]: 1, [HEAL]: 1 },
-        { [MOVE]: 1, [HEAL]: 1 },
-        { [MOVE]: 2, [HEAL]: 2 },
-        { [MOVE]: 4, [HEAL]: 4 },
-        { [MOVE]: 6, [HEAL]: 6 },
-        { [MOVE]: 7, [HEAL]: 7 },
-        { [MOVE]: 16, [HEAL]: 16 },
-        { [MOVE]: 25, [HEAL]: 25 }
-    ), 
+        {[MOVE]: 1, [HEAL]: 1},
+        {[MOVE]: 1, [HEAL]: 1},
+        {[MOVE]: 2, [HEAL]: 2},
+        {[MOVE]: 4, [HEAL]: 4},
+        {[MOVE]: 6, [HEAL]: 6},
+        {[MOVE]: 7, [HEAL]: 7},
+        {[MOVE]: 16, [HEAL]: 16},
+        {[MOVE]: 25, [HEAL]: 25}
+    ),
 
     /**
      * 拆除者身体
      */
     dismantler: getBodyConfig(
-        { [TOUGH]: 1, [WORK]: 1, [MOVE]: 2 },
-        { [TOUGH]: 2, [WORK]: 2, [MOVE]: 4 },
-        { [TOUGH]: 2, [WORK]: 3, [MOVE]: 5 },
-        { [TOUGH]: 3, [WORK]: 4, [MOVE]: 7 },
-        { [TOUGH]: 4, [WORK]: 5, [MOVE]: 9 },
-        { [TOUGH]: 5, [WORK]: 6, [MOVE]: 11 },
-        { [TOUGH]: 10, [WORK]: 10, [MOVE]: 20 },
-        { [TOUGH]: 13, [WORK]: 12, [MOVE]: 25 }
+        {[TOUGH]: 1, [WORK]: 1, [MOVE]: 2},
+        {[TOUGH]: 2, [WORK]: 2, [MOVE]: 4},
+        {[TOUGH]: 2, [WORK]: 3, [MOVE]: 5},
+        {[TOUGH]: 3, [WORK]: 4, [MOVE]: 7},
+        {[TOUGH]: 4, [WORK]: 5, [MOVE]: 9},
+        {[TOUGH]: 5, [WORK]: 6, [MOVE]: 11},
+        {[TOUGH]: 10, [WORK]: 10, [MOVE]: 20},
+        {[TOUGH]: 13, [WORK]: 12, [MOVE]: 25}
     ),
 
     /**
@@ -157,14 +157,14 @@ export const bodyConfigs: BodyConfigs = {
      * 和采集者的区别就是外矿采集者拥有更多的 CARRY
      */
     remoteHarvester: getBodyConfig(
-        { [WORK]: 1, [CARRY]: 1, [MOVE]: 1 },
-        { [WORK]: 2, [CARRY]: 2, [MOVE]: 2 },
-        { [WORK]: 3, [CARRY]: 3, [MOVE]: 3 },
-        { [WORK]: 4, [CARRY]: 6, [MOVE]: 5 },
-        { [WORK]: 5, [CARRY]: 9, [MOVE]: 7 },
-        { [WORK]: 6, [CARRY]: 10, [MOVE]: 8 },
-        { [WORK]: 7, [CARRY]: 15, [MOVE]: 11 },
-        { [WORK]: 11, [CARRY]: 15, [MOVE]: 19 }
+        {[WORK]: 1, [CARRY]: 1, [MOVE]: 1},
+        {[WORK]: 2, [CARRY]: 2, [MOVE]: 2},
+        {[WORK]: 3, [CARRY]: 3, [MOVE]: 3},
+        {[WORK]: 4, [CARRY]: 6, [MOVE]: 5},
+        {[WORK]: 5, [CARRY]: 9, [MOVE]: 7},
+        {[WORK]: 6, [CARRY]: 10, [MOVE]: 8},
+        {[WORK]: 7, [CARRY]: 15, [MOVE]: 11},
+        {[WORK]: 11, [CARRY]: 15, [MOVE]: 19}
     )
 }
 
@@ -175,76 +175,76 @@ export const bodyConfigs: BodyConfigs = {
  */
 export const baseLayout: BaseLayout = {
     1: {
-        [STRUCTURE_SPAWN]: [[-3,-2]]
+        [STRUCTURE_SPAWN]: [[-3, -2]]
     },
     2: {
-        [STRUCTURE_EXTENSION]: [[-4,-3],[-3,-4],[-5,-4],[-5,-3],[-5,-2]]
+        [STRUCTURE_EXTENSION]: [[-4, -3], [-3, -4], [-5, -4], [-5, -3], [-5, -2]]
     },
     3: {
-        [STRUCTURE_EXTENSION]: [[-4,-5],[-3,-5],[-2,-5],[-1,-4],[-1,-3]],
-        [STRUCTURE_TOWER]: [[-2,-1]],
-        [STRUCTURE_ROAD]: [[-1,-2],[-1,-1],[-2,-2],[-3,-3],[-2,-4],[-4,-2],[-4,-4]]
+        [STRUCTURE_EXTENSION]: [[-4, -5], [-3, -5], [-2, -5], [-1, -4], [-1, -3]],
+        [STRUCTURE_TOWER]: [[-2, -1]],
+        [STRUCTURE_ROAD]: [[-1, -2], [-1, -1], [-2, -2], [-3, -3], [-2, -4], [-4, -2], [-4, -4]]
     },
     4: {
-        [STRUCTURE_EXTENSION]: [[-3,-1],[-4,-1],[1,-4],[1,-3],[3,-4],[4,-3],[2,-5],[3,-5],[4,-5],[5,-4]],
-        [STRUCTURE_STORAGE]: [[0,-1]],
-        [STRUCTURE_ROAD]: [[0,-3],[1,-2],[2,-2],[3,-3],[2,-4],[4,-4]],
-        [STRUCTURE_RAMPART]: [[-3,-2],[0,-1],[-2,-1]]
+        [STRUCTURE_EXTENSION]: [[-3, -1], [-4, -1], [1, -4], [1, -3], [3, -4], [4, -3], [2, -5], [3, -5], [4, -5], [5, -4]],
+        [STRUCTURE_STORAGE]: [[0, -1]],
+        [STRUCTURE_ROAD]: [[0, -3], [1, -2], [2, -2], [3, -3], [2, -4], [4, -4]],
+        [STRUCTURE_RAMPART]: [[-3, -2], [0, -1], [-2, -1]]
     },
     5: {
-        [STRUCTURE_EXTENSION]: [[5,-3],[5,-2],[4,-1],[3,-1],[-3,1],[-4,1],[-3,2],[-4,3],[-3,4],[-2,3]],
-        [STRUCTURE_TOWER]: [[0,-2]],
-        [STRUCTURE_LINK]: [[-1,0], null],
-        [STRUCTURE_ROAD]: [[4,-2],[-2,0],[-1,1],[-1,2],[-2,2],[-3,3],[-4,2],[0,0]],
-        [STRUCTURE_RAMPART]: [[0,-2]]
+        [STRUCTURE_EXTENSION]: [[5, -3], [5, -2], [4, -1], [3, -1], [-3, 1], [-4, 1], [-3, 2], [-4, 3], [-3, 4], [-2, 3]],
+        [STRUCTURE_TOWER]: [[0, -2]],
+        [STRUCTURE_LINK]: [[-1, 0], null],
+        [STRUCTURE_ROAD]: [[4, -2], [-2, 0], [-1, 1], [-1, 2], [-2, 2], [-3, 3], [-4, 2], [0, 0]],
+        [STRUCTURE_RAMPART]: [[0, -2]]
     },
     6: {
-        [STRUCTURE_EXTENSION]: [[-5,2],[-5,3],[-5,4],[-4,5],[-3,5],[-2,5],[-1,3],[-1,4],[3,1],[4,1]],
-        [STRUCTURE_LAB]: [[4,3],[3,4],[2,3]],
-        [STRUCTURE_TERMINAL]: [[1,0]],
+        [STRUCTURE_EXTENSION]: [[-5, 2], [-5, 3], [-5, 4], [-4, 5], [-3, 5], [-2, 5], [-1, 3], [-1, 4], [3, 1], [4, 1]],
+        [STRUCTURE_LAB]: [[4, 3], [3, 4], [2, 3]],
+        [STRUCTURE_TERMINAL]: [[1, 0]],
         [STRUCTURE_EXTRACTOR]: [null],
         [STRUCTURE_LINK]: [null],
-        [STRUCTURE_ROAD]: [[1,-1],[2,0],[1,1],[1,2],[0,3],[3,0],[2,2],[3,3]],
-        [STRUCTURE_RAMPART]: [[1,0]]
+        [STRUCTURE_ROAD]: [[1, -1], [2, 0], [1, 1], [1, 2], [0, 3], [3, 0], [2, 2], [3, 3]],
+        [STRUCTURE_RAMPART]: [[1, 0]]
     },
     7: {
-        [STRUCTURE_EXTENSION]: [[5,1],[5,-1],[5,-5],[1,-5],[-5,-5],[-5,-1],[-5,1],[-1,5],[-1,-5],[1,3]],
-        [STRUCTURE_TOWER]: [[2,-1]],
-        [STRUCTURE_SPAWN]: [[-2,-3]],
-        [STRUCTURE_FACTORY]: [[0,1]],
-        [STRUCTURE_LAB]: [[3,2],[2,4],[3,5]],
+        [STRUCTURE_EXTENSION]: [[5, 1], [5, -1], [5, -5], [1, -5], [-5, -5], [-5, -1], [-5, 1], [-1, 5], [-1, -5], [1, 3]],
+        [STRUCTURE_TOWER]: [[2, -1]],
+        [STRUCTURE_SPAWN]: [[-2, -3]],
+        [STRUCTURE_FACTORY]: [[0, 1]],
+        [STRUCTURE_LAB]: [[3, 2], [2, 4], [3, 5]],
         [STRUCTURE_LINK]: [null],
-        [STRUCTURE_ROAD]: [[4,4],[-4,4],[-2,4],[4,0],[-3,0],[-4,0]],
-        [STRUCTURE_RAMPART]: [[0,1],[-2,-3],[2,-1]]
+        [STRUCTURE_ROAD]: [[4, 4], [-4, 4], [-2, 4], [4, 0], [-3, 0], [-4, 0]],
+        [STRUCTURE_RAMPART]: [[0, 1], [-2, -3], [2, -1]]
     },
     8: {
-        [STRUCTURE_EXTENSION]: [[1,4],[1,5]],
-        [STRUCTURE_TOWER]: [[-2,1],[0,2],[2,1]],
-        [STRUCTURE_LAB]: [[5,2],[5,3],[5,4],[4,5]],
-        [STRUCTURE_SPAWN]: [[2,-3]],
-        [STRUCTURE_OBSERVER]: [[2,5]],
-        [STRUCTURE_NUKER]: [[-5,5]],
-        [STRUCTURE_POWER_SPAWN]: [[3,-2]],
-        [STRUCTURE_ROAD]: [[4,2],[0,4],[0,-4]],
-        [STRUCTURE_RAMPART]: [[2,-3],[-5,5],[-2,1],[0,2],[2,1]]
+        [STRUCTURE_EXTENSION]: [[1, 4], [1, 5]],
+        [STRUCTURE_TOWER]: [[-2, 1], [0, 2], [2, 1]],
+        [STRUCTURE_LAB]: [[5, 2], [5, 3], [5, 4], [4, 5]],
+        [STRUCTURE_SPAWN]: [[2, -3]],
+        [STRUCTURE_OBSERVER]: [[2, 5]],
+        [STRUCTURE_NUKER]: [[-5, 5]],
+        [STRUCTURE_POWER_SPAWN]: [[3, -2]],
+        [STRUCTURE_ROAD]: [[4, 2], [0, 4], [0, -4]],
+        [STRUCTURE_RAMPART]: [[2, -3], [-5, 5], [-2, 1], [0, 2], [2, 1]]
     }
 }
 
 // creep 的默认内存
 export const creepDefaultMemory: CreepMemory = {
-    role: 'harvester', 
-    ready: false, 
+    role: 'harvester',
+    ready: false,
     working: false
 }
 
 // 房间建筑维修需要的设置
 export const repairSetting = {
     // 在 tower 的能量高于该值时才会刷墙
-    energyLimit: 600, 
+    energyLimit: 600,
     // 普通建筑维修的检查间隔
-    checkInterval: 8, 
+    checkInterval: 8,
     // 墙壁维修的检查间隔
-    wallCheckInterval: 3, 
+    wallCheckInterval: 3,
     // 墙壁的关注时间
     focusTime: 100
 }
@@ -252,53 +252,53 @@ export const repairSetting = {
 // 从反应目标产物获取其底物的对应表
 export const reactionSource: IReactionSource = {
     // 三级化合物
-    [RESOURCE_CATALYZED_GHODIUM_ACID]: [ RESOURCE_GHODIUM_ACID, RESOURCE_CATALYST ], 
-    [RESOURCE_CATALYZED_GHODIUM_ALKALIDE]: [ RESOURCE_GHODIUM_ALKALIDE, RESOURCE_CATALYST ], 
-    [RESOURCE_CATALYZED_KEANIUM_ACID]: [ RESOURCE_KEANIUM_ACID, RESOURCE_CATALYST ], 
-    [RESOURCE_CATALYZED_KEANIUM_ALKALIDE]: [ RESOURCE_KEANIUM_ALKALIDE, RESOURCE_CATALYST ], 
-    [RESOURCE_CATALYZED_LEMERGIUM_ACID]: [ RESOURCE_LEMERGIUM_ACID, RESOURCE_CATALYST ], 
-    [RESOURCE_CATALYZED_LEMERGIUM_ALKALIDE]: [ RESOURCE_LEMERGIUM_ALKALIDE, RESOURCE_CATALYST ], 
-    [RESOURCE_CATALYZED_UTRIUM_ACID]: [ RESOURCE_UTRIUM_ACID, RESOURCE_CATALYST ], 
-    [RESOURCE_CATALYZED_UTRIUM_ALKALIDE]: [ RESOURCE_UTRIUM_ALKALIDE, RESOURCE_CATALYST ], 
-    [RESOURCE_CATALYZED_ZYNTHIUM_ACID]: [ RESOURCE_ZYNTHIUM_ACID, RESOURCE_CATALYST ], 
-    [RESOURCE_CATALYZED_ZYNTHIUM_ALKALIDE]: [ RESOURCE_ZYNTHIUM_ALKALIDE, RESOURCE_CATALYST ], 
+    [RESOURCE_CATALYZED_GHODIUM_ACID]: [RESOURCE_GHODIUM_ACID, RESOURCE_CATALYST],
+    [RESOURCE_CATALYZED_GHODIUM_ALKALIDE]: [RESOURCE_GHODIUM_ALKALIDE, RESOURCE_CATALYST],
+    [RESOURCE_CATALYZED_KEANIUM_ACID]: [RESOURCE_KEANIUM_ACID, RESOURCE_CATALYST],
+    [RESOURCE_CATALYZED_KEANIUM_ALKALIDE]: [RESOURCE_KEANIUM_ALKALIDE, RESOURCE_CATALYST],
+    [RESOURCE_CATALYZED_LEMERGIUM_ACID]: [RESOURCE_LEMERGIUM_ACID, RESOURCE_CATALYST],
+    [RESOURCE_CATALYZED_LEMERGIUM_ALKALIDE]: [RESOURCE_LEMERGIUM_ALKALIDE, RESOURCE_CATALYST],
+    [RESOURCE_CATALYZED_UTRIUM_ACID]: [RESOURCE_UTRIUM_ACID, RESOURCE_CATALYST],
+    [RESOURCE_CATALYZED_UTRIUM_ALKALIDE]: [RESOURCE_UTRIUM_ALKALIDE, RESOURCE_CATALYST],
+    [RESOURCE_CATALYZED_ZYNTHIUM_ACID]: [RESOURCE_ZYNTHIUM_ACID, RESOURCE_CATALYST],
+    [RESOURCE_CATALYZED_ZYNTHIUM_ALKALIDE]: [RESOURCE_ZYNTHIUM_ALKALIDE, RESOURCE_CATALYST],
     // 二级化合物
-    [RESOURCE_GHODIUM_ACID]: [ RESOURCE_GHODIUM_HYDRIDE, RESOURCE_HYDROXIDE ], 
-    [RESOURCE_GHODIUM_ALKALIDE]: [ RESOURCE_GHODIUM_OXIDE, RESOURCE_HYDROXIDE ], 
-    [RESOURCE_KEANIUM_ACID]: [ RESOURCE_KEANIUM_HYDRIDE, RESOURCE_HYDROXIDE], 
-    [RESOURCE_KEANIUM_ALKALIDE]: [ RESOURCE_KEANIUM_OXIDE, RESOURCE_HYDROXIDE], 
-    [RESOURCE_LEMERGIUM_ACID]: [ RESOURCE_LEMERGIUM_HYDRIDE, RESOURCE_HYDROXIDE], 
-    [RESOURCE_LEMERGIUM_ALKALIDE]: [ RESOURCE_LEMERGIUM_OXIDE, RESOURCE_HYDROXIDE], 
-    [RESOURCE_UTRIUM_ACID]: [ RESOURCE_UTRIUM_HYDRIDE, RESOURCE_HYDROXIDE], 
-    [RESOURCE_UTRIUM_ALKALIDE]: [ RESOURCE_UTRIUM_OXIDE, RESOURCE_HYDROXIDE], 
-    [RESOURCE_ZYNTHIUM_ACID]: [ RESOURCE_ZYNTHIUM_HYDRIDE, RESOURCE_HYDROXIDE], 
-    [RESOURCE_ZYNTHIUM_ALKALIDE]: [ RESOURCE_ZYNTHIUM_OXIDE, RESOURCE_HYDROXIDE], 
+    [RESOURCE_GHODIUM_ACID]: [RESOURCE_GHODIUM_HYDRIDE, RESOURCE_HYDROXIDE],
+    [RESOURCE_GHODIUM_ALKALIDE]: [RESOURCE_GHODIUM_OXIDE, RESOURCE_HYDROXIDE],
+    [RESOURCE_KEANIUM_ACID]: [RESOURCE_KEANIUM_HYDRIDE, RESOURCE_HYDROXIDE],
+    [RESOURCE_KEANIUM_ALKALIDE]: [RESOURCE_KEANIUM_OXIDE, RESOURCE_HYDROXIDE],
+    [RESOURCE_LEMERGIUM_ACID]: [RESOURCE_LEMERGIUM_HYDRIDE, RESOURCE_HYDROXIDE],
+    [RESOURCE_LEMERGIUM_ALKALIDE]: [RESOURCE_LEMERGIUM_OXIDE, RESOURCE_HYDROXIDE],
+    [RESOURCE_UTRIUM_ACID]: [RESOURCE_UTRIUM_HYDRIDE, RESOURCE_HYDROXIDE],
+    [RESOURCE_UTRIUM_ALKALIDE]: [RESOURCE_UTRIUM_OXIDE, RESOURCE_HYDROXIDE],
+    [RESOURCE_ZYNTHIUM_ACID]: [RESOURCE_ZYNTHIUM_HYDRIDE, RESOURCE_HYDROXIDE],
+    [RESOURCE_ZYNTHIUM_ALKALIDE]: [RESOURCE_ZYNTHIUM_OXIDE, RESOURCE_HYDROXIDE],
     // 一级化合物
-    [RESOURCE_GHODIUM_HYDRIDE]: [ RESOURCE_GHODIUM, RESOURCE_HYDROGEN ], 
-    [RESOURCE_GHODIUM_OXIDE]: [ RESOURCE_GHODIUM, RESOURCE_OXYGEN ], 
-    [RESOURCE_KEANIUM_HYDRIDE]: [ RESOURCE_KEANIUM, RESOURCE_HYDROGEN ], 
-    [RESOURCE_KEANIUM_OXIDE]: [ RESOURCE_KEANIUM, RESOURCE_OXYGEN ], 
-    [RESOURCE_LEMERGIUM_HYDRIDE]: [ RESOURCE_LEMERGIUM, RESOURCE_HYDROGEN ], 
-    [RESOURCE_LEMERGIUM_OXIDE]: [ RESOURCE_LEMERGIUM, RESOURCE_OXYGEN ], 
-    [RESOURCE_UTRIUM_HYDRIDE]: [ RESOURCE_UTRIUM, RESOURCE_HYDROGEN ], 
-    [RESOURCE_UTRIUM_OXIDE]: [ RESOURCE_UTRIUM, RESOURCE_OXYGEN ], 
-    [RESOURCE_ZYNTHIUM_HYDRIDE]: [ RESOURCE_ZYNTHIUM, RESOURCE_HYDROGEN ], 
-    [RESOURCE_ZYNTHIUM_OXIDE]: [ RESOURCE_ZYNTHIUM, RESOURCE_OXYGEN ], 
-    [RESOURCE_GHODIUM]: [ RESOURCE_ZYNTHIUM_KEANITE, RESOURCE_UTRIUM_LEMERGITE ], 
+    [RESOURCE_GHODIUM_HYDRIDE]: [RESOURCE_GHODIUM, RESOURCE_HYDROGEN],
+    [RESOURCE_GHODIUM_OXIDE]: [RESOURCE_GHODIUM, RESOURCE_OXYGEN],
+    [RESOURCE_KEANIUM_HYDRIDE]: [RESOURCE_KEANIUM, RESOURCE_HYDROGEN],
+    [RESOURCE_KEANIUM_OXIDE]: [RESOURCE_KEANIUM, RESOURCE_OXYGEN],
+    [RESOURCE_LEMERGIUM_HYDRIDE]: [RESOURCE_LEMERGIUM, RESOURCE_HYDROGEN],
+    [RESOURCE_LEMERGIUM_OXIDE]: [RESOURCE_LEMERGIUM, RESOURCE_OXYGEN],
+    [RESOURCE_UTRIUM_HYDRIDE]: [RESOURCE_UTRIUM, RESOURCE_HYDROGEN],
+    [RESOURCE_UTRIUM_OXIDE]: [RESOURCE_UTRIUM, RESOURCE_OXYGEN],
+    [RESOURCE_ZYNTHIUM_HYDRIDE]: [RESOURCE_ZYNTHIUM, RESOURCE_HYDROGEN],
+    [RESOURCE_ZYNTHIUM_OXIDE]: [RESOURCE_ZYNTHIUM, RESOURCE_OXYGEN],
+    [RESOURCE_GHODIUM]: [RESOURCE_ZYNTHIUM_KEANITE, RESOURCE_UTRIUM_LEMERGITE],
     // 基础化合物
-    [RESOURCE_ZYNTHIUM_KEANITE]: [ RESOURCE_ZYNTHIUM, RESOURCE_KEANIUM ], 
-    [RESOURCE_UTRIUM_LEMERGITE]: [ RESOURCE_UTRIUM, RESOURCE_LEMERGIUM ], 
-    [RESOURCE_HYDROXIDE]: [ RESOURCE_HYDROGEN, RESOURCE_OXYGEN ], 
+    [RESOURCE_ZYNTHIUM_KEANITE]: [RESOURCE_ZYNTHIUM, RESOURCE_KEANIUM],
+    [RESOURCE_UTRIUM_LEMERGITE]: [RESOURCE_UTRIUM, RESOURCE_LEMERGIUM],
+    [RESOURCE_HYDROXIDE]: [RESOURCE_HYDROGEN, RESOURCE_OXYGEN],
 }
 
 /**
  * lab 集群的工作状态常量
  */
 export const LAB_STATE = {
-    GET_TARGET: 'getTarget', 
-    GET_RESOURCE: 'getResource', 
-    WORKING: 'working', 
-    PUT_RESOURCE: 'putResource', 
+    GET_TARGET: 'getTarget',
+    GET_RESOURCE: 'getResource',
+    WORKING: 'working',
+    PUT_RESOURCE: 'putResource',
     BOOST: 'boost'
 }
 
@@ -308,31 +308,31 @@ export const LAB_STATE = {
  */
 export const labTarget = [
     // 基础
-    { target: RESOURCE_HYDROXIDE, number: 500 }, 
-    { target: RESOURCE_ZYNTHIUM_KEANITE, number: 500 }, 
-    { target: RESOURCE_UTRIUM_LEMERGITE, number: 500 }, 
+    {target: RESOURCE_HYDROXIDE, number: 500},
+    {target: RESOURCE_ZYNTHIUM_KEANITE, number: 500},
+    {target: RESOURCE_UTRIUM_LEMERGITE, number: 500},
     // G
-    { target: RESOURCE_GHODIUM, number: 5000 }, 
+    {target: RESOURCE_GHODIUM, number: 5000},
     // XKHO2 生产线，强化 RANGE_ATTACK
-    { target: RESOURCE_KEANIUM_OXIDE, number: 300 }, 
-    { target: RESOURCE_KEANIUM_ALKALIDE, number: 1000 }, 
-    { target: RESOURCE_CATALYZED_KEANIUM_ALKALIDE, number: 4000 }, 
+    {target: RESOURCE_KEANIUM_OXIDE, number: 300},
+    {target: RESOURCE_KEANIUM_ALKALIDE, number: 1000},
+    {target: RESOURCE_CATALYZED_KEANIUM_ALKALIDE, number: 4000},
     // XLHO2 生产线，强化 HEAL
-    { target: RESOURCE_LEMERGIUM_OXIDE, number: 300 }, 
-    { target: RESOURCE_LEMERGIUM_ALKALIDE, number: 1000 }, 
-    { target: RESOURCE_CATALYZED_LEMERGIUM_ALKALIDE, number: 4000 }, 
+    {target: RESOURCE_LEMERGIUM_OXIDE, number: 300},
+    {target: RESOURCE_LEMERGIUM_ALKALIDE, number: 1000},
+    {target: RESOURCE_CATALYZED_LEMERGIUM_ALKALIDE, number: 4000},
     // XZHO2 生产线，强化 MOVE
-    { target: RESOURCE_ZYNTHIUM_OXIDE, number: 300 }, 
-    { target: RESOURCE_ZYNTHIUM_ALKALIDE, number: 1000 }, 
-    { target: RESOURCE_CATALYZED_ZYNTHIUM_ALKALIDE, number: 4000 }, 
+    {target: RESOURCE_ZYNTHIUM_OXIDE, number: 300},
+    {target: RESOURCE_ZYNTHIUM_ALKALIDE, number: 1000},
+    {target: RESOURCE_CATALYZED_ZYNTHIUM_ALKALIDE, number: 4000},
     // XZH2O 生产线，强化 WORK 的 dismantle
-    { target: RESOURCE_ZYNTHIUM_HYDRIDE, number: 300 }, 
-    { target: RESOURCE_ZYNTHIUM_ACID, number: 1000 }, 
-    { target: RESOURCE_CATALYZED_ZYNTHIUM_ACID, number: 4000 }, 
+    {target: RESOURCE_ZYNTHIUM_HYDRIDE, number: 300},
+    {target: RESOURCE_ZYNTHIUM_ACID, number: 1000},
+    {target: RESOURCE_CATALYZED_ZYNTHIUM_ACID, number: 4000},
     // XGHO2 生产线，强化 TOUGH
-    { target: RESOURCE_GHODIUM_OXIDE, number: 300 }, 
-    { target: RESOURCE_GHODIUM_ALKALIDE, number: 1000 }, 
-    { target: RESOURCE_CATALYZED_GHODIUM_ALKALIDE, number: 4000 }, 
+    {target: RESOURCE_GHODIUM_OXIDE, number: 300},
+    {target: RESOURCE_GHODIUM_ALKALIDE, number: 1000},
+    {target: RESOURCE_CATALYZED_GHODIUM_ALKALIDE, number: 4000},
 ]
 
 /**
@@ -361,19 +361,19 @@ export const FACTORY_LOCK_AMOUNT = {
     },
     [RESOURCE_UTRIUM_BAR]: {
         sub: RESOURCE_UTRIUM,
-        limit: 40000
+        limit: 20000
     },
     [RESOURCE_LEMERGIUM_BAR]: {
         sub: RESOURCE_LEMERGIUM,
-        limit: 40000
+        limit: 20000
     },
     [RESOURCE_KEANIUM_BAR]: {
         sub: RESOURCE_KEANIUM,
-        limit: 40000
+        limit: 20000
     },
     [RESOURCE_ZYNTHIUM_BAR]: {
         sub: RESOURCE_ZYNTHIUM,
-        limit: 40000
+        limit: 20000
     },
     [RESOURCE_PURIFIER]: {
         sub: RESOURCE_CATALYST,
@@ -386,7 +386,7 @@ export const FACTORY_LOCK_AMOUNT = {
 }
 
 /**
- * powerProcess 的设置 
+ * powerProcess 的设置
  */
 export const powerSettings = {
     // 当前房间 storage 内存量低于limit时自动停止 process
@@ -480,14 +480,14 @@ export const ENERGY_SHARE_LIMIT = 600000
 
 /**
  * 需要挂载内存的 structure
- * 
+ *
  * @property {} poto 要进行挂载的原型
  * @property {} memoryKey 其在所在房间内存中的存储字段
  */
 export const structureWithMemory: {
     poto: StructureConstructor
     memoryKey: string
-}[] = [ 
+}[] = [
     {
         poto: StructureFactory,
         memoryKey: STRUCTURE_FACTORY
@@ -533,35 +533,35 @@ export const factoryTopTargets: {
 } = {
     // 机械产业
     [RESOURCE_METAL]: {
-        1: [ RESOURCE_COMPOSITE, RESOURCE_TUBE ],
-        2: [ RESOURCE_FIXTURES ],
-        3: [ RESOURCE_LIQUID, RESOURCE_FRAME ],
-        4: [ RESOURCE_HYDRAULICS ],
-        5: [ RESOURCE_MACHINE ]
+        1: [RESOURCE_COMPOSITE, RESOURCE_TUBE],
+        2: [RESOURCE_FIXTURES],
+        3: [RESOURCE_LIQUID, RESOURCE_FRAME],
+        4: [RESOURCE_HYDRAULICS],
+        5: [RESOURCE_MACHINE]
     },
     // 生物产业
     [RESOURCE_BIOMASS]: {
-        1: [ RESOURCE_PHLEGM ],
-        2: [ RESOURCE_TISSUE ],
-        3: [ RESOURCE_LIQUID, RESOURCE_MUSCLE ],
-        4: [ RESOURCE_ORGANOID ],
-        5: [ RESOURCE_ORGANISM ]
+        1: [RESOURCE_PHLEGM],
+        2: [RESOURCE_TISSUE],
+        3: [RESOURCE_LIQUID, RESOURCE_MUSCLE],
+        4: [RESOURCE_ORGANOID],
+        5: [RESOURCE_ORGANISM]
     },
     // 电子产业
     [RESOURCE_SILICON]: {
-        1: [ RESOURCE_COMPOSITE, RESOURCE_SWITCH ],
-        2: [ RESOURCE_CRYSTAL, RESOURCE_TRANSISTOR ],
-        3: [ RESOURCE_MICROCHIP ],
-        4: [ RESOURCE_CIRCUIT ],
-        5: [ RESOURCE_DEVICE ]
+        1: [RESOURCE_COMPOSITE, RESOURCE_SWITCH],
+        2: [RESOURCE_CRYSTAL, RESOURCE_TRANSISTOR],
+        3: [RESOURCE_MICROCHIP],
+        4: [RESOURCE_CIRCUIT],
+        5: [RESOURCE_DEVICE]
     },
     // 奥秘产业
     [RESOURCE_MIST]: {
-        1: [ RESOURCE_CONCENTRATE ],
-        2: [ RESOURCE_CRYSTAL, RESOURCE_EXTRACT ],
-        3: [ RESOURCE_SPIRIT ],
-        4: [ RESOURCE_EMANATION ],
-        5: [ RESOURCE_ESSENCE ]
+        1: [RESOURCE_CONCENTRATE],
+        2: [RESOURCE_CRYSTAL, RESOURCE_EXTRACT],
+        3: [RESOURCE_SPIRIT],
+        4: [RESOURCE_EMANATION],
+        5: [RESOURCE_ESSENCE]
     }
 }
 
@@ -608,15 +608,15 @@ export const minerHervesteLimit = 200000
  * 在进行交易时会通过该资源的昨日历史价格配合下面的比例来确定合适的交易价格区间
  */
 export const DEAL_RATIO: DealRatios = {
-    default: { MAX: 1.4, MIN: 0.4 },
+    default: {MAX: 1.4, MIN: 0.4},
     // 所有原矿
-    [RESOURCE_HYDROGEN]: { MAX: 2.5, MIN: 0.3 },
-    [RESOURCE_OXYGEN]: { MAX: 2.5, MIN: 0.3 },
-    [RESOURCE_UTRIUM]: { MAX: 2.5, MIN: 0.3 },
-    [RESOURCE_LEMERGIUM]: { MAX: 2.5, MIN: 0.3 },
-    [RESOURCE_KEANIUM]: { MAX: 2.5, MIN: 0.3 },
-    [RESOURCE_ZYNTHIUM]: { MAX: 2.5, MIN: 0.3 },
-    [RESOURCE_CATALYST]: { MAX: 2.5, MIN: 0.3 }
+    [RESOURCE_HYDROGEN]: {MAX: 2.5, MIN: 0.3},
+    [RESOURCE_OXYGEN]: {MAX: 2.5, MIN: 0.3},
+    [RESOURCE_UTRIUM]: {MAX: 2.5, MIN: 0.3},
+    [RESOURCE_LEMERGIUM]: {MAX: 2.5, MIN: 0.3},
+    [RESOURCE_KEANIUM]: {MAX: 2.5, MIN: 0.3},
+    [RESOURCE_ZYNTHIUM]: {MAX: 2.5, MIN: 0.3},
+    [RESOURCE_CATALYST]: {MAX: 2.5, MIN: 0.3}
 }
 
 // 造好新墙时 builder 会先将墙刷到超过下面值，之后才会去建其他建筑
@@ -651,7 +651,7 @@ export const terminalChannels: {
 }
 
 // 每个房间最多同时存在多少 upgrader 和 harvester
-export const MAX_UPGRADER_NUM = 8
+export const MAX_UPGRADER_NUM = 12
 export const MAX_HARVESTER_NUM = 4
 
 /**
@@ -660,23 +660,23 @@ export const MAX_HARVESTER_NUM = 4
  * 请确保最少有一条内容
  */
 export const UPGRADE_WITH_TERMINAL = [
-    { energy: 80000, num: 8 },
-    { energy: 70000, num: 7 },
-    { energy: 60000, num: 6 },
-    { energy: 50000, num: 5 },
-    { energy: 40000, num: 4 },
-    { energy: 30000, num: 3 },
-    { energy: 20000, num: 2 }
+    {energy: 80000, num: 10},
+    {energy: 70000, num: 9},
+    {energy: 60000, num: 8},
+    {energy: 50000, num: 7},
+    {energy: 40000, num: 6},
+    {energy: 30000, num: 5},
+    {energy: 20000, num: 4}
 ]
 
 /**
  * storage 中的能量和对应发布的 upgrader 数量
  */
 export const UPGRADE_WITH_STORAGE = [
-    { energy: 700000, num: 3 },
-    { energy: 500000, num: 2 },
-    { energy: 100000, num: 1 }
+    {energy: 700000, num: 4},
+    {energy: 500000, num: 3},
+    {energy: 100000, num: 2}
 ]
 
 // 用于维持房间能量正常运转的重要角色
-export const importantRoles: CreepRoleConstant[] = [ 'harvester', 'collector', 'filler', 'manager', 'processor' ]
+export const importantRoles: CreepRoleConstant[] = ['harvester', 'collector', 'filler', 'manager', 'processor']

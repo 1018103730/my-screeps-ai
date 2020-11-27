@@ -1,5 +1,5 @@
-import { maxOps } from 'setting'
-import { log } from 'utils'
+import {maxOps} from 'setting'
+import {log} from 'utils'
 
 /**
  * PowerCreep 原型拓展
@@ -12,7 +12,7 @@ export default class PowerCreepExtension extends PowerCreep {
         // 获取队列中的第一个任务并执行
         // 没有任务的话就搓 ops
         let powerTask = this.room.getPowerTask()
-        
+
         // 没有任务，并且 ops 不够，就搓 ops
         if (!powerTask && this.room.terminal && this.room.terminal.store[RESOURCE_OPS] < maxOps) powerTask = PWR_GENERATE_OPS
         if (!powerTask) return
@@ -22,7 +22,7 @@ export default class PowerCreepExtension extends PowerCreep {
 
     /**
      * 发送日志
-     * 
+     *
      * @param content 日志内容
      * @param instanceName 发送日志的实例名
      * @param color 日志前缀颜色
@@ -30,13 +30,13 @@ export default class PowerCreepExtension extends PowerCreep {
      */
     log(content: string, color: Colors = undefined, notify: boolean = false): void {
         // 因为 pc 可能未孵化，所以这里需要特别判断一下
-        if (!this.room) log(content, [ this.name ], color, notify)
+        if (!this.room) log(content, [this.name], color, notify)
         else this.room.log(content, this.name, color, notify)
     }
 
     /**
      * 保证自己一直活着
-     * 
+     *
      * @returns 是否可以执行后面的工作
      */
     private keepAlive(): boolean {
@@ -71,7 +71,7 @@ export default class PowerCreepExtension extends PowerCreep {
     private executeTask(task: PowerConstant): void {
         // 没有该 power 就直接移除任务
         if (!this.powers[task]) {
-            this.say(`无法处理任务 ${task}`)
+            // this.say(`无法处理任务 ${task}`)
             return this.finishTask()
         }
         // 没冷却好就暂时挂起任务
@@ -98,14 +98,13 @@ export default class PowerCreepExtension extends PowerCreep {
             if (result === OK && task !== PWR_GENERATE_OPS) this.finishTask()
             // target 资源不足了就去执行 source
             else if (result === ERR_NOT_ENOUGH_RESOURCES) this.memory.working = false
-        }
-        else {
+        } else {
             const result = taskOptioon.source(this)
-            
+
             // source OK 了代表资源获取完成，去执行 target
             if (result === OK) this.memory.working = true
-            // 如果 source 还发现没资源的话就强制执行 ops 生成任务
-            // 这里调用了自己，但是由于 PWR_GENERATE_OPS 的 source 阶段永远不会返回 ERR_NOT_ENOUGH_RESOURCES
+                // 如果 source 还发现没资源的话就强制执行 ops 生成任务
+                // 这里调用了自己，但是由于 PWR_GENERATE_OPS 的 source 阶段永远不会返回 ERR_NOT_ENOUGH_RESOURCES
             // 所以不会产生循环调用
             else if (result === ERR_NOT_ENOUGH_RESOURCES) this.executeTask(PWR_GENERATE_OPS)
         }
@@ -113,7 +112,7 @@ export default class PowerCreepExtension extends PowerCreep {
 
     /**
      * 在指定房间生成自己
-     * 
+     *
      * @param roomName 要生成的房间名
      * @returns OK 生成成功
      * @returns ERR_INVALID_ARGS 该房间没有视野
@@ -122,12 +121,12 @@ export default class PowerCreepExtension extends PowerCreep {
     private spawnAtRoom(roomName: string): OK | ERR_INVALID_ARGS | ERR_NOT_FOUND {
         const targetRoom = Game.rooms[roomName]
         if (!targetRoom || !targetRoom.powerSpawn) {
-            this.log(`找不到指定房间或者房间内没有 powerSpawn，请重新指定工作房间`)
+            // this.log(`找不到指定房间或者房间内没有 powerSpawn，请重新指定工作房间`)
             return ERR_NOT_FOUND
         }
 
         const spawnResult = this.spawn(targetRoom.powerSpawn)
-        
+
         if (spawnResult === OK) return OK
         else {
             this.log(`孵化异常! 错误码: ${spawnResult}`, 'yellow')
@@ -137,16 +136,16 @@ export default class PowerCreepExtension extends PowerCreep {
 
     /**
      * 给 powerCreep 指定工作房间
-     * 
+     *
      * @param roomName 要进行生成的房间名
      */
     public setWorkRoom(roomName: string = 'hideTip'): string {
-        let result: string = this.memory.workRoom ? 
-            `[${this.name}] 已将工作房间从 ${this.memory.workRoom} 重置为 ${roomName}, 将会在老死后复活在目标房间` : 
+        let result: string = this.memory.workRoom ?
+            `[${this.name}] 已将工作房间从 ${this.memory.workRoom} 重置为 ${roomName}, 将会在老死后复活在目标房间` :
             `[${this.name}] 已将工作房间设置为 ${roomName}`
-        
+
         if (roomName === 'hideTip') result = `[${this.name}] 已关闭提示，重新执行该命令来孵化此 powerCrep`
-        
+
         this.memory.workRoom = roomName
 
         return result
@@ -154,7 +153,7 @@ export default class PowerCreepExtension extends PowerCreep {
 
     /**
      * 前往 controller 启用房间中的 power
-     * 
+     *
      * @returns OK 激活完成
      * @returns ERR_BUSY 正在激活中
      */
@@ -171,7 +170,7 @@ export default class PowerCreepExtension extends PowerCreep {
 
     /**
      * 找到房间中的 powerSpawn renew 自己
-     * 
+     *
      * @returns OK 正在执行 renew
      * @returns ERR_NOT_FOUND 房间内没有 powerSpawn
      */
@@ -194,7 +193,7 @@ export default class PowerCreepExtension extends PowerCreep {
         const powers = Object.keys(this.powers)
         // 把房间内已有的 powers 取出来并进行去重操作，放置房间内有多个 Pc 时互相覆盖彼此的能力
         const existPowers = this.room.memory.powers ? this.room.memory.powers.split(' ') : []
-        const uniqePowers = _.uniq([ ...powers, ...existPowers])
+        const uniqePowers = _.uniq([...powers, ...existPowers])
 
         this.room.memory.powers = uniqePowers.join(' ')
     }
@@ -210,7 +209,7 @@ export default class PowerCreepExtension extends PowerCreep {
 
     /**
      * 从 terminal 中取出 ops
-     * 
+     *
      * @param opsNumber 要拿取的数量
      * @returns OK 拿取完成
      * @returns ERR_NOT_ENOUGH_RESOURCES 资源不足
@@ -233,8 +232,7 @@ export default class PowerCreepExtension extends PowerCreep {
         else if (actionResult === ERR_NOT_IN_RANGE) {
             this.goTo(sourceStructure.pos)
             return ERR_BUSY
-        }
-        else {
+        } else {
             this.log(`执行 getOps 时出错，错误码 ${actionResult}`, 'yellow')
             return ERR_BUSY
         }
@@ -243,16 +241,19 @@ export default class PowerCreepExtension extends PowerCreep {
     /**
      * 以下为对穿移动的相关方法，直接执行 Creep 原型上的对应方法
      */
-    
+
     public move(target: DirectionConstant | Creep): CreepMoveReturnCode | ERR_INVALID_TARGET | ERR_NOT_IN_RANGE {
         return Creep.prototype.move.call(this, target)
     }
+
     public goTo(target: RoomPosition): CreepMoveReturnCode | ERR_NO_PATH | ERR_INVALID_TARGET | ERR_NOT_FOUND {
         return Creep.prototype.goTo.call(this, target)
     }
+
     public requireCross(direction: DirectionConstant): Boolean {
         return Creep.prototype.requireCross.call(this, direction)
     }
+
     private mutualCross(direction: DirectionConstant): OK | ERR_BUSY | ERR_NOT_FOUND {
         return Creep.prototype.mutualCross.call(this, direction)
     }
@@ -260,7 +261,7 @@ export default class PowerCreepExtension extends PowerCreep {
 
 /**
  * 所有 power 的任务检查逻辑及工作逻辑
- * 
+ *
  * @property PWR_* 常量之一，代表对应的任务
  * @value power 任务的具体配置项
  */
@@ -306,8 +307,25 @@ const PowerTasks: IPowerTaskConfigs = {
                 return ERR_BUSY
             }
             // ops 不足就继续生成
-            else if (result == ERR_NOT_ENOUGH_RESOURCES){
+            else if (result == ERR_NOT_ENOUGH_RESOURCES) {
                 return ERR_NOT_ENOUGH_RESOURCES
+            }
+        }
+    },
+
+    [PWR_OPERATE_STORAGE]: {
+        source: creep => creep.getOps(POWER_INFO[PWR_OPERATE_STORAGE].ops),
+        target: creep => {
+            if (creep.store[RESOURCE_OPS] < POWER_INFO[PWR_OPERATE_STORAGE].ops) return ERR_NOT_ENOUGH_RESOURCES
+
+            let storage = creep.room.storage
+
+            const actionResult = creep.usePower(PWR_OPERATE_STORAGE, storage)
+            if (actionResult === OK) return OK
+            else if (actionResult === ERR_NOT_IN_RANGE) creep.goTo(storage.pos)
+            else {
+                creep.log(`[${creep.room.name} ${creep.name}] 执行 PWR_OPERATE_STORAGE target 时出错，错误码 ${actionResult}`, 'red')
+                return OK
             }
         }
     },
@@ -396,15 +414,14 @@ const PowerTasks: IPowerTaskConfigs = {
             else target = creep.room.sources[creep.memory.sourceIndex]
             // 两个 source 都有 regen_source 时将获取不到 target
             if (!target) return ERR_BUSY
-            
+
             const actionResult = creep.usePower(PWR_REGEN_SOURCE, target)
 
             if (actionResult === OK) {
                 // 移除缓存
                 delete creep.memory.sourceIndex
                 return OK
-            }
-            else if (actionResult === ERR_NOT_IN_RANGE) creep.goTo(target.pos)
+            } else if (actionResult === ERR_NOT_IN_RANGE) creep.goTo(target.pos)
             else {
                 creep.log(`[${creep.room.name} ${creep.name}] 执行 PWR_REGEN_SOURCE target 时出错，错误码 ${actionResult}`, 'red')
                 return OK

@@ -1,4 +1,4 @@
-import { createHelp } from 'modules/help'
+import {createHelp} from 'modules/help'
 
 // Link 原型拓展
 export class LinkExtension extends StructureLink {
@@ -66,7 +66,7 @@ export class LinkExtension extends StructureLink {
 
     /**
      * 注册为升级 link
-     * 
+     *
      * 自己被动的给 upgrader 角色提供能量，所以啥也不做
      * 只是在房间内存里注册来方便其他 link 找到自己
      */
@@ -89,7 +89,7 @@ export class LinkExtension extends StructureLink {
 
     /**
      * 扮演升级 link
-     * 
+     *
      * 自己能量不足时检查 storage 和 terminal 里的能量，并发布中央物流
      */
     private upgradeWork(): void {
@@ -105,20 +105,22 @@ export class LinkExtension extends StructureLink {
         // terminal 不能作为能量来源的话就用 storage 里的能量
         if (!source && this.room.storage && this.room.storage.store[RESOURCE_ENERGY] > LINK_CAPACITY) source = this.room.storage
 
-        // 以 centerLink 的名义发布中央物流任务
-        const result = this.room.addCenterTask({
-            submit: 'centerLink',
-            source: source.structureType,
-            target: 'centerLink',
-            resourceType: RESOURCE_ENERGY,
-            // 自己和 centerLink 的容量中找最小值
-            amount: Math.min(this.store.getFreeCapacity(RESOURCE_ENERGY), centerlink.store.getFreeCapacity(RESOURCE_ENERGY))
-        })
+        if (source) {
+            // 以 centerLink 的名义发布中央物流任务
+            const result = this.room.addCenterTask({
+                submit: 'centerLink',
+                source: source.structureType,
+                target: 'centerLink',
+                resourceType: RESOURCE_ENERGY,
+                // 自己和 centerLink 的容量中找最小值
+                amount: Math.min(this.store.getFreeCapacity(RESOURCE_ENERGY), centerlink.store.getFreeCapacity(RESOURCE_ENERGY))
+            })
+        }
     }
 
     /**
      * 扮演中央 link
-     * 
+     *
      * 能量快满时向房间中的资源转移队列推送任务
      */
     private centerWork(): void {
@@ -129,7 +131,7 @@ export class LinkExtension extends StructureLink {
         if (this.supportUpgradeLink()) return
 
         // 之前发的转移任务没有处理好的话就先挂机
-        if (this.room.hasCenterTask('centerLink') || !this.room.storage) return 
+        if (this.room.hasCenterTask('centerLink') || !this.room.storage) return
 
         this.room.addCenterTask({
             submit: 'centerLink',
@@ -142,7 +144,7 @@ export class LinkExtension extends StructureLink {
 
     /**
      * 扮演能量提供 link
-     * 
+     *
      * 如果房间内有 upgrede link 并且其没有能量时则把自己的能量转移给它
      * 否则向中央 link 发送能量
      * 都不存在时待机
@@ -150,7 +152,7 @@ export class LinkExtension extends StructureLink {
     private sourceWork(): void {
         // 能量填满再发送
         if (<number>this.store.getUsedCapacity(RESOURCE_ENERGY) < 700) return
-        
+
         // 优先响应 upgrade，在 8 级后这个检查用处不大，暂时注释了
         // if (this.supportUpgradeLink()) return
 
@@ -184,7 +186,7 @@ export class LinkExtension extends StructureLink {
      * 通过 room.memory 中指定字段名中的值获取 link
      * 如果没有找到对应的 link id 的话则清除该字段
      * @danger 请不要把该方法用在查找 link 之外的地方
-     * 
+     *
      * @param memoryKey link 的 id 保存在哪个 room.memory 字段中
      */
     private getLinkByMemoryKey(memoryKey: string): StructureLink | null {
@@ -195,8 +197,7 @@ export class LinkExtension extends StructureLink {
         if (!link) {
             delete this.room.memory[memoryKey]
             return null
-        }
-        else return link
+        } else return link
     }
 }
 

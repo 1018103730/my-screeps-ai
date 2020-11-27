@@ -1,5 +1,5 @@
-import { PB_HARVESTE_STATE, DEPOSIT_MAX_COOLDOWN } from 'setting'
-import { calcBodyPart, getName } from 'utils'
+import {PB_HARVESTE_STATE, DEPOSIT_MAX_COOLDOWN} from 'setting'
+import {calcBodyPart, getName} from 'utils'
 
 /**
  * 多房间角色组
@@ -13,14 +13,14 @@ const roles: {
      * 暂不支持从 ruin 中获取资源
      * 从指定房间的目标建筑（由旗帜指定）中搬运物品到指定建筑
      * 在目标建筑搬空后将会移除旗帜并自杀
-     * 
+     *
      * data:
      * @param flagName 目标建筑上的旗帜名称
      * @param targetStructureId 要搬运到的建筑 id
      */
     reiver: (data: ReiverData): ICreepConfig => ({
         // 要搬运资源的目标旗帜消失了就不再生成
-        isNeed: () => data.flagName in Game.flags, 
+        isNeed: () => data.flagName in Game.flags,
         // 如果已经统计了移动
         prepare: creep => {
             const flag = Game.flags[data.flagName]
@@ -36,7 +36,7 @@ const roles: {
                 if (!flag.memory.sourceId) {
                     // 搜索包含存储的目标建筑并存储
                     let targetStructure: StructureWithStore | Ruin = flag.pos.lookFor(LOOK_STRUCTURES).find(s => 'store' in s) as StructureWithStore
-                    
+
                     if (!targetStructure) {
                         // 查找废墟，如果有包含 store 的废墟就设为目标
                         const ruins = flag.pos.lookFor(LOOK_RUINS)
@@ -50,8 +50,7 @@ const roles: {
 
                     if (targetStructure) {
                         flag.memory.sourceId = targetStructure.id
-                    }
-                    else creep.say('没找到建筑啊')
+                    } else creep.say('没找到建筑啊')
                 }
 
                 // 如果移动到附近了就准备完成
@@ -98,7 +97,7 @@ const roles: {
                         else if (withdrawResult === ERR_NOT_IN_RANGE) {
                             creep.farMoveTo(targetStructure.pos)
                         }
-                        
+
                         // 等到下个 tick 重新遍历来继续搬
                         return false
                     }
@@ -134,20 +133,19 @@ const roles: {
                 }
 
                 // 上面的遍历完了就说明放完了，检查生命值，如果还够搬一趟的就过去，否则自杀
-                const flag = Game.flags[data.flagName] 
+                const flag = Game.flags[data.flagName]
                 if (!flag) {
                     creep.suicide()
                     return false
                 }
-                
+
                 // 乘以 3 是去一趟，回来的时候走的慢需要两倍的时间再加上沼泽可能更慢，40 是冗余
                 if (creep.ticksToLive >= flag.memory.travelTime * 3 + 40) return true
                 else {
                     creep.suicide()
                     return false
                 }
-            }
-            else creep.farMoveTo(targetStructure.pos)
+            } else creep.farMoveTo(targetStructure.pos)
         },
         bodys: 'manager'
     }),
@@ -155,10 +153,10 @@ const roles: {
     /**
      * 占领者
      * target: 占领指定房间
-     * 
+     *
      * data:
      * @param targetRoomName 要占领的目标房间
-     */ 
+     */
     claimer: (data: RemoteDeclarerData): ICreepConfig => ({
         // 该 creep 死了不会再次孵化
         isNeed: () => false,
@@ -173,7 +171,7 @@ const roles: {
             else {
                 // 用户没有指定旗帜时才会运行自动规划
                 if (!(getName.flagBaseCenter(creep.room.name) in Game.flags)) creep.room.findBaseCenterPos()
-                
+
                 return true
             }
         },
@@ -193,7 +191,7 @@ const roles: {
                 if (creep.attackController(controller) == ERR_NOT_IN_RANGE) creep.moveTo(controller)
                 return false
             }
-            
+
             // 是中立控制器，进行占领
             const claimResult = creep.claimController(controller)
             if (claimResult === ERR_NOT_IN_RANGE) creep.goTo(controller.pos)
@@ -219,8 +217,7 @@ const roles: {
                 else {
                     if (creep.room.memory.centerCandidates.length <= 0) {
                         creep.log(`房间中未找到有效的基地中心点，请放置旗帜并执行 Game.rooms.${creep.room.name}.setcenter('旗帜名')`, 'red')
-                    }
-                    else {
+                    } else {
                         const result = creep.room.confirmBaseCenter()
                         if (result === ERR_NOT_FOUND) creep.log(`新的基地中心点确认失败，请手动指定`, 'yellow')
                         else creep.log(`新的基地中心点已确认, 位置 [${result.x}, ${result.y}]`, 'green')
@@ -232,17 +229,16 @@ const roles: {
 
                 // 任务完成，一路顺风
                 creep.suicide()
-            }
-            else if (claimResult === ERR_GCL_NOT_ENOUGH) creep.log(`CCL 不足，无法占领`)
+            } else if (claimResult === ERR_GCL_NOT_ENOUGH) creep.log(`CCL 不足，无法占领`)
             else creep.say(`占领 ${claimResult}`)
         },
-        bodys: [ MOVE, CLAIM ]
+        bodys: [MOVE, CLAIM]
     }),
 
     /**
      * 预定者
      * 这个角色并不会想太多，出生了就去预定，一辈子走完了就不再出生，外矿采集单位采集的时候会检查预定剩余时间，如果不够了会自己发布该角色
-     * 
+     *
      * 准备阶段：向指定房间控制器移动
      * 阶段A：预定控制器
      */
@@ -255,8 +251,7 @@ const roles: {
             if (creep.room.name !== data.targetRoomName) {
                 creep.farMoveTo(new RoomPosition(25, 25, data.targetRoomName))
                 return false
-            }
-            else return true
+            } else return true
         },
         // 一直进行预定
         target: creep => {
@@ -281,7 +276,7 @@ const roles: {
     /**
      * 签名者
      * 会先抵达指定房间, 然后执行签名
-     * 
+     *
      * @param spawnRoom 出生房间名称
      * @param targetRoomName 要签名的目标房间名
      * @param signText 要签名的内容
@@ -293,12 +288,11 @@ const roles: {
                 if (creep.signController(creep.room.controller, data.signText) === ERR_NOT_IN_RANGE) {
                     creep.goTo(creep.room.controller.pos)
                 }
-            }
-            else creep.farMoveTo(new RoomPosition(25, 25, data.targetRoomName))
+            } else creep.farMoveTo(new RoomPosition(25, 25, data.targetRoomName))
 
             return false
         },
-        bodys: [ MOVE ]
+        bodys: [MOVE]
     }),
 
     /**
@@ -320,8 +314,7 @@ const roles: {
             if (creep.room.name !== data.targetRoomName) {
                 creep.farMoveTo(new RoomPosition(25, 25, data.targetRoomName))
                 return false
-            }
-            else {
+            } else {
                 delete creep.memory.farMove
                 return true
             }
@@ -334,9 +327,12 @@ const roles: {
             let source: StructureStorage | StructureTerminal | StructureContainer | Source
             if (!creep.memory.sourceId) {
                 source = creep.room.getAvailableSource()
-                creep.memory.sourceId = source.id
-            }
-            else source = Game.getObjectById(creep.memory.sourceId)
+                if (Memory.creepConfigs[creep.name].data['sourceId'] == source.id) {
+                    creep.memory.sourceId = source.id
+                } else {
+                    creep.memory.sourceId = Memory.creepConfigs[creep.name].data['sourceId'];
+                }
+            } else source = Game.getObjectById(creep.memory.sourceId)
 
             // 之前用的能量来源没能量了就更新来源（如果来源已经是 source 的话就改了）
             if (creep.getEngryFrom(source) === ERR_NOT_ENOUGH_RESOURCES && source instanceof Structure) delete creep.memory.sourceId
@@ -372,8 +368,7 @@ const roles: {
             if (creep.room.name !== data.targetRoomName) {
                 creep.farMoveTo(new RoomPosition(25, 25, data.targetRoomName))
                 return false
-            }
-            else {
+            } else {
                 delete creep.memory.farMove
                 return true
             }
@@ -387,8 +382,7 @@ const roles: {
             if (!creep.memory.sourceId) {
                 source = creep.room.getAvailableSource()
                 creep.memory.sourceId = source.id
-            }
-            else source = Game.getObjectById(creep.memory.sourceId)
+            } else source = Game.getObjectById(creep.memory.sourceId)
 
             // 之前用的能量来源没能量了就更新来源（如果来源已经是 source 的话就改了）
             if (creep.getEngryFrom(source) === ERR_NOT_ENOUGH_RESOURCES && source instanceof Structure) delete creep.memory.sourceId
@@ -447,11 +441,10 @@ const roles: {
                     // 再检查下有没有工地, 没有则以后再也不检查
                     const constructionSites = sourceFlag.room.find(FIND_CONSTRUCTION_SITES)
                     if (constructionSites.length <= 0)
-                    creep.memory.dontBuild = true
+                        creep.memory.dontBuild = true
                 }
                 return false
-            }
-            else return true
+            } else return true
         },
         // 向旗帜出发
         source: creep => {
@@ -476,7 +469,7 @@ const roles: {
                     room.memory.remote[sourceFlag.pos.roomName].disableTill = Game.time + 1500
                 }
             }
-            
+
             const source = Game.getObjectById<Source>(creep.memory.sourceId)
             const harvestResult = creep.harvest(source)
             if (harvestResult === OK) {
@@ -506,7 +499,7 @@ const roles: {
                         if (collapseTimerEffect) {
                             /**
                              * 将重生时间设置为 core 消失之后
-                             * 再加 5000 是因为 core 消失之后控制器还会有 5000 tick 的被预定时间 
+                             * 再加 5000 是因为 core 消失之后控制器还会有 5000 tick 的被预定时间
                              */
                             room.memory.remote[sourceFlag.pos.roomName].disableTill = Game.time + collapseTimerEffect.ticksRemaining + 5000
                         }
@@ -530,14 +523,14 @@ const roles: {
                         creep.memory.standed = true
                     }
                 }
-                if (buildResult === ERR_NOT_FOUND)  creep.memory.dontBuild = true
+                if (buildResult === ERR_NOT_FOUND) creep.memory.dontBuild = true
                 // 能量不足了就去 source 阶段，同时释放掉禁止通行点位
                 else if (buildResult === ERR_NOT_ENOUGH_ENERGY) {
                     creep.room.removeRestrictedPos(creep.name)
                     delete creep.memory.standed
                     return true
                 }
-                
+
                 return false
             }
 
@@ -553,7 +546,7 @@ const roles: {
                 creep.log(`找不到存放建筑 ${data.targetId}`, 'yellow')
                 return false
             }
-            
+
             // 再把剩余能量运回去
             const result = creep.transfer(target, RESOURCE_ENERGY)
             // 报自己身上资源不足了就说明能量放完了
@@ -570,7 +563,7 @@ const roles: {
     /**
      * deposit 采集者
      * 从指定矿中挖 deposit > 将挖出来的资源转移到建筑中
-     * 
+     *
      * @property {} sourceFlagName 旗帜名，要插在 deposit 上
      * @property {} spawnRoom 出生房间名
      */
@@ -610,7 +603,7 @@ const roles: {
                 // 边走边记录抵达时间
                 if (targetFlag.memory.travelTime == undefined) targetFlag.memory.travelTime = 0 // 初始化
                 // 旅途时间还没有计算完成
-                else if (!targetFlag.memory.travelComplete) targetFlag.memory.travelTime ++ // 增量
+                else if (!targetFlag.memory.travelComplete) targetFlag.memory.travelTime++ // 增量
 
                 creep.farMoveTo(targetFlag.pos, 1)
 
@@ -624,7 +617,7 @@ const roles: {
             if (targetFlag.memory.sourceId) target = Game.getObjectById(targetFlag.memory.sourceId)
             else {
                 target = targetFlag.pos.lookFor(LOOK_DEPOSITS)[0]
-                
+
                 // 找到了就赋值并缓存
                 if (target) targetFlag.memory.sourceId = target.id
                 // 找不到就失去了存在的意义
@@ -656,7 +649,7 @@ const roles: {
                 creep.log(`[${creep.name}] 找不到存放建筑`, 'yellow')
                 return false
             }
-            
+
             // 转移并检测返回值
             const result = creep.transfer(room.terminal, creep.memory.depositType)
             if (result === OK || result === ERR_NOT_ENOUGH_RESOURCES) {
@@ -687,7 +680,7 @@ const roles: {
      * PowerBank 攻击单位
      * 移动并攻击 powerBank, 请在 8 级时生成
      * @see doc "../doc/PB 采集小组设计案"
-     * 
+     *
      * @property {} sourceFlagName 旗帜名，要插在 powerBank 上
      */
     pbAttacker: (data: pbAttackerData): ICreepConfig => ({
@@ -751,8 +744,7 @@ const roles: {
                 // 发现废墟，pb 成功摧毁，进入下个阶段
                 if (targetFlag.pos.lookFor(LOOK_RUINS).length > 0) {
                     targetFlag.memory.state = PB_HARVESTE_STATE.TRANSFER
-                }
-                else {
+                } else {
                     // 未能成功在 pb 消失前将其摧毁，移除采集小组
                     delete Memory.flags[targetFlag.name]
                     targetFlag.remove()
@@ -761,7 +753,7 @@ const roles: {
                     const roomMemory = Memory.rooms[data.spawnRoom]
                     if (roomMemory && roomMemory.observer) roomMemory.observer.pbNumber -= 1
                 }
-                
+
                 // 移除采集小组
                 removeSelfGroup(creep, data.healerCreepName, data.spawnRoom)
                 return false
@@ -789,10 +781,9 @@ const roles: {
                     // 设置为新状态
                     targetFlag.memory.state = PB_HARVESTE_STATE.PREPARE
                 }
-            }
-            else if (attackResult === ERR_NOT_IN_RANGE) creep.moveTo(powerbank)
+            } else if (attackResult === ERR_NOT_IN_RANGE) creep.moveTo(powerbank)
         },
-        bodys: calcBodyPart({ [ATTACK]: 20, [MOVE]: 20 })
+        bodys: calcBodyPart({[ATTACK]: 20, [MOVE]: 20})
     }),
 
     /**
@@ -800,7 +791,7 @@ const roles: {
      * 移动并治疗 pbAttacker, 请在 8 级时生成
      * @see doc "../doc/PB 采集小组设计案"
      * @todo 治疗的时候应该禁止对穿的，现在没禁止有可能出现两个 healer 选在一个位置疯狂对穿。但是机率不大，不写了。
-     * 
+     *
      * @property {} creepName 要治疗的 pbAttacker 的名字
      */
     pbHealer: (data: HealUnitData): ICreepConfig => ({
@@ -816,14 +807,14 @@ const roles: {
             if (creep.pos.isNearTo(targetCreep)) creep.heal(targetCreep)
             else creep.farMoveTo(targetCreep.pos)
         },
-        bodys: calcBodyPart({ [HEAL]: 25, [MOVE]: 25 })
+        bodys: calcBodyPart({[HEAL]: 25, [MOVE]: 25})
     }),
 
     /**
      * PowerBank 运输单位
      * 搬运 PowerBank Ruin 中的 power, 请在 8 级时生成
      * @see doc "../doc/PB 采集小组设计案"
-     * 
+     *
      * @param spawnRoom 出生房间名称
      * @param sourceFlagName 旗帜的名称 (插在 PowerBank 上)
      */
@@ -880,7 +871,7 @@ const roles: {
                 creep.log(`找不到 terminal`, 'yellow')
                 return false
             }
-            
+
             // 存放资源
             const result = creep.transfer(room.terminal, RESOURCE_POWER)
             // 存好了就直接自杀并移除旗帜
@@ -898,18 +889,17 @@ const roles: {
 
                 // 通知 terminal 进行 power 平衡
                 room.terminal.balancePower()
-                
+
                 return true
-            }
-            else if (result === ERR_NOT_IN_RANGE) creep.farMoveTo(room.terminal.pos)
+            } else if (result === ERR_NOT_IN_RANGE) creep.farMoveTo(room.terminal.pos)
         },
-        bodys: calcBodyPart({ [CARRY]: 32, [MOVE]: 16 })
+        bodys: calcBodyPart({[CARRY]: 32, [MOVE]: 16})
     }),
 
     /**
      * 移动测试单位
      * 一直朝着旗帜移动
-     * 
+     *
      * @param spawnRoom 出生房间名称
      * @param flagName 目标旗帜名称
      */
@@ -927,19 +917,19 @@ const roles: {
 
             return false
         },
-        bodys: [ MOVE ]
+        bodys: [MOVE]
     }),
 }
 
 /**
  * pbAttacker 移除自身采集小组并自杀的封装
- * 
+ *
  * @param creep pbAttacker
  * @param healerName 治疗单位名称
  * @param spawnRoomName 出生房间名
  * @returns 是否移除成功
  */
-const removeSelfGroup = function(creep: Creep, healerName: string, spawnRoomName: string): boolean {
+const removeSelfGroup = function (creep: Creep, healerName: string, spawnRoomName: string): boolean {
     // 移除自己和 heal 的配置项
     const spawnRoom = Game.rooms[spawnRoomName]
     if (!spawnRoom) {

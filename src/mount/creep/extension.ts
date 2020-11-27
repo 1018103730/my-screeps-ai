@@ -1,5 +1,5 @@
-import { getOppositeDirection, assignPrototype } from 'utils'
-import { repairSetting, minWallHits } from 'setting'
+import {getOppositeDirection, assignPrototype} from 'utils'
+import {repairSetting, minWallHits} from 'setting'
 import roles from 'role'
 
 // creep 原型拓展
@@ -10,7 +10,7 @@ export default class CreepExtension extends Creep {
     public work(): void {
         // 检查 creep 内存中的角色是否存在
         if (!(this.memory.role in roles)) {
-            this.log(`找不到对应的 creepConfig`, 'yellow')
+            // this.log(`找不到对应的 creepConfig`, 'yellow')
             this.say('我凉了！')
             return
         }
@@ -39,7 +39,7 @@ export default class CreepExtension extends Creep {
         }
 
         //　如果执行了 prepare 还没有 ready，就返回等下个 tick 再执行
-        if (!this.memory.ready) return 
+        if (!this.memory.ready) return
 
         // 获取是否工作，没有 source 的话直接执行 target
         const working = creepConfig.source ? this.memory.working : true
@@ -49,8 +49,7 @@ export default class CreepExtension extends Creep {
         // 阶段执行结果返回 true 就说明需要更换 working 状态
         if (working) {
             if (creepConfig.target && creepConfig.target(this)) stateChange = true
-        }
-        else {
+        } else {
             if (creepConfig.source && creepConfig.source(this)) stateChange = true
         }
 
@@ -66,7 +65,7 @@ export default class CreepExtension extends Creep {
 
     /**
      * 发送日志
-     * 
+     *
      * @param content 日志内容
      * @param instanceName 发送日志的实例名
      * @param color 日志前缀颜色
@@ -79,7 +78,7 @@ export default class CreepExtension extends Creep {
     /**
      * 检查是否有敌人
      * 注意! 该方法只能检查有视野的房间
-     * 
+     *
      * @returns {boolean} 是否有敌人
      */
     public checkEnemy(): boolean {
@@ -95,8 +94,7 @@ export default class CreepExtension extends Creep {
             // 取消待命状态
             this.memory.isStanBy = false
             return true
-        }
-        else return false
+        } else return false
     }
 
     /**
@@ -145,13 +143,13 @@ export default class CreepExtension extends Creep {
 
     /**
      * 远程寻路
-     * 
+     *
      * @param target 目标位置
      * @param range 搜索范围 默认为 1
      * @returns PathFinder.search 的返回值
      */
     public findPath(target: RoomPosition, range: number): string | null {
-        if (!this.memory.farMove) this.memory.farMove = { }
+        if (!this.memory.farMove) this.memory.farMove = {}
         this.memory.farMove.index = 0
 
         // 先查询下缓存里有没有值
@@ -161,8 +159,8 @@ export default class CreepExtension extends Creep {
         if (route) {
             return route
         }
-        
-        const result = PathFinder.search(this.pos, { pos: target, range }, {
+
+        const result = PathFinder.search(this.pos, {pos: target, range}, {
             plainCost: 2,
             swampCost: 10,
             maxOps: 4000,
@@ -182,7 +180,7 @@ export default class CreepExtension extends Creep {
                     }
                     // 不能穿过无法行走的建筑
                     else if (struct.structureType !== STRUCTURE_CONTAINER &&
-                        (struct.structureType !== STRUCTURE_RAMPART || !struct.my) 
+                        (struct.structureType !== STRUCTURE_RAMPART || !struct.my)
                     ) costs.set(struct.pos.x, struct.pos.y, 0xff)
                 })
 
@@ -217,13 +215,13 @@ export default class CreepExtension extends Creep {
         route = this.serializeFarPath(result.path)
         // 保存到全局缓存
         if (!result.incomplete) global.routeCache[routeKey] = route
-        
+
         return route
     }
 
     /**
      * 压缩 PathFinder 返回的路径数组
-     * 
+     *
      * @param positions 房间位置对象数组，必须连续
      * @returns 压缩好的路径
      */
@@ -245,7 +243,7 @@ export default class CreepExtension extends Creep {
     /**
      * 使用缓存进行移动
      * 该方法会对 creep.memory.farMove 产生影响
-     * 
+     *
      * @returns ERR_NO_PATH 找不到缓存
      * @returns ERR_INVALID_TARGET 撞墙上了
      */
@@ -262,26 +260,26 @@ export default class CreepExtension extends Creep {
         // 获取方向，进行移动
         const direction = <DirectionConstant>Number(this.memory.farMove.path[index])
         const goResult = this.move(direction)
-        
+
         // 移动成功，更新下次移动索引
-        if (goResult == OK) this.memory.farMove.index ++
-        
+        if (goResult == OK) this.memory.farMove.index++
+
         return goResult
     }
 
     /**
      * 向指定方向移动
-     * 
+     *
      * @param target 要移动到的方向
      * @returns ERR_INVALID_TARGET 发生撞停
      */
     public move(target: DirectionConstant | Creep): CreepMoveReturnCode | ERR_INVALID_TARGET | ERR_NOT_IN_RANGE {
         // const baseCost = Game.cpu.getUsed()
         // 进行移动，并分析其移动结果，OK 时才有可能发生撞停
-        const moveResult = this._move(target) 
+        const moveResult = this._move(target)
 
         if (moveResult != OK || target instanceof Creep) return moveResult
-        
+
         const currentPos = `${this.pos.x}/${this.pos.y}`
         // 如果和之前位置重复了就分析撞上了啥
         if (this.memory.prePos && currentPos == this.memory.prePos) {
@@ -303,7 +301,7 @@ export default class CreepExtension extends Creep {
 
     /**
      * 无视 Creep 的寻路
-     * 
+     *
      * @param target 要移动到的位置
      */
     public goTo(target: RoomPosition): CreepMoveReturnCode | ERR_NO_PATH | ERR_INVALID_TARGET | ERR_NOT_FOUND {
@@ -318,12 +316,12 @@ export default class CreepExtension extends Creep {
                     for (const creepName in restrictedPos) {
                         // 自己注册的禁止通行点位自己可以走
                         if (creepName === this.name) continue
-                        
+
                         const pos = this.room.unserializePos(restrictedPos[creepName])
                         costMatrix.set(pos.x, pos.y, 0xff)
                     }
                 }
-                
+
                 return costMatrix
             }
         })
@@ -334,12 +332,12 @@ export default class CreepExtension extends Creep {
     /**
      * 远程寻路
      * 包含对穿功能，会自动躲避 bypass 中配置的绕过房间
-     * 
+     *
      * @param target 要移动到的位置对象
      * @param range 允许移动到目标周围的范围
      */
     public farMoveTo(target: RoomPosition, range: number = 0): CreepMoveReturnCode | ERR_NO_PATH | ERR_NOT_IN_RANGE | ERR_INVALID_TARGET {
-        if (this.memory.farMove == undefined) this.memory.farMove = { }
+        if (this.memory.farMove == undefined) this.memory.farMove = {}
         // 确认目标有没有变化, 变化了则重新规划路线
         const targetPosTag = this.room.serializePos(target)
         if (targetPosTag !== this.memory.farMove.targetPos) {
@@ -356,7 +354,7 @@ export default class CreepExtension extends Creep {
             delete this.memory.farMove.path
             return OK
         }
-        
+
         // 使用缓存进行移动
         const goResult = this.goByCache()
 
@@ -372,7 +370,7 @@ export default class CreepExtension extends Creep {
 
     /**
      * 向指定方向发起对穿
-     * 
+     *
      * @param direction 要进行对穿的方向
      * @returns OK 成功对穿
      * @returns ERR_BUSY 对方拒绝对穿
@@ -389,7 +387,7 @@ export default class CreepExtension extends Creep {
         this.say(`👉`)
         // 如果前面的 creep 同意对穿了，自己就朝前移动
         if (fontCreep.requireCross(getOppositeDirection(direction))) this._move(direction)
-        else return 
+        else return
 
         return OK
     }
@@ -397,7 +395,7 @@ export default class CreepExtension extends Creep {
     /**
      * 请求对穿
      * 自己内存中 standed 为 true 时将拒绝对穿
-     * 
+     *
      * @param direction 请求该 creep 进行对穿
      */
     public requireCross(direction: DirectionConstant): Boolean {
@@ -426,8 +424,7 @@ export default class CreepExtension extends Creep {
         if (result === OK && !this.memory.standed) {
             this.memory.standed = true
             this.room.addRestrictedPos(this.name, this.pos)
-        }
-        else if (result == ERR_NOT_IN_RANGE) {
+        } else if (result == ERR_NOT_IN_RANGE) {
             this.goTo(this.room.controller.pos)
         }
         return result
@@ -463,21 +460,20 @@ export default class CreepExtension extends Creep {
                 }
 
                 // 获取下个建筑目标
-                target = this._updateConstructionSite()   
+                target = this._updateConstructionSite()
             }
         }
         // 没缓存就直接获取
         else target = this._updateConstructionSite()
         if (!target) return ERR_NOT_FOUND
-        
+
         // 建设
         const buildResult = this.build(target)
         if (buildResult == OK) {
             // 如果修好的是 rempart 的话就移除墙壁缓存
             // 让维修单位可以快速发现新 rempart
             if (target.structureType == STRUCTURE_RAMPART) delete this.room.memory.focusWall
-        }
-        else if (buildResult == ERR_NOT_IN_RANGE) this.goTo(target.pos)
+        } else if (buildResult == ERR_NOT_IN_RANGE) this.goTo(target.pos)
         return buildResult
     }
 
@@ -492,8 +488,7 @@ export default class CreepExtension extends Creep {
         if (wall.hits < minWallHits) {
             const result = this.repair(wall)
             if (result == ERR_NOT_IN_RANGE) this.goTo(wall.pos)
-        }
-        else delete this.memory.fillWallId
+        } else delete this.memory.fillWallId
 
         return OK
     }
@@ -501,7 +496,7 @@ export default class CreepExtension extends Creep {
     /**
      * 获取下一个建筑工地
      * 有的话将其 id 写入自己 memory.constructionSiteId
-     * 
+     *
      * @returns 下一个建筑工地，或者 null
      */
     private _updateConstructionSite(): ConstructionSite | undefined {
@@ -509,7 +504,7 @@ export default class CreepExtension extends Creep {
         if (targets.length > 0) {
             let target: ConstructionSite
             // 优先建造 spawn，然后是 extension，想添加新的优先级就在下面的数组里追加即可
-            for (const type of [ STRUCTURE_SPAWN, STRUCTURE_EXTENSION ]) {
+            for (const type of [STRUCTURE_SPAWN, STRUCTURE_EXTENSION]) {
                 target = targets.find(cs => cs.structureType === type)
                 if (target) break
             }
@@ -519,10 +514,9 @@ export default class CreepExtension extends Creep {
             // 缓存工地信息，用于统一建造并在之后验证是否完成建造
             this.room.memory.constructionSiteId = target.id
             this.room.memory.constructionSiteType = target.structureType
-            this.room.memory.constructionSitePos = [ target.pos.x, target.pos.y ]
+            this.room.memory.constructionSitePos = [target.pos.x, target.pos.y]
             return target
-        }
-        else {
+        } else {
             delete this.room.memory.constructionSiteId
             delete this.room.memory.constructionSiteType
             delete this.room.memory.constructionSitePos
@@ -541,7 +535,7 @@ export default class CreepExtension extends Creep {
         if (!focusWall || (focusWall && Game.time >= focusWall.endTime)) {
             // 获取所有没填满的墙
             const walls = <(StructureWall | StructureRampart)[]>this.room.find(FIND_STRUCTURES, {
-                filter: s => (s.hits < s.hitsMax) && 
+                filter: s => (s.hits < s.hitsMax) &&
                     (s.structureType == STRUCTURE_WALL || s.structureType == STRUCTURE_RAMPART)
             })
             // 没有目标就啥都不干
@@ -572,11 +566,10 @@ export default class CreepExtension extends Creep {
                 this.memory.standed = true
                 this.room.addRestrictedPos(this.name, this.pos)
             }
-            
+
             // 离墙三格远可能正好把路堵上，所以要走进一点
             if (!targetWall.pos.inRangeTo(this.pos, 2)) this.goTo(targetWall.pos)
-        }
-        else if (result == ERR_NOT_IN_RANGE) {
+        } else if (result == ERR_NOT_IN_RANGE) {
             this.goTo(targetWall.pos)
         }
         return true
@@ -584,7 +577,7 @@ export default class CreepExtension extends Creep {
 
     /**
      * 从目标结构获取能量
-     * 
+     *
      * @param target 提供能量的结构
      * @returns 执行 harvest 或 withdraw 后的返回值
      */
@@ -614,7 +607,7 @@ export default class CreepExtension extends Creep {
 
     /**
      * 转移资源到结构
-     * 
+     *
      * @param target 要转移到的目标
      * @param RESOURCE 要转移的资源类型
      */
@@ -627,7 +620,7 @@ export default class CreepExtension extends Creep {
     /**
      * 进攻
      * 向指定旗帜旗帜发起进攻
-     * 
+     *
      * @param flagName 要进攻的旗帜名称
      */
     public attackFlag(flagName: string): boolean {
@@ -641,7 +634,7 @@ export default class CreepExtension extends Creep {
             this.farMoveTo(attackFlag.pos)
             return true
         }
-        
+
         // 如果到旗帜所在房间了
         // 优先攻击 creep
         let target: Creep | PowerCreep | Structure | Flag
@@ -653,10 +646,9 @@ export default class CreepExtension extends Creep {
             if (structures.length === 0) {
                 this.say('干谁？')
                 target = attackFlag
-            }
-            else target = structures[0]
+            } else target = structures[0]
         }
-        
+
         this.moveTo(target)
         this.attack(target as Creep)
 
@@ -666,7 +658,7 @@ export default class CreepExtension extends Creep {
     /**
      * 使用 range_attack 进攻旗帜
      * 整合了 heal 逻辑
-     * 
+     *
      * @param flagName 要进攻的旗帜名称
      */
     public rangedAttackFlag(flagName: string): boolean {
@@ -684,7 +676,7 @@ export default class CreepExtension extends Creep {
         // 治疗自己，不会检查自己生命值，一直治疗
         // 因为本 tick 受到的伤害只有在下个 tick 才能发现，两个 tick 累计的伤害足以击穿 tough。
         if (this.getActiveBodyparts(HEAL)) this.heal(this)
- 
+
         // 无脑移动
         this.moveTo(attackFlag)
     }
@@ -696,8 +688,7 @@ export default class CreepExtension extends Creep {
         if (this.memory.massMode) {
             delete this.memory.massMode
             return `MassAttack [OFF]`
-        }
-        else {
+        } else {
             this.memory.massMode = true
             return `MassAttack [ON]`
         }
@@ -706,7 +697,7 @@ export default class CreepExtension extends Creep {
     /**
      * 拆除旗帜下的建筑
      * 向指定旗帜发起进攻并拆除旗帜下的建筑
-     * 
+     *
      * @param flagName 要进攻的旗帜名称
      */
     public dismantleFlag(flagName: string, healerName: string = ''): boolean {
@@ -736,7 +727,7 @@ export default class CreepExtension extends Creep {
      * 是否可以和指定 Creep 一起移动
      * 并不会执行移动，本方法只是进行查询，返回 true 时说明当前两者状态可以一起移动
      * 当目标 creep 不存在时本方法将永远返回 false
-     * 
+     *
      * @param creep 要一起移动的 creep
      * @returns 可以移动时返回 true，否则返回 false
      */
@@ -769,14 +760,14 @@ export default class CreepExtension extends Creep {
         // 一直朝着目标移动，在友方领土上移动时会无视 creep
         if (!this.room.controller || !this.room.controller.owner || this.room.controller.owner.username !== this.owner.username) this.moveTo(creep)
         else this.goTo(creep.pos)
-        
+
         // 检查自己是不是在骑墙
         if (this.pos.x === 0 || this.pos.x === 49 || this.pos.y === 0 || this.pos.y === 49) {
             const safePosFinder = i => i !== 0 && i !== 49
             // 遍历找到目标 creep 身边的不骑墙位置
             const x = [creep.pos.x - 1, creep.pos.x + 1].find(safePosFinder)
             const y = [creep.pos.y - 1, creep.pos.y + 1].find(safePosFinder)
-            
+
             // 移动到不骑墙位置
             this.moveTo(new RoomPosition(x, y, creep.pos.roomName))
         }
@@ -785,7 +776,7 @@ export default class CreepExtension extends Creep {
     /**
      * 检查旗帜是否存在
      * 不存在的话会在控制台给出提示
-     * 
+     *
      * @param flagName 要检查的 flag 名称
      * @returns 有旗帜就返回旗帜, 否则返回 null
      */
@@ -794,7 +785,6 @@ export default class CreepExtension extends Creep {
         if (!flag) {
             this.log(`场上不存在名称为 [${flagName}] 的旗帜，请新建`)
             return null
-        }
-        else return flag
+        } else return flag
     }
 }

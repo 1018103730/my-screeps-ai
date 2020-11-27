@@ -1,5 +1,5 @@
-import { minerHervesteLimit, ROOM_TRANSFER_TASK } from 'setting'
-import { getRoomTransferTask, transferTaskOperations } from './advanced'
+import {minerHervesteLimit, ROOM_TRANSFER_TASK} from 'setting'
+import {getRoomTransferTask, transferTaskOperations} from './advanced'
 
 /**
  * 初级房间运维角色组
@@ -63,7 +63,7 @@ const roles: {
                 creep.getEngryFrom(Game.getObjectById(data.sourceId))
                 return false
             }
-            
+
             // 获取 prepare 阶段中保存的 targetId
             let target = Game.getObjectById<StructureContainer | Source>(creep.memory.targetId)
 
@@ -150,8 +150,7 @@ const roles: {
                         // 添加 power 任务，设置重新尝试时间
                         creep.room.addPowerTask(PWR_REGEN_SOURCE)
                         creep.memory.regenSource = Game.time + 300
-                    }
-                    else creep.memory.regenSource = Game.time + 1000
+                    } else creep.memory.regenSource = Game.time + 1000
                 }
             }
 
@@ -193,7 +192,7 @@ const roles: {
                 room.memory.mineralCooldown = Game.time + 10000
                 return false
             }
-            
+
             return true
         },
         prepare: creep => {
@@ -218,8 +217,7 @@ const roles: {
             if (harvestResult === OK && !creep.memory.standed) {
                 creep.memory.standed = true
                 creep.room.addRestrictedPos(creep.name, creep.pos)
-            }
-            else if (harvestResult === ERR_NOT_IN_RANGE) creep.goTo(creep.room.mineral.pos)
+            } else if (harvestResult === ERR_NOT_IN_RANGE) creep.goTo(creep.room.mineral.pos)
         },
         target: creep => {
             const target: StructureTerminal = creep.room.terminal
@@ -267,7 +265,7 @@ const roles: {
             if (task && (task.type === ROOM_TRANSFER_TASK.FILL_EXTENSION || task.type === ROOM_TRANSFER_TASK.FILL_TOWER)) {
                 return transferTaskOperations[task.type].target(creep, task)
             }
-            
+
             // 空闲时间会尝试把能量存放到 storage 里
             if (!creep.room.storage) return false
 
@@ -319,7 +317,7 @@ const roles: {
      * 建筑者
      * 只有在有工地时才会生成
      * 从指定结构中获取能量 > 查找建筑工地并建造
-     * 
+     *
      * @param spawnRoom 出生房间名称
      * @param sourceId 要挖的矿 id
      */
@@ -342,9 +340,12 @@ const roles: {
             let source: StructureStorage | StructureTerminal | StructureContainer | Source
             if (!creep.memory.sourceId) {
                 source = creep.room.getAvailableSource()
-                creep.memory.sourceId = source.id
-            }
-            else source = Game.getObjectById(creep.memory.sourceId)
+                if (Memory.creepConfigs[creep.name].data['sourceId'] == source.id) {
+                    creep.memory.sourceId = source.id
+                } else {
+                    creep.memory.sourceId = Memory.creepConfigs[creep.name].data['sourceId'];
+                }
+            } else source = Game.getObjectById(creep.memory.sourceId)
 
             // 之前用的能量来源没能量了就更新来源（如果来源已经是 source 的话就不改了）
             if (creep.getEngryFrom(source) === ERR_NOT_ENOUGH_RESOURCES && source instanceof Structure) delete creep.memory.sourceId
@@ -353,9 +354,11 @@ const roles: {
             // 有新墙就先刷新墙
             if (creep.memory.fillWallId) creep.steadyWall()
             // 没有就建其他工地
-            else if (creep.buildStructure() !== ERR_NOT_FOUND) { }
+            else if (creep.buildStructure() !== ERR_NOT_FOUND) {
+            }
             // 工地也没了就去升级
-            else if (creep.upgrade()) { }
+            else if (creep.upgrade()) {
+            }
 
             if (creep.store.getUsedCapacity() === 0) return true
         },
@@ -366,7 +369,7 @@ const roles: {
      * 维修者
      * 从指定结构中获取能量 > 维修房间内的建筑
      * 注：目前维修者只会在敌人攻城时使用
-     * 
+     *
      * @param spawnRoom 出生房间名称
      * @param sourceId 要挖的矿 id
      */
@@ -384,7 +387,7 @@ const roles: {
             // 先尝试获取焦点墙，有最新的就更新缓存，没有就用缓存中的墙
             if (importantWall) creep.memory.fillWallId = importantWall.id
             else if (creep.memory.fillWallId) importantWall = Game.getObjectById(creep.memory.fillWallId)
-            
+
             // 有焦点墙就优先刷
             if (importantWall) {
                 const actionResult = creep.repair(creep.room._importantWall)
@@ -393,11 +396,10 @@ const roles: {
                         creep.memory.standed = true
                         creep.room.addRestrictedPos(creep.name, creep.pos)
                     }
-                    
+
                     // 离墙三格远可能正好把路堵上，所以要走进一点
                     if (!creep.room._importantWall.pos.inRangeTo(creep.pos, 2)) creep.goTo(creep.room._importantWall.pos)
-                }
-                else if (actionResult == ERR_NOT_IN_RANGE) creep.goTo(creep.room._importantWall.pos)
+                } else if (actionResult == ERR_NOT_IN_RANGE) creep.goTo(creep.room._importantWall.pos)
             }
             // 否则就按原计划维修
             else creep.fillDefenseStructure()

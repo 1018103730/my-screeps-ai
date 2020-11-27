@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="10d41954-e381-4121-a946-d325cd5560c6" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mount/creep/extension.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/mount/creep/extension.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mount/powerCreep/mount.powerCreep.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/mount/powerCreep/mount.powerCreep.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mount/structures/link.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/mount/structures/link.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mount/structures/tower.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/mount/structures/tower.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/role/advanced.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/role/advanced.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/role/base.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/role/base.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/role/remote.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/role/remote.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/setting.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/setting.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils.ts" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1kH6ntMdYyLRgOtiopfvshePoby" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="ts.external.directory.path" value="E:\screeps\my-screeps-ai\node_modules\typescript\lib" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="10d41954-e381-4121-a946-d325cd5560c6" name="Default Changelist" comment="" />
+      <created>1605345340142</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1605345340142</updated>
+      <workItem from="1605345341204" duration="2673000" />
+      <workItem from="1605490986083" duration="186000" />
+      <workItem from="1605512373469" duration="3287000" />
+      <workItem from="1605575430332" duration="2821000" />
+      <workItem from="1605658540444" duration="12099000" />
+      <workItem from="1605746672645" duration="973000" />
+      <workItem from="1605756069514" duration="2155000" />
+      <workItem from="1605765402897" duration="89000" />
+      <workItem from="1606197630054" duration="2021000" />
+      <workItem from="1606207299447" duration="243000" />
+      <workItem from="1606211205302" duration="748000" />
+      <workItem from="1606263171192" duration="2142000" />
+      <workItem from="1606270917237" duration="914000" />
+      <workItem from="1606286438065" duration="1208000" />
+      <workItem from="1606436233796" duration="3670000" />
+      <workItem from="1606443497406" duration="263000" />
+      <workItem from="1606443864256" duration="4461000" />
+      <workItem from="1606452140863" duration="3724000" />
+      <workItem from="1606462239859" duration="18000" />
+      <workItem from="1606462636216" duration="726000" />
+      <workItem from="1606463701872" duration="5420000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1606468503296">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1606468503296" />
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1606463362188">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1606463362188" />
+    <state x="461" y="164" key="SettingsEditor" timestamp="1606443750453">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="461" y="164" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1606443750453" />
+    <state x="663" y="236" width="594" height="568" key="find.popup" timestamp="1606467481568">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="663" y="236" width="594" height="568" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1606467481568" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1606467484028">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1606467484028" />
+  </component>
+</project>
