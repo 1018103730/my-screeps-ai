@@ -36,10 +36,13 @@ export const loop = ErrorMapper.wrapLoop(() => {
     if (Game.shard.name == 'shard2') {
         for (let creep in Game.creeps) {
             let c = Game.creeps[creep]
+            if (c.pos.roomName == Game.flags['door_address1'].pos.roomName) {
+                return
+            }
             if (c.room.name.slice(0, 3) != "W30") {
-                c.moveTo(Game.flags['door_address0']);
+                c.moveTo(Game.flags['door_address0'], {reusePath: 20});
             } else {
-                c.moveTo(Game.flags['door_address1']);
+                c.moveTo(Game.flags['door_address1'], {reusePath: 20});
             }
         }
     }

@@ -1,5 +1,5 @@
-import { creepApi } from 'modules/creepController'
-import { whiteListFilter } from 'utils'
+import {creepApi} from 'modules/creepController'
+import {whiteListFilter} from 'utils'
 
 /**
  * Controller 拓展
@@ -31,7 +31,7 @@ export default class ControllerExtension extends StructureController {
 
     /**
      * 当等级发生变化时的回调函数
-     * 
+     *
      * @param level 当前的等级
      */
     public onLevelChange(level: number): void {
@@ -48,7 +48,7 @@ export default class ControllerExtension extends StructureController {
 
     /**
      * 统计自己的等级信息
-     * 
+     *
      * @returns 为 true 时说明自己等级发生了变化
      */
     private stateScanner(): boolean {
@@ -68,7 +68,7 @@ export default class ControllerExtension extends StructureController {
     /**
      * 检查敌人威胁
      * 检查房间内所有敌人的身体部件情况确认是否可以造成威胁
-     * 
+     *
      * @returns 是否可以造成威胁（是否启用主动防御模式）
      */
     public checkEnemyThreat(): boolean {
