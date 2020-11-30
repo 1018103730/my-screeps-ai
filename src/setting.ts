@@ -62,7 +62,7 @@ export const bodyConfigs: BodyConfigs = {
         {[WORK]: 6, [CARRY]: 6, [MOVE]: 6},
         {[WORK]: 9, [CARRY]: 9, [MOVE]: 9},
         {[WORK]: 17, [CARRY]: 9, [MOVE]: 17},
-        {[WORK]: 12, [CARRY]: 12, [MOVE]: 12}
+        {[WORK]: 15, [CARRY]: 15, [MOVE]: 15}
     ),
 
     /**
@@ -651,7 +651,7 @@ export const terminalChannels: {
 }
 
 // 每个房间最多同时存在多少 upgrader 和 harvester
-export const MAX_UPGRADER_NUM = 12
+export const MAX_UPGRADER_NUM = 14
 export const MAX_HARVESTER_NUM = 4
 
 /**
@@ -666,7 +666,7 @@ export const UPGRADE_WITH_TERMINAL = [
     {energy: 50000, num: 7},
     {energy: 40000, num: 6},
     {energy: 30000, num: 5},
-    {energy: 20000, num: 4}
+    {energy: 20001, num: 4}
 ]
 
 /**

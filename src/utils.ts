@@ -1,16 +1,18 @@
+import {creepApi} from "./modules/creepController";
+
 /**
-* 获取指定方向的相反方向
-* 
-* @param direction 目标方向
-*/
+ * 获取指定方向的相反方向
+ *
+ * @param direction 目标方向
+ */
 export function getOppositeDirection(direction: DirectionConstant): DirectionConstant {
-   return <DirectionConstant>((direction + 3) % 8 + 1)
+    return <DirectionConstant>((direction + 3) % 8 + 1)
 }
 
 /**
  * 根据身体配置生成完成的身体数组
  * cpu 消耗: 0.028 左右
- * 
+ *
  * @param bodySet 身体部件配置对象
  */
 export function calcBodyPart(bodySet: BodySet): BodyPartConstant[] {
@@ -23,7 +25,7 @@ export function calcBodyPart(bodySet: BodySet): BodyPartConstant[] {
 
 /**
  * 执行 Hash Map 中子元素对象的 work 方法
- * 
+ *
  * @param hashMap 游戏对象的 hash map。如 Game.creeps、Game.spawns 等
  * @param showCpu [可选] 传入指定字符串来启动该 Map 的数量统计
  */
@@ -37,7 +39,7 @@ export function doing(...hashMaps: object[]): void {
         })
 
         // 如果有需求的话就显示 cpu 消耗
-        if (Memory.showCost) log(`消耗 ${Game.cpu.getUsed() - startCost}`, [ `[${index}]` ])
+        if (Memory.showCost) log(`消耗 ${Game.cpu.getUsed() - startCost}`, [`[${index}]`])
     })
 }
 
@@ -53,7 +55,7 @@ const colors: { [name in Colors]: string } = {
 
 /**
  * 给指定文本添加颜色
- * 
+ *
  * @param content 要添加颜色的文本
  * @param colorName 要添加的颜色常量字符串
  * @param bolder 是否加粗
@@ -62,7 +64,7 @@ export function colorful(content: string, colorName: Colors = null, bolder: bool
     const colorStyle = colorName ? `color: ${colors[colorName]};` : ''
     const bolderStyle = bolder ? 'font-weight: bolder;' : ''
 
-    return `<text style="${[ colorStyle, bolderStyle ].join(' ')}">${content}</text>`
+    return `<text style="${[colorStyle, bolderStyle].join(' ')}">${content}</text>`
 }
 
 /**
@@ -77,7 +79,7 @@ export function createLink(content: string, url: string, newTab: boolean = true)
 
 /**
  * 给房间内添加跳转链接
- * 
+ *
  * @param roomName 添加调整链接的房间名
  * @returns 打印在控制台上后可以点击跳转的房间名
  */
@@ -87,7 +89,7 @@ export function createRoomLink(roomName): string {
 
 /**
  * 快捷生成单个常量帮助
- * 
+ *
  * @param name 常量简称
  * @param constant 常量名
  */
@@ -101,21 +103,23 @@ export function createConst(name: string, constant: string): string {
  * 详情见 ./doc/Grafana 统计信息.md
  */
 export function stateScanner(): void {
-    if (Game.time % 20) return 
+    if (Game.time % 20) return
 
-    if (!Memory.stats) Memory.stats = { rooms: {} }
-    
+    if (!Memory.stats) Memory.stats = {rooms: {}}
+
     // 统计 GCL / GPL 的升级百分比和等级
     Memory.stats.gcl = (Game.gcl.progress / Game.gcl.progressTotal) * 100,
-    Memory.stats.gclLevel = Game.gcl.level,
-    Memory.stats.gpl = (Game.gpl.progress / Game.gpl.progressTotal) * 100,
-    Memory.stats.gplLevel = Game.gpl.level,
-    // CPU 的当前使用量
-    Memory.stats.cpu = Game.cpu.getUsed(),
-    // bucket 当前剩余量
-    Memory.stats.bucket = Game.cpu.bucket
+        Memory.stats.gclLevel = Game.gcl.level,
+        Memory.stats.gpl = (Game.gpl.progress / Game.gpl.progressTotal) * 100,
+        Memory.stats.gplLevel = Game.gpl.level,
+        // CPU 的当前使用量
+        Memory.stats.cpu = Game.cpu.getUsed(),
+        // bucket 当前剩余量
+        Memory.stats.bucket = Game.cpu.bucket
     // 统计剩余钱数
     Memory.stats.credit = Game.market.credits
+    // 统计剩余pixel
+    Memory.stats['pixel'] = Game.resources.pixel
 }
 
 /**
@@ -133,7 +137,7 @@ export function globalSay(words: string[]) {
  * 移除过期的 flag 内存
  */
 export function clearFlag(): string {
-    let logs = [ '已清理过期旗帜:' ]
+    let logs = ['已清理过期旗帜:']
     for (const flagName in Memory.flags) {
         if (!Game.flags[flagName]) {
             delete Memory.flags[flagName]
@@ -146,7 +150,7 @@ export function clearFlag(): string {
 
 /**
  * 判断是否为白名单玩家
- * 
+ *
  * @param creep 要检查的 creep
  * @returns 是否为白名单玩家
  */
@@ -163,7 +167,7 @@ export function whiteListFilter(creep) {
 
 /**
  * 生成 pixel
- * 
+ *
  * @param cpuLimit 当 bucket 中的 cpu 到多少时才生成 pixel
  */
 export function generatePixel(cpuLimit: number = 9000): void {
@@ -172,7 +176,7 @@ export function generatePixel(cpuLimit: number = 9000): void {
 
 /**
  * 全局日志
- * 
+ *
  * @param content 日志内容
  * @param prefixes 前缀中包含的内容
  * @param color 日志前缀颜色
@@ -194,7 +198,7 @@ export function log(content: string, prefixes: string[] = [], color: Colors = nu
 
 /**
  * 创建发送函数到控制台的调用链
- * 
+ *
  * @see https://screeps.slack.com/files/U5GS01HT8/FJGTY8VQE/console_button.php
  * @param command 要在游戏控制台执行的方法
  */
@@ -244,7 +248,7 @@ export const createElement = {
      * @param detail 创建需要的信息
      */
     select(detail: SelectDetail): string {
-        const parts = [ `${detail.label || ''} <select name="${detail.name}">` ]
+        const parts = [`${detail.label || ''} <select name="${detail.name}">`]
         parts.push(...detail.options.map(option => ` <option value="${option.value}">${option.label}</option>`))
         parts.push(`</select>`)
 
@@ -275,11 +279,11 @@ export const createElement = {
             this.customStyle(),
             `<form name='${formName}'>`,
         ]
-        
+
         // 添加表单内容
         parts.push(...details.map(detail => {
             switch (detail.type) {
-                case 'input': 
+                case 'input':
                     return this.input(detail) + '    '
                 case 'select':
                     return this.select(detail) + '    '
@@ -321,7 +325,7 @@ export const getName = {
  * @param obj1 要挂载到的对象
  * @param obj2 要进行挂载的对象
  */
-export const assignPrototype = function(obj1: {[key: string]: any}, obj2: {[key: string]: any}) {
+export const assignPrototype = function (obj1: { [key: string]: any }, obj2: { [key: string]: any }) {
     Object.getOwnPropertyNames(obj2.prototype).forEach(key => {
         if (key.includes('Getter')) {
             Object.defineProperty(obj1.prototype, key.split('Getter')[0], {
@@ -329,7 +333,6 @@ export const assignPrototype = function(obj1: {[key: string]: any}, obj2: {[key:
                 enumerable: false,
                 configurable: true
             })
-        }
-        else obj1.prototype[key] = obj2.prototype[key]
+        } else obj1.prototype[key] = obj2.prototype[key]
     })
 }

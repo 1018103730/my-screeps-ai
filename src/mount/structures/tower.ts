@@ -107,10 +107,10 @@ export default class TowerExtension extends StructureTower {
             // this.log('正在准备 boost 主动防御')
             const result = this.room.startWar('DEFENSE')
 
-            // if (result === ERR_NOT_FOUND)
-            //     this.log(`未找到名为 [${this.room.name}Boost] 的旗帜，请保证其周围有足够数量的 lab（至少 5 个）`, 'yellow')
-            // else if (result === ERR_INVALID_TARGET)
-            //     this.log('旗帜周围的 lab 数量不足，请移动旗帜位置', 'yellow')
+            if (result === ERR_NOT_FOUND)
+                this.log(`未找到名为 [${this.room.name}Boost] 的旗帜，请保证其周围有足够数量的 lab（至少 5 个）`, 'yellow')
+            else if (result === ERR_INVALID_TARGET)
+                this.log('旗帜周围的 lab 数量不足，请移动旗帜位置', 'yellow')
 
             return
         }

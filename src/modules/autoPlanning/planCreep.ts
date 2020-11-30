@@ -133,9 +133,8 @@ const releasePlans: CreepReleasePlans = {
                 // if (ticksToDowngrade >= 100000) return true
                 //
                 // // 快掉级了就发布一个
-                // addUpgrader(room.name, [ 0 ], upgradeLinkId)
+                addUpgrader(room.name, [0], upgradeLinkId)
 
-                addUpgrader(room.name, [0], room.terminal.id)
                 return true
             },
 
