@@ -427,5 +427,22 @@ const PowerTasks: IPowerTaskConfigs = {
                 return OK
             }
         }
+    },
+    //强化power合成
+    [PWR_OPERATE_POWER]: {
+        source: creep => creep.getOps(POWER_INFO[PWR_OPERATE_POWER].ops),
+        target: creep => {
+            if (creep.store[RESOURCE_OPS] < POWER_INFO[PWR_OPERATE_POWER].ops) return ERR_NOT_ENOUGH_RESOURCES
+
+            let address = creep.room.powerSpawn
+
+            const actionResult = creep.usePower(PWR_OPERATE_POWER, address)
+            if (actionResult === OK) return OK
+            else if (actionResult === ERR_NOT_IN_RANGE) creep.goTo(address.pos)
+            else {
+                creep.log(`[${creep.room.name} ${creep.name}] 执行 PWR_OPERATE_POWER target 时出错，错误码 ${actionResult}`, 'red')
+                return OK
+            }
+        }
     }
 }

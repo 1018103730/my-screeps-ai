@@ -2,14 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="10d41954-e381-4121-a946-d325cd5560c6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/modules/myTools.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frame.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/autoPlanning/planCreep.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/autoPlanning/planCreep.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mount/structures/tower.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/mount/structures/tower.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/myTools.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/myTools.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mount/creep/extension.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/mount/creep/extension.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mount/powerCreep/mount.powerCreep.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/mount/powerCreep/mount.powerCreep.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mount/structures/terminal/extension.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/mount/structures/terminal/extension.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/role/advanced.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/role/advanced.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/role/remote.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/role/remote.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/setting.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/setting.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,6 +34,11 @@
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
     <property name="ts.external.directory.path" value="E:\screeps\my-screeps-ai\node_modules\typescript\lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\screeps\my-screeps-ai\src\modules" />
+    </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -67,7 +74,22 @@
       <workItem from="1606606434294" duration="11596000" />
       <workItem from="1606624956489" duration="14585000" />
       <workItem from="1606695566839" duration="7014000" />
-      <workItem from="1606712067444" duration="5160000" />
+      <workItem from="1606712067444" duration="10502000" />
+      <workItem from="1606865863734" duration="7923000" />
+      <workItem from="1606874675443" duration="10401000" />
+      <workItem from="1606953551865" duration="3778000" />
+      <workItem from="1606963667615" duration="6339000" />
+      <workItem from="1606980702787" duration="7636000" />
+      <workItem from="1607040582615" duration="3063000" />
+      <workItem from="1607048106515" duration="5215000" />
+      <workItem from="1607073633536" duration="749000" />
+      <workItem from="1607299732807" duration="1355000" />
+      <workItem from="1607325931482" duration="1714000" />
+      <workItem from="1607387358811" duration="5902000" />
+      <workItem from="1607403743081" duration="2584000" />
+      <workItem from="1607408466652" duration="1408000" />
+      <workItem from="1607410210836" duration="5391000" />
+      <workItem from="1607416188145" duration="374000" />
     </task>
     <servers />
   </component>
@@ -75,29 +97,29 @@
     <option name="version" value="3" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1606468503296">
+    <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1607388814452">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1606468503296" />
-    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1606463362188">
+    <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1607388814452" />
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1607303028115">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1606463362188" />
+    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1607303028115" />
     <state x="461" y="164" key="SettingsEditor" timestamp="1606443750453">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="164" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1606443750453" />
-    <state x="853" y="340" width="594" height="568" key="find.popup" timestamp="1606719039825">
+    <state x="648" y="103" width="594" height="835" key="find.popup" timestamp="1607414880941">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="853" y="340" width="594" height="568" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1606719039825" />
+    <state x="648" y="103" width="594" height="835" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1607414880941" />
     <state x="616" y="244" key="run.anything.popup" timestamp="1606617684390">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="616" y="244" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1606617684390" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1606715544040">
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1607411953417">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1606715544040" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1607411953417" />
   </component>
 </project>

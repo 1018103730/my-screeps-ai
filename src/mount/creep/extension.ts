@@ -163,7 +163,7 @@ export default class CreepExtension extends Creep {
         const result = PathFinder.search(this.pos, {pos: target, range}, {
             plainCost: 2,
             swampCost: 10,
-            maxOps: 4000,
+            maxOps:20000,
             roomCallback: roomName => {
                 // 强调了不许走就不走
                 if (Memory.bypassRooms && Memory.bypassRooms.includes(roomName)) return false
@@ -504,7 +504,7 @@ export default class CreepExtension extends Creep {
         if (targets.length > 0) {
             let target: ConstructionSite
             // 优先建造 spawn，然后是 extension，想添加新的优先级就在下面的数组里追加即可
-            for (const type of [STRUCTURE_SPAWN, STRUCTURE_EXTENSION]) {
+            for (const type of [STRUCTURE_SPAWN, STRUCTURE_TERMINAL, STRUCTURE_EXTENSION]) {
                 target = targets.find(cs => cs.structureType === type)
                 if (target) break
             }

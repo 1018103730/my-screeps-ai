@@ -3,7 +3,7 @@ import {doing, stateScanner, generatePixel} from './utils'
 import creepNumberListener, {creepApi} from './modules/creepController'
 import {ErrorMapper} from './modules/errorMapper'
 import {DEFAULT_FLAG_NAME} from "./setting";
-import {buildUpdaterRoad, sharder} from './modules/myTools'
+import {buildUpdaterRoad, claimNewRoom, dispatchGarrison, sharder, startOp} from './modules/myTools'
 
 export const loop = ErrorMapper.wrapLoop(() => {
     if (Game.shard.name == 'shard3') {
@@ -20,8 +20,17 @@ export const loop = ErrorMapper.wrapLoop(() => {
         // 统计全局资源使用
         stateScanner()
 
-        //造路机
+        // 造路机
         buildUpdaterRoad();
+
+        // claimer
+        // claimNewRoom("W17S16", "W17S17");
+
+        //驻军
+        dispatchGarrison()
+
+        //增强power能力
+        startOp()
     }
 
     //位面漫步者

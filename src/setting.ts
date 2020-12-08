@@ -390,7 +390,7 @@ export const FACTORY_LOCK_AMOUNT = {
  */
 export const powerSettings = {
     // 当前房间 storage 内存量低于limit时自动停止 process
-    processEnergyLimit: 500000
+    processEnergyLimit: 100000
 }
 
 /**
@@ -666,16 +666,16 @@ export const UPGRADE_WITH_TERMINAL = [
     {energy: 50000, num: 7},
     {energy: 40000, num: 6},
     {energy: 30000, num: 5},
-    {energy: 20001, num: 4}
+    {energy: 20000, num: 4}
 ]
 
 /**
  * storage 中的能量和对应发布的 upgrader 数量
  */
 export const UPGRADE_WITH_STORAGE = [
-    {energy: 700000, num: 4},
-    {energy: 500000, num: 3},
-    {energy: 100000, num: 2}
+    {energy: 700000, num: 5},
+    {energy: 500000, num: 4},
+    {energy: 100000, num: 3}
 ]
 
 // 用于维持房间能量正常运转的重要角色

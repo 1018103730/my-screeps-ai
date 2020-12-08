@@ -248,7 +248,7 @@ export const transferTaskOperations: { [taskType: string]: transferTaskOperation
             creep.getEngryFrom(sourceId ? Game.getObjectById(sourceId) : creep.room.storage)
         },
         target: (creep, task: IFillTower) => {
-            if (creep.room.controller.level <= 5) {
+            if (creep.room.controller.level <= 6 && creep.room.energyAvailable <= 1000) {
                 creep.room.deleteCurrentRoomTransferTask()
                 return true
             }
@@ -496,10 +496,10 @@ export const transferTaskOperations: { [taskType: string]: transferTaskOperation
 
             // 获取资源存储建筑
             let sourceStructure: StructureStorage | StructureTerminal
-            // if (task.resourceType == RESOURCE_ENERGY) sourceStructure = sourceId ? Game.getObjectById(sourceId) : creep.room.storage
-            // else sourceStructure = creep.room.terminal
+            if (task.resourceType == RESOURCE_ENERGY) sourceStructure = sourceId ? Game.getObjectById(sourceId) : creep.room.storage
+            else sourceStructure = creep.room.terminal
 
-            sourceStructure = creep.room.terminal
+            // sourceStructure = creep.room.terminal
             // 获取 powerspawn
             const powerspawn: StructurePowerSpawn = Game.getObjectById(task.id)
 
