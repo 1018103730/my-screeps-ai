@@ -81,3 +81,12 @@ for (let c in Memory.creepConfigs) {
 for (let r in global.resourcePrice) {
     console.log(r, global.resourcePrice[r])
 }
+
+// 根据工地批量生成建造者
+let s = new Set();
+for(let c in Game.constructionSites){
+    s.add(Game.constructionSites[c].room.name)
+}
+for(let r of s){
+    Game.rooms[r].releaseCreep('builder')
+}

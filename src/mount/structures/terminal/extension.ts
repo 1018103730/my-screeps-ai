@@ -1,8 +1,8 @@
-import { DEAL_RATIO, terminalModes, terminalChannels } from 'setting'
+import {DEAL_RATIO, terminalModes, terminalChannels} from 'setting'
 
 /**
  * Terminal 原型拓展
- * 
+ *
  * 监听房间中的共享任务和资源监听任务
  * 共享任务负责向其他房间发送资源，会优先执行
  * 资源监听由玩家自行发布，包括资源数量、来源和数量，在条件不满足（数量低于限制等）时会尝试从来源（market等）获取该资源
@@ -11,7 +11,7 @@ export default class TerminalExtension extends StructureTerminal {
     public work(): void {
         // 没有冷却好或者不到 10 tick 就跳过
         if (this.cooldown !== 0 || Game.time % 10) return
-        
+
         // 资源统计
         this.stateScanner()
 
@@ -21,7 +21,7 @@ export default class TerminalExtension extends StructureTerminal {
         // 执行终端工作
         const resource = this.getResourceByIndex()
         // 没有配置监听任务的话就跳过
-        if (!resource) return 
+        if (!resource) return
 
         // 只有 dealOrder 下命令了才能继续执行 resourceListener
         if (this.dealOrder(resource)) this.resourceListener(resource)
@@ -54,7 +54,7 @@ export default class TerminalExtension extends StructureTerminal {
      * 平衡 power
      * 将自己存储的多余 power 转移至其他房间
      * 只会平衡到执行了 powerSpawn.on() 的房间
-     * 
+     *
      * @returns ERR_NOT_ENOUGH_RESOURCES power 的资源不足
      * @returns ERR_NAME_EXISTS 房间内已经存在 shareTask
      * @returns ERR_NOT_FOUND 未找到有效的目标房间
@@ -69,14 +69,14 @@ export default class TerminalExtension extends StructureTerminal {
         if (this.store[RESOURCE_POWER] < SHARE_LIMIE) return ERR_NOT_ENOUGH_RESOURCES
 
         if (!Memory.psRooms || Memory.psRooms.length <= 0) return ERR_NOT_FOUND
-        
+
         // 找到 power 数量最少的已启用 ps 房间的信息
         const targetRoomInfo = Memory.psRooms
             // 统计出所有目标房间的 power 数量
             .map(roomName => {
                 const room = Game.rooms[roomName]
                 // 无法正常接收的不参与计算
-                if (!room || !room.terminal) return { room: room.name, number: null }
+                if (!room || !room.terminal) return {room: room.name, number: null}
 
                 return {
                     room: room.name,
@@ -90,7 +90,7 @@ export default class TerminalExtension extends StructureTerminal {
                 if (prev.number > next.number) return next
                 else return prev
             })
-        
+
         // 添加共享任务
         if (!targetRoomInfo || !targetRoomInfo.room) return ERR_NOT_FOUND
         this.room.shareAdd(targetRoomInfo.room, RESOURCE_POWER, SHARE_LIMIE)
@@ -104,7 +104,7 @@ export default class TerminalExtension extends StructureTerminal {
     public execShareTask(): void {
         // 获取任务
         const task = this.room.memory.shareTask
-        if (!task) return 
+        if (!task) return
 
         // 如果自己存储的资源数量已经足够了
         if (this.store[task.resourceType] >= task.amount) {
@@ -119,7 +119,7 @@ export default class TerminalExtension extends StructureTerminal {
             if (costCondition) {
                 if (this.getEnergy(cost) == -2) Game.notify(`[${this.room.name}] 终端中央物流添加失败 —— 等待路费, ${cost}`)
                 // this.getEnergy(cost)
-                return 
+                return
             }
 
             // 路费够了就执行转移
@@ -127,12 +127,10 @@ export default class TerminalExtension extends StructureTerminal {
             if (sendResult == OK) {
                 delete this.room.memory.shareTask
                 this.energyCheck()
-            }
-            else if (sendResult == ERR_INVALID_ARGS) {
+            } else if (sendResult == ERR_INVALID_ARGS) {
                 this.log(`共享任务参数异常，无法执行传送，已移除`, 'yellow')
                 delete this.room.memory.shareTask
-            }
-            else this.log(`执行共享任务出错, 错误码：${sendResult}`, 'yellow')
+            } else this.log(`执行共享任务出错, 错误码：${sendResult}`, 'yellow')
         }
         // 如果不足
         else {
@@ -156,7 +154,7 @@ export default class TerminalExtension extends StructureTerminal {
      * 如果 terminal 中能量过多会返还至 storage
      */
     private energyCheck(): void {
-        if (this.store[RESOURCE_ENERGY] >= 80000) this.room.addCenterTask({
+        if (this.store[RESOURCE_ENERGY] >= 30000) this.room.addCenterTask({
             submit: STRUCTURE_TERMINAL,
             source: STRUCTURE_TERMINAL,
             target: STRUCTURE_STORAGE,
@@ -167,7 +165,7 @@ export default class TerminalExtension extends StructureTerminal {
 
     /**
      * 继续处理之前缓存的订单
-     * 
+     *
      * @returns 是否需要继续执行 resourceListener
      */
     public dealOrder(resource: TerminalListenerTask): boolean {
@@ -199,17 +197,16 @@ export default class TerminalExtension extends StructureTerminal {
         const dealResult = Game.market.deal(targetOrder.id, amount, this.room.name)
         // 检查返回值
         if (dealResult === OK) {
-            const crChange = (targetOrder.type == ORDER_BUY ? '+ ' : '- ') + (amount * targetOrder.price).toString() + ' Cr' 
+            const crChange = (targetOrder.type == ORDER_BUY ? '+ ' : '- ') + (amount * targetOrder.price).toString() + ' Cr'
             const introduce = `${(targetOrder.type == ORDER_BUY ? '卖出' : '买入')} ${amount} ${targetOrder.resourceType} 单价: ${targetOrder.price}`
             this.log(`交易成功! ${introduce} ${crChange}`, 'green')
             delete this.room.memory.targetOrderId
 
             this.setNextIndex()
             this.energyCheck()
-            
+
             return false // 把这个改成 true 可以加快交易速度
-        }
-        else if (dealResult === ERR_INVALID_ARGS) delete this.room.memory.targetOrderId
+        } else if (dealResult === ERR_INVALID_ARGS) delete this.room.memory.targetOrderId
         else this.log(`${this.room.name} 处理订单异常 ${dealResult}`, 'yellow')
     }
 
@@ -226,8 +223,7 @@ export default class TerminalExtension extends StructureTerminal {
         // 资源获取监听，低于标准才进行获取
         else if (resource.mod === terminalModes.get) {
             if (resourceAmount >= resource.amount) return this.setNextIndex()
-        }
-        else {
+        } else {
             this.log(`未知监听类型 ${resource.mod}`, 'yellow')
             return this.setNextIndex()
         }
@@ -242,38 +238,38 @@ export default class TerminalExtension extends StructureTerminal {
                     resource.mod === terminalModes.get ? ORDER_BUY : ORDER_SELL,
                     Math.abs(resourceAmount - resource.amount)
                 )
-            break
+                break
 
             // 需要拍单
             case terminalChannels.take:
                 this.takeOrder(
                     resource.type,
                     // 这里订单类型取反是因为如果我想**买入**一个订单，那我就要拍下一个**卖单**
-                    resource.mod === terminalModes.get ? ORDER_SELL : ORDER_BUY, 
+                    resource.mod === terminalModes.get ? ORDER_SELL : ORDER_BUY,
                     Math.abs(resourceAmount - resource.amount),
                     resource.priceLimit
                 )
-            break
+                break
 
             // 进行共享
             case terminalChannels.share:
                 if (resource.mod === terminalModes.get) this.room.shareRequest(resource.type, resource.amount - resourceAmount)
                 else this.room.shareAddSource(resource.type)
-                
+
                 return this.setNextIndex()
-            break
+                break
 
             // 找不到对应的渠道
             default:
                 this.log(`未知渠道 ${resource.channel}`, 'yellow')
                 return this.setNextIndex()
-            break
+                break
         }
     }
 
     /**
      * 挂单
-     * 
+     *
      * @param resourceType 要拍单的资源类型
      * @param type 订单类型
      * @param amount 要购买的数量
@@ -281,7 +277,7 @@ export default class TerminalExtension extends StructureTerminal {
     private releaseOrder(resourceType: ResourceConstant, type: ORDER_BUY | ORDER_SELL, amount: number) {
         // 检查是否已经有对应资源的订单
         const order = this.getExistOrder(resourceType, type)
-        
+
         // 存在就追加订单
         if (order) {
             // 价格有变化就更新价格
@@ -316,8 +312,7 @@ export default class TerminalExtension extends StructureTerminal {
 
             if (result === ERR_NOT_ENOUGH_RESOURCES) {
                 this.log(`没有足够的 credit 来为 ${resourceType} ${type} 缴纳挂单费用`, 'yellow')
-            }
-            else if (result === ERR_FULL) {
+            } else if (result === ERR_FULL) {
                 this.log(`订单数超过上限，无法为 ${resourceType} ${type} 创建新订单`, 'yellow')
             }
         }
@@ -328,7 +323,7 @@ export default class TerminalExtension extends StructureTerminal {
 
     /**
      * 在已有的订单中检查是否有相同类型的订单
-     * 
+     *
      * @param resourceType 要搜索的资源类型
      * @param type 订单类型
      * @returns 找到的订单
@@ -339,7 +334,7 @@ export default class TerminalExtension extends StructureTerminal {
             const order = Game.market.orders[orderId]
 
             if (
-                order.resourceType === resourceType && 
+                order.resourceType === resourceType &&
                 order.type === type &&
                 order.roomName === this.room.name
             ) return order
@@ -350,7 +345,7 @@ export default class TerminalExtension extends StructureTerminal {
 
     /**
      * 拍单
-     * 
+     *
      * @param resourceType 要拍单的资源类型
      * @param type 订单类型
      * @param amount 要购买的数量
@@ -358,12 +353,12 @@ export default class TerminalExtension extends StructureTerminal {
      */
     private takeOrder(resourceType: MarketResourceConstant, type: ORDER_BUY | ORDER_SELL, amount: number, priceLimit: number = undefined) {
         // 获取订单
-        const targetOrder = this.getOrder({ type, resourceType }, priceLimit)
+        const targetOrder = this.getOrder({type, resourceType}, priceLimit)
 
         if (!targetOrder) {
             return this.setNextIndex()
         }
-        
+
         // 订单合适，写入缓存并要路费
         this.room.memory.targetOrderId = targetOrder.id
 
@@ -388,7 +383,7 @@ export default class TerminalExtension extends StructureTerminal {
 
     /**
      * 从内存中索引获取正在监听的资源
-     * 
+     *
      * @returns 该资源的信息，格式如下：
      *   @property {} type 资源类型
      *   @property {} amount 期望数量
@@ -409,7 +404,7 @@ export default class TerminalExtension extends StructureTerminal {
     /**
      * 寻找合适的订单
      * 该方法**不会**将订单缓存到房间内存
-     * 
+     *
      * @param config 市场交易任务
      * @returns 找到则返回订单, 否找返回 null
      */
@@ -429,13 +424,12 @@ export default class TerminalExtension extends StructureTerminal {
             if (targetOrder.type == ORDER_SELL) return targetOrder.price <= priceLimit ? targetOrder : null
             // 买单的价格不能太低
             else return targetOrder.price >= priceLimit ? targetOrder : null
-        }
-        else if (!this.checkPrice(targetOrder)) return null
+        } else if (!this.checkPrice(targetOrder)) return null
         else return targetOrder
     }
 
     /**
-     * 
+     *
      * @param resourceType 资源类型
      * @param type 买单还是买单
      */
@@ -454,7 +448,7 @@ export default class TerminalExtension extends StructureTerminal {
         // 买单挂最高
         else {
             // 拉取市场订单作为参考
-            const orders = Game.market.getAllOrders({ resourceType, type })
+            const orders = Game.market.getAllOrders({resourceType, type})
             // 降序排列，价高在前，方便下面遍历
             const sortedOrders = _.sortBy(orders, order => -order.price)
             // 找到价格合理的订单中售价最高的
@@ -471,7 +465,7 @@ export default class TerminalExtension extends StructureTerminal {
     /**
      * 检查订单单价是否合适
      * 防止投机玩家的过低或过高订单
-     * 
+     *
      * @param targetOrder 目标订单
      */
     private checkPrice(targetOrder: Order): boolean {
@@ -512,7 +506,7 @@ export default class TerminalExtension extends StructureTerminal {
 
     /**
      * 添加终端矿物监控
-     * 
+     *
      * @param resourceType 要监控的资源类型
      * @param amount 期望的资源数量
      * @param mod 监听类型
@@ -526,12 +520,12 @@ export default class TerminalExtension extends StructureTerminal {
         if (!this.room.memory.terminalTasks) this.room.memory.terminalTasks = []
 
         // 再保存任务
-        this.room.memory.terminalTasks.push(this.stringifyTask({ mod, channel, type: resourceType, amount, priceLimit }))
+        this.room.memory.terminalTasks.push(this.stringifyTask({mod, channel, type: resourceType, amount, priceLimit}))
     }
 
     /**
      * 移除终端矿物监控
-     * 
+     *
      * @param index 要移除的任务索引
      * @return OK 移除完成
      * @returns ERR_INVALID_ARGS 传入了错误的索引
@@ -554,11 +548,11 @@ export default class TerminalExtension extends StructureTerminal {
 
     /**
      * 将任务序列化成字符串
-     * 
+     *
      * @danger 注意，这个序列化格式是固定的，单独修改将会导致任务读取时出现问题
      * @param task 要序列化的任务
      */
-    protected stringifyTask({ mod, channel, type, amount, priceLimit }: TerminalListenerTask): string {
+    protected stringifyTask({mod, channel, type, amount, priceLimit}: TerminalListenerTask): string {
         let stringifyTask = `${mod} ${channel} ${type} ${amount}`
         if (priceLimit) stringifyTask += ` ${priceLimit}`
 
@@ -567,13 +561,13 @@ export default class TerminalExtension extends StructureTerminal {
 
     /**
      * 把字符串解析为任务
-     * 
+     *
      * @danger 注意，这个序列化格式是固定的，单独修改将会导致无法读取已保存任务
      * @param taskStr 要反序列化的任务
      */
     protected unstringifyTask(taskStr: string): TerminalListenerTask {
         // 对序列化的任务进行重建
-        const [ mod, channel, type, amount, priceLimit ] = taskStr.split(' ')
+        const [mod, channel, type, amount, priceLimit] = taskStr.split(' ')
 
         return {
             mod: (Number(mod) as TerminalModes),
@@ -586,7 +580,7 @@ export default class TerminalExtension extends StructureTerminal {
 
     /**
      * 通过条件匹配任务
-     * 
+     *
      * @param type 资源类型
      * @param mod 物流类型
      * @param channel 交易渠道

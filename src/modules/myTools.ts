@@ -120,3 +120,32 @@ export function startOp() {
         }
     }
 }
+
+//自动抬价
+export function upPrice(orderId, maxPrice = 10, step = 1) {
+    if (Game.time % 10) return
+
+    let myOrderData = Game.market.getOrderById(orderId);
+    let myPrice = myOrderData.price;
+    let resourceType = myOrderData.resourceType;
+    let orderType = myOrderData.type;
+
+    //获取当前市场上所有同类型订单
+    let allOrders = Game.market.getAllOrders({type: orderType, resourceType: resourceType});
+    let prices = [];
+    for (let o in allOrders) {
+        let order = allOrders[o];
+        if (order.id == orderId) continue
+
+        prices.push(order.price);
+    }
+
+    let maxOrderPrice = prices.sort().reverse()[0];
+    if (maxOrderPrice >= maxPrice) return //如果价格超出了设置的阀值 就不加价了
+    if (maxOrderPrice <= myPrice) return //如果其他人的最高价也没我的价格高 就不加价了
+    let newPrice = maxOrderPrice + step
+    if (newPrice >= maxPrice) return //如果新的价格超过了阀值 就不加价了
+
+    //价格被人超过了且在合理范围内, 就抬价
+    Game.market.changeOrderPrice(orderId, newPrice)
+}

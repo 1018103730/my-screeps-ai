@@ -2,16 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="10d41954-e381-4121-a946-d325cd5560c6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/frame.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frame.js" beforeDir="false" afterPath="$PROJECT_DIR$/frame.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modules/myTools.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/myTools.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mount/creep/extension.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/mount/creep/extension.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mount/powerCreep/mount.powerCreep.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/mount/powerCreep/mount.powerCreep.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/mount/structures/terminal/extension.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/mount/structures/terminal/extension.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/role/advanced.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/role/advanced.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/role/remote.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/role/remote.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/setting.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/setting.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,7 +85,11 @@
       <workItem from="1607403743081" duration="2584000" />
       <workItem from="1607408466652" duration="1408000" />
       <workItem from="1607410210836" duration="5391000" />
-      <workItem from="1607416188145" duration="374000" />
+      <workItem from="1607416188145" duration="478000" />
+      <workItem from="1607472555320" duration="664000" />
+      <workItem from="1607473878373" duration="217000" />
+      <workItem from="1607495190626" duration="2000" />
+      <workItem from="1607506423585" duration="1718000" />
     </task>
     <servers />
   </component>
@@ -109,10 +109,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="164" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1606443750453" />
-    <state x="648" y="103" width="594" height="835" key="find.popup" timestamp="1607414880941">
+    <state x="648" y="103" width="594" height="835" key="find.popup" timestamp="1607473918136">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="648" y="103" width="594" height="835" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1607414880941" />
+    <state x="648" y="103" width="594" height="835" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1607473918136" />
     <state x="616" y="244" key="run.anything.popup" timestamp="1606617684390">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

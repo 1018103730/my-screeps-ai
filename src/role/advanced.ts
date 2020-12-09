@@ -374,6 +374,12 @@ export const transferTaskOperations: { [taskType: string]: transferTaskOperation
                 return false
             }
 
+            // 拓展能量过少,直接跳过, 优先填充拓展
+            if (creep.room.energyAvailable <= 1000) {
+                creep.room.deleteCurrentRoomTransferTask()
+                return true
+            }
+
             if (!clearCarryingEnergy(creep)) return false
 
             // 找到第一个需要从终端取出的底物
@@ -460,6 +466,12 @@ export const transferTaskOperations: { [taskType: string]: transferTaskOperation
                 creep.room.deleteCurrentRoomTransferTask()
                 creep.log(`labout, 未找到 terminal，任务已移除`)
                 return false
+            }
+
+            // 拓展能量过少,直接跳过, 优先填充拓展
+            if (creep.room.energyAvailable <= 1000) {
+                creep.room.deleteCurrentRoomTransferTask()
+                return true
             }
 
             // 指定资源类型及目标
