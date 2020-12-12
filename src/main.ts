@@ -3,7 +3,15 @@ import {doing, stateScanner, generatePixel} from './utils'
 import creepNumberListener, {creepApi} from './modules/creepController'
 import {ErrorMapper} from './modules/errorMapper'
 import {DEFAULT_FLAG_NAME} from "./setting";
-import {buildUpdaterRoad, claimNewRoom, dispatchGarrison, sharder, startOp, upPrice} from './modules/myTools'
+import {
+    attactPosChechk,
+    buildUpdaterRoad,
+    claimNewRoom,
+    dispatchGarrison,
+    sharder,
+    startOp,
+    upPrice
+} from './modules/myTools'
 
 export const loop = ErrorMapper.wrapLoop(() => {
     if (Game.shard.name == 'shard3') {
@@ -30,10 +38,12 @@ export const loop = ErrorMapper.wrapLoop(() => {
         dispatchGarrison()
 
         //增强power能力
-        startOp()
+        // startOp()
 
         //自动抬价
-        upPrice("5fd02fb409cc071d9eb725ba",800) //收pixel
+        // upPrice("5fd02fb409cc071d9eb725ba",880) //收pixel
+
+        attactPosChechk();
     }
 
     //位面漫步者

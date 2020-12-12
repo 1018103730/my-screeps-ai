@@ -154,13 +154,16 @@ export default class TerminalExtension extends StructureTerminal {
      * 如果 terminal 中能量过多会返还至 storage
      */
     private energyCheck(): void {
-        if (this.store[RESOURCE_ENERGY] >= 30000) this.room.addCenterTask({
-            submit: STRUCTURE_TERMINAL,
-            source: STRUCTURE_TERMINAL,
-            target: STRUCTURE_STORAGE,
-            resourceType: RESOURCE_ENERGY,
-            amount: this.store[RESOURCE_ENERGY]
-        })
+        if (this.store[RESOURCE_ENERGY] >= 100000) {
+            console.log(this.room.name + "触发能量回流");
+            this.room.addCenterTask({
+                submit: STRUCTURE_TERMINAL,
+                source: STRUCTURE_TERMINAL,
+                target: STRUCTURE_STORAGE,
+                resourceType: RESOURCE_ENERGY,
+                amount: this.store[RESOURCE_ENERGY]
+            })
+        }
     }
 
     /**
@@ -207,7 +210,9 @@ export default class TerminalExtension extends StructureTerminal {
 
             return false // 把这个改成 true 可以加快交易速度
         } else if (dealResult === ERR_INVALID_ARGS) delete this.room.memory.targetOrderId
-        else this.log(`${this.room.name} 处理订单异常 ${dealResult}`, 'yellow')
+        else {
+            this.log(`${this.room.name} 处理订单异常 ${dealResult}`, 'yellow')
+        }
     }
 
     /**

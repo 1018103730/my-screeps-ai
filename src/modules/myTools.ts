@@ -1,4 +1,6 @@
 import {creepApi} from "./creepController";
+import {unwatchFile} from "fs";
+import {ROOM_TRANSFER_TASK} from "../setting";
 
 export function claimNewRoom(roomName, claimRoomName) {
     if (Game.time % 50) return
@@ -13,7 +15,7 @@ export function sharder() {
     //位面漫步者
     if (Game.shard.name == 'shard3') {
         if (Game.time % 1000 == 0) {
-            console.log((new Date).getTime() + '号位面漫步者正在生成~');
+            console.log(Game.time + '号位面漫步者正在生成~');
             creepApi.add(`door` + (new Date).getTime(), 'soldier', {
                 targetFlagName: "door",
                 keepSpawn: false
@@ -148,4 +150,61 @@ export function upPrice(orderId, maxPrice = 10, step = 1) {
 
     //价格被人超过了且在合理范围内, 就抬价
     Game.market.changeOrderPrice(orderId, newPrice)
+}
+
+export function attactPosChechk() {
+    if (Game.time % 500 == 0) {
+        Game.rooms.W17S17.addRoomTransferTask({
+            type: 'boostGetResource'
+        })
+        Game.rooms.W17S17.addRoomTransferTask({
+            type: 'boostGetEnergy'
+        })
+    }
+
+    let waitRoom = 'W19S16';
+    let targetRoom = 'W19S17';
+    let attackFlag = "W19S17 chaiqiang attack";
+    let attackFlagPlanB = 'W19S17 chaiqiang attack plan b'
+
+    let teams = {
+        'team1': {
+            'attacker': "W17S17 dismantler 23876562",
+            'doctor': "W17S17 doctor 23876562",
+        }
+    }
+
+    for (let t in teams) {
+        let team = teams[t];
+        if (
+            Game.creeps[team.attacker] &&
+            Game.creeps[team.attacker].room.name == targetRoom
+        ) {
+            Game.creeps[team.attacker].moveTo(36, 1);
+        }
+
+        if (
+            Game.creeps[team.attacker] &&
+            Game.creeps[team.attacker].room.name == waitRoom &&
+            Game.creeps[team.doctor] &&
+            Game.creeps[team.doctor].room.name == waitRoom
+        ) {
+            Game.creeps[team.attacker].memory.data['targetFlagName'] = attackFlag;
+        }
+
+        if (Game.creeps[team.attacker] && Game.creeps[team.attacker].room.name == targetRoom) {
+            let ss = Game.rooms.W19S17.lookAt(Game.flags[attackFlag]);
+            let needChangeFlag = true;
+            for (let s in ss) {
+                if (ss[s].type == 'structure') {
+                    needChangeFlag = false
+                    break
+                }
+            }
+
+            if (needChangeFlag) {
+                Game.creeps[team.attacker].memory.data['targetFlagName'] = attackFlagPlanB;
+            }
+        }
+    }
 }

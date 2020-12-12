@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="10d41954-e381-4121-a946-d325cd5560c6" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frame.js" beforeDir="false" afterPath="$PROJECT_DIR$/frame.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/autoPlanning/planCreep.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/autoPlanning/planCreep.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modules/myTools.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/myTools.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mount/creep/extension.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/mount/creep/extension.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/mount/structures/terminal/extension.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/mount/structures/terminal/extension.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/role/advanced.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/role/advanced.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/role/war.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/role/war.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/setting.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/setting.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,6 +42,16 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\screeps\my-screeps-ai\src\modules" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="frame.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/frame.js" working-dir="$PROJECT_DIR$">
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Node.js.frame.js" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -89,7 +106,15 @@
       <workItem from="1607472555320" duration="664000" />
       <workItem from="1607473878373" duration="217000" />
       <workItem from="1607495190626" duration="2000" />
-      <workItem from="1607506423585" duration="1718000" />
+      <workItem from="1607506423585" duration="1807000" />
+      <workItem from="1607559130296" duration="2241000" />
+      <workItem from="1607570668241" duration="9548000" />
+      <workItem from="1607645862580" duration="14285000" />
+      <workItem from="1607664286678" duration="12002000" />
+      <workItem from="1607678868460" duration="1371000" />
+      <workItem from="1607731598872" duration="4520000" />
+      <workItem from="1607737627095" duration="1227000" />
+      <workItem from="1607739945530" duration="12267000" />
     </task>
     <servers />
   </component>
@@ -105,21 +130,37 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1607303028115" />
+    <state width="1899" height="275" key="GridCell.Tab.0.bottom" timestamp="1607736058519">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1899" height="275" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1607736058519" />
+    <state width="1899" height="275" key="GridCell.Tab.0.center" timestamp="1607736058519">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1899" height="275" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1607736058519" />
+    <state width="1899" height="275" key="GridCell.Tab.0.left" timestamp="1607736058519">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1899" height="275" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1607736058519" />
+    <state width="1899" height="275" key="GridCell.Tab.0.right" timestamp="1607736058519">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1899" height="275" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1607736058519" />
     <state x="461" y="164" key="SettingsEditor" timestamp="1606443750453">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="164" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1606443750453" />
-    <state x="648" y="103" width="594" height="835" key="find.popup" timestamp="1607473918136">
+    <state x="648" y="103" width="594" height="835" key="find.popup" timestamp="1607753624740">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="648" y="103" width="594" height="835" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1607473918136" />
+    <state x="648" y="103" width="594" height="835" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1607753624740" />
     <state x="616" y="244" key="run.anything.popup" timestamp="1606617684390">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="616" y="244" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1606617684390" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1607411953417">
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1607760065391">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1607411953417" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1607760065391" />
   </component>
 </project>

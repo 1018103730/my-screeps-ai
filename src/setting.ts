@@ -189,14 +189,14 @@ export const baseLayout: BaseLayout = {
         [STRUCTURE_EXTENSION]: [[-3, -1], [-4, -1], [1, -4], [1, -3], [3, -4], [4, -3], [2, -5], [3, -5], [4, -5], [5, -4]],
         [STRUCTURE_STORAGE]: [[0, -1]],
         [STRUCTURE_ROAD]: [[0, -3], [1, -2], [2, -2], [3, -3], [2, -4], [4, -4]],
-        [STRUCTURE_RAMPART]: [[-3, -2], [0, -1], [-2, -1]]
+        // [STRUCTURE_RAMPART]: [[-3, -2], [0, -1], [-2, -1]]
     },
     5: {
         [STRUCTURE_EXTENSION]: [[5, -3], [5, -2], [4, -1], [3, -1], [-3, 1], [-4, 1], [-3, 2], [-4, 3], [-3, 4], [-2, 3]],
         [STRUCTURE_TOWER]: [[0, -2]],
         [STRUCTURE_LINK]: [[-1, 0], null],
         [STRUCTURE_ROAD]: [[4, -2], [-2, 0], [-1, 1], [-1, 2], [-2, 2], [-3, 3], [-4, 2], [0, 0]],
-        [STRUCTURE_RAMPART]: [[0, -2]]
+        // [STRUCTURE_RAMPART]: [[0, -2]]
     },
     6: {
         [STRUCTURE_EXTENSION]: [[-5, 2], [-5, 3], [-5, 4], [-4, 5], [-3, 5], [-2, 5], [-1, 3], [-1, 4], [3, 1], [4, 1]],
@@ -205,7 +205,7 @@ export const baseLayout: BaseLayout = {
         [STRUCTURE_EXTRACTOR]: [null],
         [STRUCTURE_LINK]: [null],
         [STRUCTURE_ROAD]: [[1, -1], [2, 0], [1, 1], [1, 2], [0, 3], [3, 0], [2, 2], [3, 3]],
-        [STRUCTURE_RAMPART]: [[1, 0]]
+        // [STRUCTURE_RAMPART]: [[1, 0]]
     },
     7: {
         [STRUCTURE_EXTENSION]: [[5, 1], [5, -1], [5, -5], [1, -5], [-5, -5], [-5, -1], [-5, 1], [-1, 5], [-1, -5], [1, 3]],
@@ -215,7 +215,7 @@ export const baseLayout: BaseLayout = {
         [STRUCTURE_LAB]: [[3, 2], [2, 4], [3, 5]],
         [STRUCTURE_LINK]: [null],
         [STRUCTURE_ROAD]: [[4, 4], [-4, 4], [-2, 4], [4, 0], [-3, 0], [-4, 0]],
-        [STRUCTURE_RAMPART]: [[0, 1], [-2, -3], [2, -1]]
+        // [STRUCTURE_RAMPART]: [[0, 1], [-2, -3], [2, -1]]
     },
     8: {
         [STRUCTURE_EXTENSION]: [[1, 4], [1, 5]],
@@ -226,7 +226,7 @@ export const baseLayout: BaseLayout = {
         [STRUCTURE_NUKER]: [[-5, 5]],
         [STRUCTURE_POWER_SPAWN]: [[3, -2]],
         [STRUCTURE_ROAD]: [[4, 2], [0, 4], [0, -4]],
-        [STRUCTURE_RAMPART]: [[2, -3], [-5, 5], [-2, 1], [0, 2], [2, 1]]
+        // [STRUCTURE_RAMPART]: [[2, -3], [-5, 5], [-2, 1], [0, 2], [2, 1]]
     }
 }
 
@@ -446,7 +446,7 @@ export const BOOST_RESOURCE: BoostResourceConfig = {
 /**
  * 当 lab 强化过 creep 之后会检查资源的剩余容量，如果低于下面这个值就会重新装填
  */
-export const boostResourceReloadLimit = 900
+export const boostResourceReloadLimit = 2000
 
 /**
  * powerbank 的采集阶段
@@ -660,13 +660,13 @@ export const MAX_HARVESTER_NUM = 4
  * 请确保最少有一条内容
  */
 export const UPGRADE_WITH_TERMINAL = [
-    {energy: 80000, num: 10},
-    {energy: 70000, num: 9},
-    {energy: 60000, num: 8},
-    {energy: 50000, num: 7},
-    {energy: 40000, num: 6},
-    {energy: 30000, num: 5},
-    {energy: 20000, num: 4}
+    {energy: 80000, num: 12},
+    {energy: 70000, num: 11},
+    {energy: 60000, num: 10},
+    {energy: 50000, num: 9},
+    {energy: 40000, num: 8},
+    {energy: 30000, num: 7},
+    {energy: 20000, num: 6}
 ]
 
 /**

@@ -375,10 +375,10 @@ export const transferTaskOperations: { [taskType: string]: transferTaskOperation
             }
 
             // 拓展能量过少,直接跳过, 优先填充拓展
-            if (creep.room.energyAvailable <= 1000) {
-                creep.room.deleteCurrentRoomTransferTask()
-                return true
-            }
+            // if (creep.room.energyAvailable <= 1000) {
+            //     creep.room.deleteCurrentRoomTransferTask()
+            //     return true
+            // }
 
             if (!clearCarryingEnergy(creep)) return false
 
@@ -426,7 +426,10 @@ export const transferTaskOperations: { [taskType: string]: transferTaskOperation
                 // 保证在产物移出的时候可以一次就拿完
                 creep.room.handleLabInTask(targetResource.type, 0)
                 return true
-            } else if (result != ERR_NOT_IN_RANGE) creep.say(`labInB ${result}`)
+            } else if (result != ERR_NOT_IN_RANGE) {
+                creep.say(`labInB ${result}`)
+                creep.room.deleteCurrentRoomTransferTask()
+            }
         }
     },
 
@@ -469,10 +472,10 @@ export const transferTaskOperations: { [taskType: string]: transferTaskOperation
             }
 
             // 拓展能量过少,直接跳过, 优先填充拓展
-            if (creep.room.energyAvailable <= 1000) {
-                creep.room.deleteCurrentRoomTransferTask()
-                return true
-            }
+            // if (creep.room.energyAvailable <= 1000) {
+            //     creep.room.deleteCurrentRoomTransferTask()
+            //     return true
+            // }
 
             // 指定资源类型及目标
             let resourceType = task.resourceType
