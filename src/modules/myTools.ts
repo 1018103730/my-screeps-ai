@@ -1,11 +1,13 @@
 import {creepApi} from "./creepController";
 import {unwatchFile} from "fs";
-import {ROOM_TRANSFER_TASK} from "../setting";
+import {DEFAULT_FLAG_NAME, ROOM_TRANSFER_TASK} from "../setting";
 
 export function claimNewRoom(roomName, claimRoomName) {
-    if (Game.time % 50) return
+    if (Game.time % 20) return //每20tick执行一次
 
     if (!Memory.creeps[roomName + ' Claimer']) {
+        if (!Game.rooms[roomName]) return; //房间里没有抗塔的 就取消操作
+        if (Game.rooms[roomName].controller.upgradeBlocked > 500) return; //距离下次claim还有会儿  就取消操作
         console.log('发布Claimer占领' + roomName)
         Game.rooms[claimRoomName].claimRoom(roomName)
     }
@@ -27,6 +29,10 @@ export function sharder() {
     }
 
     if (Game.shard.name == 'shard2') {
+        if (Game.time % 1500 == 0) {
+            Memory.creeps = {}
+        }
+
         let reusePath = Memory['reusePath'] ?? 500;
         for (let creep in Game.creeps) {
             let c = Game.creeps[creep]
@@ -62,15 +68,18 @@ export function sharder() {
     }
 }
 
-export function buildUpdaterRoad() {
+export function buildRoad() {
     if (Object.keys(Game.constructionSites).length >= 100 || !(Memory['buildUpdaterRoad'])) return
     for (let c in Game.creeps) {
         let creep = Game.creeps[c];
         if (creep.pos.x == 0 || creep.pos.y == 0) continue
+        if (!creep.room.controller) continue
+        if (!creep.room.controller.my) continue
+
         let creepRole = Memory.creeps[creep.name]['role'];
         if (
-            (creepRole == "upgrader" && creep.room.controller && creep.room.controller.level >= 5)
-            || (creep.room.controller && creep.room.controller.level == 8)
+            (creepRole == "upgrader" && creep.room.controller.level >= 6)
+            || (creepRole != 'builder' && creep.room.controller.level == 8)
         ) {
             let ls = creep.pos.lookFor(LOOK_STRUCTURES);
             if (
@@ -162,49 +171,12 @@ export function attactPosChechk() {
         })
     }
 
-    let waitRoom = 'W19S16';
-    let targetRoom = 'W19S17';
-    let attackFlag = "W19S17 chaiqiang attack";
-    let attackFlagPlanB = 'W19S17 chaiqiang attack plan b'
-
-    let teams = {
-        'team1': {
-            'attacker': "W17S17 dismantler 23876562",
-            'doctor': "W17S17 doctor 23876562",
-        }
-    }
-
-    for (let t in teams) {
-        let team = teams[t];
-        if (
-            Game.creeps[team.attacker] &&
-            Game.creeps[team.attacker].room.name == targetRoom
-        ) {
-            Game.creeps[team.attacker].moveTo(36, 1);
-        }
-
-        if (
-            Game.creeps[team.attacker] &&
-            Game.creeps[team.attacker].room.name == waitRoom &&
-            Game.creeps[team.doctor] &&
-            Game.creeps[team.doctor].room.name == waitRoom
-        ) {
-            Game.creeps[team.attacker].memory.data['targetFlagName'] = attackFlag;
-        }
-
-        if (Game.creeps[team.attacker] && Game.creeps[team.attacker].room.name == targetRoom) {
-            let ss = Game.rooms.W19S17.lookAt(Game.flags[attackFlag]);
-            let needChangeFlag = true;
-            for (let s in ss) {
-                if (ss[s].type == 'structure') {
-                    needChangeFlag = false
-                    break
-                }
-            }
-
-            if (needChangeFlag) {
-                Game.creeps[team.attacker].memory.data['targetFlagName'] = attackFlagPlanB;
-            }
+    let creeps = ['W17S17 apocalypse 23949911', 'W17S17 apocalypse 23950166'];
+    for (let c of creeps) {
+        let creep = Game.creeps[c];
+        if (!creep) continue;
+        if (!creep.memory.massMode) {
+            creep.memory.massMode = true;
         }
     }
 }

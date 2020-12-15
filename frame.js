@@ -1,5 +1,5 @@
 // 查看当前终端资源
-let resources = ['XZHO2', 'XZH2O', "XLHO2", "XKHO2", 'XGHO2', 'energy'];
+let resources = ['XZHO2', 'XZH2O', "XLHO2", "XKHO2", 'XGHO2', 'energy', 'power'];
 for (let r in Game.rooms) {
     let room = Game.rooms[r];
     if (!room.terminal) {
@@ -9,12 +9,12 @@ for (let r in Game.rooms) {
         continue
     }
     console.log('-------------' + r + ':' + room.terminal.store.getUsedCapacity() + '---------------')
-    for (let res in room.terminal.store) {
-        if (resources.indexOf(res) < 0) {
+    for (let resource in room.terminal.store) {
+        if (resources.indexOf(resource) < 0) {
             continue
         }
-        let resource = room.terminal.store[res];
-        console.log(res + '\t' + resource)
+        let resourceValue = room.terminal.store[resource];
+        console.log(resource + '\t' + resourceValue)
     }
 }
 
@@ -55,4 +55,29 @@ for (let r in rooms) {
     for (let record of rooms[r]) {
         console.log(record.join('\t'))
     }
+}
+
+// 每个房间的工程数量
+let rooms = {};
+let builders = {}
+for (let r in Game.rooms) {
+    rooms[Game.rooms[r].name] = 0;
+    builders[Game.rooms[r].name] = 0;
+}
+
+for (let c in Game.constructionSites) {
+    c = Game.constructionSites[c];
+
+    rooms[c.room.name] += 1;
+}
+
+for (let c in Game.creeps) {
+    let creep = Game.creeps[c];
+    if (creep.memory.role == "builder") {
+        builders[creep.room.name]++;
+    }
+}
+
+for (let room in rooms) {
+    console.log(room + '\t' + rooms[room] + '\t' + builders[room])
 }

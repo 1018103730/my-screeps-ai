@@ -154,8 +154,7 @@ export default class TerminalExtension extends StructureTerminal {
      * 如果 terminal 中能量过多会返还至 storage
      */
     private energyCheck(): void {
-        if (this.store[RESOURCE_ENERGY] >= 100000) {
-            console.log(this.room.name + "触发能量回流");
+        if (this.store[RESOURCE_ENERGY] >= 40000) {
             this.room.addCenterTask({
                 submit: STRUCTURE_TERMINAL,
                 source: STRUCTURE_TERMINAL,
@@ -202,7 +201,7 @@ export default class TerminalExtension extends StructureTerminal {
         if (dealResult === OK) {
             const crChange = (targetOrder.type == ORDER_BUY ? '+ ' : '- ') + (amount * targetOrder.price).toString() + ' Cr'
             const introduce = `${(targetOrder.type == ORDER_BUY ? '卖出' : '买入')} ${amount} ${targetOrder.resourceType} 单价: ${targetOrder.price}`
-            this.log(`交易成功! ${introduce} ${crChange}`, 'green')
+            // this.log(`交易成功! ${introduce} ${crChange}`, 'green')
             delete this.room.memory.targetOrderId
 
             this.setNextIndex()

@@ -5,7 +5,7 @@ import {ErrorMapper} from './modules/errorMapper'
 import {DEFAULT_FLAG_NAME} from "./setting";
 import {
     attactPosChechk,
-    buildUpdaterRoad,
+    buildRoad,
     claimNewRoom,
     dispatchGarrison,
     sharder,
@@ -29,16 +29,16 @@ export const loop = ErrorMapper.wrapLoop(() => {
         stateScanner()
 
         // 造路机
-        buildUpdaterRoad();
+        buildRoad();
 
         // claimer
-        // claimNewRoom("W17S16", "W17S17");
+        claimNewRoom("W19S17", "W17S17");
 
         //驻军
         dispatchGarrison()
 
         //增强power能力
-        // startOp()
+        startOp()
 
         //自动抬价
         // upPrice("5fd02fb409cc071d9eb725ba",880) //收pixel

@@ -660,22 +660,22 @@ export const MAX_HARVESTER_NUM = 4
  * 请确保最少有一条内容
  */
 export const UPGRADE_WITH_TERMINAL = [
-    {energy: 80000, num: 12},
-    {energy: 70000, num: 11},
-    {energy: 60000, num: 10},
-    {energy: 50000, num: 9},
-    {energy: 40000, num: 8},
-    {energy: 30000, num: 7},
-    {energy: 20000, num: 6}
+    {energy: 80000, num: 8},
+    {energy: 70000, num: 7},
+    {energy: 60000, num: 6},
+    {energy: 50000, num: 5},
+    {energy: 40000, num: 4},
+    {energy: 30000, num: 3},
+    {energy: 20000, num: 2}
 ]
 
 /**
  * storage 中的能量和对应发布的 upgrader 数量
  */
 export const UPGRADE_WITH_STORAGE = [
-    {energy: 700000, num: 5},
-    {energy: 500000, num: 4},
-    {energy: 100000, num: 3}
+    {energy: 700000, num: 4},
+    {energy: 500000, num: 3},
+    {energy: 100000, num: 2}
 ]
 
 // 用于维持房间能量正常运转的重要角色
