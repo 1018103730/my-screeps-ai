@@ -21,21 +21,29 @@ for (let r in Game.rooms) {
 // 重置终端自动任务
 for (let r in Game.rooms) {
     let room = Game.rooms[r];
+    let warResourceRoom = "W16S18";
     if (!room.terminal) {
         continue;
     }
-
     room.memory.terminalTasks = [];
-    room.terminal.add('H', 1000, 0, 1);
-    room.terminal.add('O', 1000, 0, 1);
-    room.terminal.add('L', 1000, 0, 1);
-    room.terminal.add('K', 1000, 0, 1);
-    room.terminal.add('Z', 1000, 0, 1);
-    room.terminal.add('U', 1000, 0, 1);
-    room.terminal.add('X', 1000, 0, 1);
 
-    room.terminal.add('energy', 90000, 0, 1);
-    room.terminal.add('energy', 90000, 0, 0);
+    if (r != warResourceRoom) {
+        room.terminal.add('H', 1000, 0, 1);
+        room.terminal.add('O', 1000, 0, 1);
+        room.terminal.add('L', 1000, 0, 1);
+        room.terminal.add('K', 1000, 0, 1);
+        room.terminal.add('Z', 1000, 0, 1);
+        room.terminal.add('U', 1000, 0, 1);
+        room.terminal.add('X', 1000, 0, 1);
+    }
+
+    if (room.controller.level < 8) {
+        room.terminal.add('energy', 100000, 0, 1);
+        room.terminal.add('energy', 100000, 0, 0);
+    } else {
+        room.terminal.add('energy', 60000, 0, 1);
+        room.terminal.add('energy', 60000, 0, 0);
+    }
 }
 
 

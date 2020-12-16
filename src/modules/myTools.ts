@@ -8,6 +8,7 @@ export function claimNewRoom(roomName, claimRoomName) {
     if (!Memory.creeps[roomName + ' Claimer']) {
         if (!Game.rooms[roomName]) return; //房间里没有抗塔的 就取消操作
         if (Game.rooms[roomName].controller.upgradeBlocked > 500) return; //距离下次claim还有会儿  就取消操作
+        if (Game.rooms[roomName].energyAvailable < 12600) return; //能量不足 无法孵化
         console.log('发布Claimer占领' + roomName)
         Game.rooms[claimRoomName].claimRoom(roomName)
     }
@@ -123,6 +124,7 @@ export function startOp() {
     if (Game.time % 20) return
     let rooms = ['W16S18', 'W16S19'];
     for (let room of rooms) {
+        if (Game.rooms[room].terminal.store['power'] <= 500) continue
         let psId = Game.rooms[room].memory.powerSpawnId
         let ps = Game.getObjectById(psId);
         if (ps['effects'].length == 0 || (ps['effects'][0].ticksRemaining <= 20)) {
@@ -171,7 +173,7 @@ export function attactPosChechk() {
         })
     }
 
-    let creeps = ['W17S17 apocalypse 23949911', 'W17S17 apocalypse 23950166'];
+    let creeps = ['W17S17 apocalypse 23950166'];
     for (let c of creeps) {
         let creep = Game.creeps[c];
         if (!creep) continue;

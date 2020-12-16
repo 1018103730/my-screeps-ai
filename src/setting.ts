@@ -212,15 +212,15 @@ export const baseLayout: BaseLayout = {
         [STRUCTURE_TOWER]: [[2, -1]],
         [STRUCTURE_SPAWN]: [[-2, -3]],
         [STRUCTURE_FACTORY]: [[0, 1]],
-        [STRUCTURE_LAB]: [[3, 2], [2, 4], [3, 5]],
+        // [STRUCTURE_LAB]: [[3, 2], [2, 4], [3, 5]],
         [STRUCTURE_LINK]: [null],
         [STRUCTURE_ROAD]: [[4, 4], [-4, 4], [-2, 4], [4, 0], [-3, 0], [-4, 0]],
         // [STRUCTURE_RAMPART]: [[0, 1], [-2, -3], [2, -1]]
     },
     8: {
         [STRUCTURE_EXTENSION]: [[1, 4], [1, 5]],
-        [STRUCTURE_TOWER]: [[-2, 1], [0, 2], [2, 1]],
-        [STRUCTURE_LAB]: [[5, 2], [5, 3], [5, 4], [4, 5]],
+        // [STRUCTURE_TOWER]: [[-2, 1], [0, 2], [2, 1]],
+        // [STRUCTURE_LAB]: [[5, 2], [5, 3], [5, 4], [4, 5]],
         [STRUCTURE_SPAWN]: [[2, -3]],
         [STRUCTURE_OBSERVER]: [[2, 5]],
         [STRUCTURE_NUKER]: [[-5, 5]],
