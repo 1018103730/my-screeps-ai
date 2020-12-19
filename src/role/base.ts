@@ -19,6 +19,11 @@ const roles: {
             let target: StructureContainer | Source | ConstructionSite
             // 如果有缓存的话就获取缓存
             if (creep.memory.targetId) target = Game.getObjectById<StructureContainer | Source>(creep.memory.sourceId)
+            const forceTarget = Memory.creepConfigs[creep.name]['targetId'];
+            if (forceTarget) {
+                target = Game.getObjectById(forceTarget);
+                // console.log(creep.name + '强制指定targetId');
+            }
             const source = Game.getObjectById<Source>(data.sourceId)
 
             // 没有缓存或者缓存失效了就重新获取

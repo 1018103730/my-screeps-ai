@@ -4,7 +4,7 @@ import creepNumberListener, {creepApi} from './modules/creepController'
 import {ErrorMapper} from './modules/errorMapper'
 import {DEFAULT_FLAG_NAME} from "./setting";
 import {
-    attactPosChechk,
+    attactPosChechk, boostUpgrader,
     buildRoad,
     claimNewRoom,
     dispatchGarrison,
@@ -32,7 +32,7 @@ export const loop = ErrorMapper.wrapLoop(() => {
         buildRoad();
 
         // claimer
-        claimNewRoom("W19S17", "W17S17");
+        claimNewRoom("W21S15", "W21S16");
 
         //驻军
         dispatchGarrison()
@@ -40,10 +40,13 @@ export const loop = ErrorMapper.wrapLoop(() => {
         //增强power能力
         startOp()
 
+        //增强upgrader
+        boostUpgrader();
+
         //自动抬价
         // upPrice("5fd02fb409cc071d9eb725ba",880) //收pixel
 
-        attactPosChechk();
+        // attactPosChechk();
     }
 
     //位面漫步者

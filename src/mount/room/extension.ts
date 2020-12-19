@@ -133,6 +133,7 @@ export default class RoomExtension extends RoomShortcut {
     public removeRestrictedPos(creepName: string): void {
         if (!this.memory.restrictedPos) this.memory.restrictedPos = {}
 
+        if (Game.creeps[creepName].memory.role == 'harvester') return
         delete this.memory.restrictedPos[creepName]
     }
 

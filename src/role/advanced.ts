@@ -248,7 +248,7 @@ export const transferTaskOperations: { [taskType: string]: transferTaskOperation
             creep.getEngryFrom(sourceId ? Game.getObjectById(sourceId) : creep.room.storage)
         },
         target: (creep, task: IFillTower) => {
-            if (creep.room.controller.level <= 6 && creep.room.energyAvailable <= 1000) {
+            if (creep.room.energyAvailable < creep.room.energyCapacityAvailable) {
                 creep.room.deleteCurrentRoomTransferTask()
                 return true
             }
@@ -374,12 +374,6 @@ export const transferTaskOperations: { [taskType: string]: transferTaskOperation
                 return false
             }
 
-            // 拓展能量过少,直接跳过, 优先填充拓展
-            // if (creep.room.energyAvailable <= 1000) {
-            //     creep.room.deleteCurrentRoomTransferTask()
-            //     return true
-            // }
-
             if (!clearCarryingEnergy(creep)) return false
 
             // 找到第一个需要从终端取出的底物
@@ -392,11 +386,14 @@ export const transferTaskOperations: { [taskType: string]: transferTaskOperation
             }
             if (creep.store[targetResource.type] > 0) return true
 
+            let lab: StructureLab = Game.getObjectById(targetResource.id)
             // 获取能拿取的数量
-            const getAmount = Math.min(targetResource.amount, creep.store.getFreeCapacity())
+            const getAmount = Math.min(targetResource.amount, creep.store.getFreeCapacity(), lab.store.getFreeCapacity(targetResource.type));
             if (getAmount <= 0) {
-                creep.room.deleteCurrentRoomTransferTask()
-                creep.log(`Lab 填充任务，${targetResource.type} 资源不足`)
+                // creep.room.deleteCurrentRoomTransferTask()
+                // creep.log(`Lab 填充任务，${targetResource.type} 资源不足`)
+
+                creep.room.handleLabInTask(targetResource.type, 0)
                 return false
             }
 
@@ -419,16 +416,21 @@ export const transferTaskOperations: { [taskType: string]: transferTaskOperation
 
             // 转移资源
             creep.goTo(targetLab.pos)
+            let amount = creep.store[targetResource.type];
             const result = creep.transfer(targetLab, targetResource.type)
             // 正常转移资源则更新任务
             if (result === OK) {
                 // 这里直接更新到 0 的原因是因为这样可以最大化运载效率
                 // 保证在产物移出的时候可以一次就拿完
-                creep.room.handleLabInTask(targetResource.type, 0)
+                creep.room.handleLabInTask(targetResource.type, targetResource.amount - amount)
                 return true
             } else if (result != ERR_NOT_IN_RANGE) {
                 creep.say(`labInB ${result}`)
-                creep.room.deleteCurrentRoomTransferTask()
+                if (targetResource.type == 'energy' || targetResource.type == 'XGH2O') {
+                    creep.room.handleLabInTask(targetResource.type, 0)
+                } else {
+                    creep.room.deleteCurrentRoomTransferTask()
+                }
             }
         }
     },

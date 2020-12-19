@@ -195,6 +195,10 @@ export default class TerminalExtension extends StructureTerminal {
             return false
         }
 
+        if (this.room.controller.level == 8 && this.room.storage.store[resource.type] >= 500000) {
+            return false;
+        }
+
         // 交易
         const dealResult = Game.market.deal(targetOrder.id, amount, this.room.name)
         // 检查返回值

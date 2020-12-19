@@ -163,7 +163,7 @@ export default class CreepExtension extends Creep {
         const result = PathFinder.search(this.pos, {pos: target, range}, {
             plainCost: 2,
             swampCost: 10,
-            maxOps: 50000,
+            maxOps: 10000,
             roomCallback: roomName => {
                 // 强调了不许走就不走
                 if (Memory.bypassRooms && Memory.bypassRooms.includes(roomName)) return false
@@ -189,6 +189,8 @@ export default class CreepExtension extends Creep {
                 for (const creepName in restrictedPos) {
                     // 自己注册的禁止通行点位自己可以走
                     if (creepName === this.name) continue
+                    //同为upgrader 就可以走
+                    // if (this.memory.role == 'upgrader') continue
                     const pos = room.unserializePos(restrictedPos[creepName])
                     costs.set(pos.x, pos.y, 0xff)
                 }
@@ -309,7 +311,7 @@ export default class CreepExtension extends Creep {
         const moveResult = this.moveTo(target, {
             reusePath: 20,
             ignoreCreeps: true,
-            maxOps: 50000,
+            maxOps: 10000,
             costCallback: (roomName, costMatrix) => {
                 if (roomName === this.room.name) {
                     // 避开房间中的禁止通行点
@@ -420,7 +422,6 @@ export default class CreepExtension extends Creep {
      */
     public upgrade(): ScreepsReturnCode {
         const result = this.upgradeController(this.room.controller)
-
         // 如果刚开始站定工作，就把自己的位置设置为禁止通行点
         if (result === OK && !this.memory.standed) {
             this.memory.standed = true

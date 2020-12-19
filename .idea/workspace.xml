@@ -7,9 +7,15 @@
     <list default="true" id="10d41954-e381-4121-a946-d325cd5560c6" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frame.js" beforeDir="false" afterPath="$PROJECT_DIR$/frame.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/autoPlanning/planBaseLayout.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/autoPlanning/planBaseLayout.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modules/myTools.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/myTools.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mount/structures/lab.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/mount/structures/lab.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mount/creep/extension.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/mount/creep/extension.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mount/room/extension.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/mount/room/extension.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/mount/structures/terminal/extension.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/mount/structures/terminal/extension.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/role/advanced.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/role/advanced.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/role/base.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/role/base.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/role/remote.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/role/remote.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/setting.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/setting.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -118,7 +124,14 @@
       <workItem from="1607998304420" duration="15987000" />
       <workItem from="1608078472532" duration="294000" />
       <workItem from="1608078786417" duration="1287000" />
-      <workItem from="1608083810231" duration="7569000" />
+      <workItem from="1608083810231" duration="12607000" />
+      <workItem from="1608163736962" duration="6984000" />
+      <workItem from="1608171817714" duration="18064000" />
+      <workItem from="1608249146870" duration="2579000" />
+      <workItem from="1608254399941" duration="1693000" />
+      <workItem from="1608261163617" duration="6913000" />
+      <workItem from="1608270056020" duration="12309000" />
+      <workItem from="1608336551083" duration="29236000" />
     </task>
     <servers />
   </component>
@@ -130,10 +143,14 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1607388814452" />
-    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1607303028115">
+    <state x="640" y="255" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1608171555886">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1607303028115" />
+    <state x="640" y="255" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1608171555886" />
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1608269939980">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1608269939980" />
     <state width="1899" height="275" key="GridCell.Tab.0.bottom" timestamp="1607736058519">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -154,17 +171,21 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="164" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1606443750453" />
-    <state x="648" y="103" width="594" height="835" key="find.popup" timestamp="1608078794784">
+    <state x="578" y="170" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1608266085452">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="648" y="103" width="594" height="835" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1608078794784" />
+    <state x="578" y="170" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1608266085452" />
+    <state x="648" y="103" width="594" height="835" key="find.popup" timestamp="1608362326826">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="648" y="103" width="594" height="835" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1608362326826" />
     <state x="616" y="244" key="run.anything.popup" timestamp="1607999424858">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="616" y="244" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1607999424858" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1607765738702">
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1608364727381">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1607765738702" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1608364727381" />
   </component>
 </project>

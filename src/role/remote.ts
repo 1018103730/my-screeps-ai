@@ -236,12 +236,9 @@ const roles: {
         // todo 记得还原
         bodys: [
             MOVE, MOVE, MOVE, MOVE, MOVE,
-            MOVE, MOVE, MOVE, MOVE, MOVE,
             MOVE, MOVE,
             CLAIM, CLAIM, CLAIM, CLAIM, CLAIM,
-            CLAIM, CLAIM, CLAIM, CLAIM, CLAIM,
-            CLAIM, CLAIM, CLAIM, CLAIM, CLAIM,
-            CLAIM, CLAIM, CLAIM, CLAIM, CLAIM
+            CLAIM, CLAIM
         ]
     }),
 
@@ -314,7 +311,7 @@ const roles: {
         isNeed: () => {
             const targetRoom = Game.rooms[data.targetRoomName]
             // 如果房间造好了 terminal，自己的使命就完成了
-            // if (!targetRoom || (targetRoom.terminal && targetRoom.terminal.my)) return false
+            if (!targetRoom || (targetRoom.terminal && targetRoom.terminal.my)) return false
 
             return true
         },
@@ -368,7 +365,7 @@ const roles: {
         isNeed: () => {
             const targetRoom = Game.rooms[data.targetRoomName]
             // 如果房间到 6 级了就任务完成
-            // if (!targetRoom || targetRoom.controller.level >= 6) return false
+            if (!targetRoom || targetRoom.controller.level >= 6) return false
 
             return true
         },
