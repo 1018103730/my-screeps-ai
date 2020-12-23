@@ -380,7 +380,9 @@ const roles: {
      */
     repairer: (data: WorkerData): ICreepConfig => ({
         // 根据敌人威胁决定是否继续生成
-        isNeed: room => room.controller.checkEnemyThreat(),
+        isNeed: room => {
+            return room.controller.checkEnemyThreat() || room.memory['forceRepair'];
+        },
         source: creep => {
             creep.getEngryFrom(Game.getObjectById(data.sourceId) || creep.room.storage || creep.room.terminal)
 

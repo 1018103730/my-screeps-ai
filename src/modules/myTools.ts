@@ -19,10 +19,10 @@ export function sharder() {
     if (Game.shard.name == 'shard3') {
         if (Game.time % 1000 == 0) {
             console.log(Game.time / 1000 + '号位面漫步者正在生成~');
-            creepApi.add(`door` + (new Date).getTime(), 'soldier', {
+            creepApi.add(`door` + Game.time, 'soldier', {
                 targetFlagName: "door",
                 keepSpawn: false
-            }, "W21S19")
+            }, "W16S19")
         }
         if (Memory['showCpuUsed']) {
             console.log(Game.cpu.getUsed())
@@ -42,25 +42,9 @@ export function sharder() {
             }
             // c.moveByPath(Memory['path'])
             if (c.room.name.slice(0, 3) != "W30") {
-                c.moveTo(Game.flags['door_address0'], {
-                    reusePath: reusePath, visualizePathStyle: {
-                        fill: 'transparent',
-                        stroke: '#fff',
-                        lineStyle: 'dashed',
-                        strokeWidth: .15,
-                        opacity: .1
-                    }
-                });
+                c.moveTo(Game.flags['door_address0'], {reusePath: reusePath});
             } else {
-                c.moveTo(Game.flags['door_address1'], {
-                    reusePath: reusePath, visualizePathStyle: {
-                        fill: 'transparent',
-                        stroke: '#fff',
-                        lineStyle: 'dashed',
-                        strokeWidth: .15,
-                        opacity: .1
-                    }
-                });
+                c.moveTo(Game.flags['door_address1'], {reusePath: reusePath});
             }
         }
         if (Memory['showCpuUsed']) {
@@ -104,6 +88,7 @@ export function dispatchGarrison() {
         if (Memory.creeps[c].role != "remoteBuilder") continue;
         let targetRoomName = Memory.creeps[c].data['targetRoomName'];
         if (c != targetRoomName + ' RemoteBuilder') continue;
+        if (targetRoomName == 'W19S17') continue;
 
         let roomName = Memory.creepConfigs[c].spawnRoom
         let flagName = roomName + ' to ' + targetRoomName + ' garrison';
@@ -226,7 +211,16 @@ export function boostUpgrader() {
 
     Object.values(Game.creeps).filter((creep) => {
         // 必须是upgrader
-        let isUpgrader = creep.memory.role == "upgrader";
+        let isUpgrader;
+        if (!creep.room.controller) {
+            isUpgrader = false;
+        } else {
+            if (creep.room.controller.level < 8) {
+                isUpgrader = creep.memory.role == "upgrader" || creep.memory.role == "remoteUpgrader";
+            } else {
+                isUpgrader = creep.memory.role == "remoteUpgrader";
+            }
+        }
 
         // 必须在开启了boostUpgrade的房间里
         let inRoom = canBoostUpgradeRoom.indexOf(creep.room.name) >= 0;
@@ -268,4 +262,12 @@ export function boostUpgrader() {
             }
         }
     })
+}
+
+export function clearRoomRestrictedPos() {
+    if (Game.time % 1000) return;
+
+    for (let r in Memory.rooms) {
+        Memory.rooms[r].restrictedPos = {};
+    }
 }

@@ -8,15 +8,12 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frame.js" beforeDir="false" afterPath="$PROJECT_DIR$/frame.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/autoPlanning/planBaseLayout.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/autoPlanning/planBaseLayout.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/autoPlanning/planCreep.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/autoPlanning/planCreep.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modules/myTools.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/myTools.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/mount/creep/extension.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/mount/creep/extension.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mount/room/extension.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/mount/room/extension.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mount/structures/terminal/extension.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/mount/structures/terminal/extension.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/role/advanced.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/role/advanced.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/role/base.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/role/base.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/role/remote.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/role/remote.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/setting.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/setting.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -131,7 +128,12 @@
       <workItem from="1608254399941" duration="1693000" />
       <workItem from="1608261163617" duration="6913000" />
       <workItem from="1608270056020" duration="12309000" />
-      <workItem from="1608336551083" duration="29236000" />
+      <workItem from="1608336551083" duration="30073000" />
+      <workItem from="1608509417652" duration="17830000" />
+      <workItem from="1608596928630" duration="8985000" />
+      <workItem from="1608682366187" duration="757000" />
+      <workItem from="1608689498959" duration="27000" />
+      <workItem from="1608693724231" duration="17594000" />
     </task>
     <servers />
   </component>
@@ -171,21 +173,21 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="164" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1606443750453" />
-    <state x="578" y="170" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1608266085452">
+    <state x="578" y="170" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1608539700780">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="578" y="170" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1608266085452" />
-    <state x="648" y="103" width="594" height="835" key="find.popup" timestamp="1608362326826">
+    <state x="578" y="170" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1608539700780" />
+    <state x="648" y="103" width="594" height="835" key="find.popup" timestamp="1608709018025">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="648" y="103" width="594" height="835" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1608362326826" />
+    <state x="648" y="103" width="594" height="835" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1608709018025" />
     <state x="616" y="244" key="run.anything.popup" timestamp="1607999424858">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="616" y="244" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1607999424858" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1608364727381">
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1608694636733">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1608364727381" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1608694636733" />
   </component>
 </project>

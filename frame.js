@@ -15,9 +15,10 @@ for (let r in Game.rooms) {
         }
         let resourceValue = room.terminal.store[resource];
         console.log(resource + '\t' + resourceValue)
-        if (resource == 'XGHO2' && r != 'W16S18') {
-            room.terminal.send(resource, resourceValue, 'W16S18')
-        }
+        // if (resource == 'XKHO2' && r != 'W16S18') {
+        //     console.log(room.name + "发送了" + resourceValue + '的' + resource)
+        //     room.terminal.send(resource, resourceValue, 'W16S18')
+        // }
     }
 }
 
@@ -36,24 +37,22 @@ for (let r in Game.rooms) {
     room.terminal.add('Z', 1000, 0, 1);
     room.terminal.add('U', 1000, 0, 1);
     room.terminal.add('X', 1000, 0, 1);
-    room.terminal.add('XGH2O', 10000, 0, 1);
-    room.terminal.add('XGH2O', 10000, 0, 0);
 
     if (room.controller.level < 8) {
+        room.terminal.add('XGH2O', 10000, 0, 1);
         room.terminal.add('energy', 100000, 0, 1);
-        room.terminal.add('energy', 100000, 0, 0);
     } else {
         room.terminal.add('energy', 60000, 0, 1);
-        room.terminal.add('energy', 60000, 0, 0);
     }
 }
 
 
 // 查看creep参数
+let room = "W16S17"
 let rooms = {};
 for (let c in Game.creeps) {
     let creep = Game.creeps[c];
-    if (creep.room.name != "W21S16") {
+    if (creep.room.name != room) {
         continue;
     }
     if (!rooms[creep.room.name]) {
@@ -73,7 +72,7 @@ for (let c in Game.creeps) {
 }
 
 for (let r in rooms) {
-    console.log('------------' + r + ':' + Game.rooms[r].energyAvailable +'-'+Game.rooms[r].memory['boostUpgradeTimeout']+ '--------------');
+    console.log('------------' + r + '-' + Game.rooms[r].controller.level + ':' + Game.rooms[r].energyAvailable + '-' + Game.rooms[r].memory['boostUpgradeTimeout'] + '--------------');
     for (let record of rooms[r]) {
         console.log(record.join('\t'))
     }
@@ -118,4 +117,40 @@ for (let r in Memory.rooms) {
         console.log(r)
         delete Memory.rooms[r]
     }
+}
+
+//生成补给搬运工
+let tasks = [
+    // {from: "W16S19", to: 'W15S18'},
+    {from: 'W17S17', to: 'W19S17'}
+];
+for (let t of tasks) {
+    let fromRoom = Game.rooms[t.from];
+    let toRoom = Game.rooms[t.to];
+    let flagName = t.from + ' to ' + t.to + ' supply reiver';
+    fromRoom.storage.pos.createFlag(flagName);
+
+    fromRoom.spawnReiver(flagName, toRoom.storage.id)
+}
+
+// shard2 寻路
+let routeKey = '36/7/W19S17 21/14/W17S17';
+let posData = routeKey.split(' ');
+let fromPos = new RoomPosition(...posData[0].split('/'));
+let toPos = new RoomPosition(...posData[1].split('/'));
+
+let result = PathFinder.search(fromPos, toPos, {plainCost: 2, swampCost: 10, maxOps: 100000, maxRooms: 40});
+if (result.incomplete) {
+    console.log('数据不完整,请增加maxOps')
+} else {
+    positions = result.path
+    wayRoute = positions.map((pos, index) => {
+        // 最后一个位置就不用再移动
+        if (index >= positions.length - 1) return null
+        // 由于房间边缘地块会有重叠，所以这里筛除掉重叠的步骤
+        if (pos.roomName != positions[index + 1].roomName) return null
+        // 获取到下个位置的方向
+        return pos.getDirectionTo(positions[index + 1])
+    }).join('')
+    global.routeCache[routeKey] = wayRoute
 }

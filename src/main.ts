@@ -6,7 +6,7 @@ import {DEFAULT_FLAG_NAME} from "./setting";
 import {
     attactPosChechk, boostUpgrader,
     buildRoad,
-    claimNewRoom,
+    claimNewRoom, clearRoomRestrictedPos,
     dispatchGarrison,
     sharder,
     startOp,
@@ -32,13 +32,13 @@ export const loop = ErrorMapper.wrapLoop(() => {
         buildRoad();
 
         // claimer
-        claimNewRoom("W21S15", "W21S16");
+        // claimNewRoom("W21S15", "W21S16");
 
         //驻军
         dispatchGarrison()
 
         //增强power能力
-        startOp()
+        // startOp()
 
         //增强upgrader
         boostUpgrader();
@@ -47,6 +47,9 @@ export const loop = ErrorMapper.wrapLoop(() => {
         // upPrice("5fd02fb409cc071d9eb725ba",880) //收pixel
 
         // attactPosChechk();
+
+        //清除禁止通行点
+        clearRoomRestrictedPos();
     }
 
     //位面漫步者

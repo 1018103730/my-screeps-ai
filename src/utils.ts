@@ -107,19 +107,30 @@ export function stateScanner(): void {
 
     if (!Memory.stats) Memory.stats = {rooms: {}}
 
+    //过滤非claim房间
+    for (let r in Memory.stats.rooms) {
+        if (!Game.rooms[r]) {
+            delete Memory.stats.rooms[r];
+        }
+
+        if (!Game.rooms[r].controller.my) {
+            delete Memory.stats.rooms[r];
+        }
+    }
+
     // 统计 GCL / GPL 的升级百分比和等级
-    Memory.stats.gcl = (Game.gcl.progress / Game.gcl.progressTotal) * 100,
-        Memory.stats.gclLevel = Game.gcl.level,
-        Memory.stats.gpl = (Game.gpl.progress / Game.gpl.progressTotal) * 100,
-        Memory.stats.gplLevel = Game.gpl.level,
-        // CPU 的当前使用量
-        Memory.stats.cpu = Game.cpu.getUsed(),
-        // bucket 当前剩余量
-        Memory.stats.bucket = Game.cpu.bucket
+    Memory.stats.gcl = (Game.gcl.progress / Game.gcl.progressTotal) * 100;
+    Memory.stats.gclLevel = Game.gcl.level;
+    Memory.stats.gpl = (Game.gpl.progress / Game.gpl.progressTotal) * 100;
+    Memory.stats.gplLevel = Game.gpl.level;
+    // CPU 的当前使用量
+    Memory.stats.cpu = Game.cpu.getUsed();
+    // bucket 当前剩余量
+    Memory.stats.bucket = Game.cpu.bucket;
     // 统计剩余钱数
-    Memory.stats.credit = Game.market.credits
+    Memory.stats.credit = Game.market.credits;
     // 统计剩余pixel
-    Memory.stats['pixel'] = Game.resources.pixel
+    Memory.stats['pixel'] = Game.resources.pixel;
 }
 
 /**

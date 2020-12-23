@@ -149,6 +149,7 @@ export default class CreepExtension extends Creep {
      * @returns PathFinder.search 的返回值
      */
     public findPath(target: RoomPosition, range: number): string | null {
+        let startCpuUsed = Game.cpu.getUsed();
         if (!this.memory.farMove) this.memory.farMove = {}
         this.memory.farMove.index = 0
 
@@ -163,7 +164,7 @@ export default class CreepExtension extends Creep {
         const result = PathFinder.search(this.pos, {pos: target, range}, {
             plainCost: 2,
             swampCost: 10,
-            maxOps: 10000,
+            maxOps: 4000,
             roomCallback: roomName => {
                 // 强调了不许走就不走
                 if (Memory.bypassRooms && Memory.bypassRooms.includes(roomName)) return false
@@ -218,6 +219,16 @@ export default class CreepExtension extends Creep {
         // 保存到全局缓存
         if (!result.incomplete) global.routeCache[routeKey] = route
 
+        let endCpuUsed = Game.cpu.getUsed();
+
+        console.log(
+            '远程寻路信息:\n' +
+            ' creep:' + this.name + ' \n' +
+            ' way:' + routeKey + ' \n' +
+            ' cpu:' + (endCpuUsed - startCpuUsed) + ' \n' +
+            ' route:' + route + ' \n' +
+            ' incomplete:' + result.incomplete
+        )
         return route
     }
 
@@ -311,7 +322,7 @@ export default class CreepExtension extends Creep {
         const moveResult = this.moveTo(target, {
             reusePath: 20,
             ignoreCreeps: true,
-            maxOps: 10000,
+            maxOps: 8000,
             costCallback: (roomName, costMatrix) => {
                 if (roomName === this.room.name) {
                     // 避开房间中的禁止通行点
