@@ -127,6 +127,14 @@ export function stateScanner(): void {
     Memory.stats.cpu = Game.cpu.getUsed();
     // bucket 当前剩余量
     Memory.stats.bucket = Game.cpu.bucket;
+    //每1000tick盈亏
+    if (Game.time % 1000 == 0) {
+        if (!Memory.stats['oldCr']) {
+            Memory.stats['oldCr'] = 0;
+        }
+        Memory.stats['profit'] = Game.market.credits - Memory.stats['oldCr'];
+        Memory.stats['oldCr'] = Game.market.credits;
+    }
     // 统计剩余钱数
     Memory.stats.credit = Game.market.credits;
     // 统计剩余pixel

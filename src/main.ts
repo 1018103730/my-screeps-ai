@@ -4,7 +4,8 @@ import creepNumberListener, {creepApi} from './modules/creepController'
 import {ErrorMapper} from './modules/errorMapper'
 import {DEFAULT_FLAG_NAME} from "./setting";
 import {
-    attactPosChechk, boostUpgrader,
+    autoPute,
+    boostUpgrader,
     buildRoad,
     claimNewRoom, clearRoomRestrictedPos,
     dispatchGarrison,
@@ -46,10 +47,11 @@ export const loop = ErrorMapper.wrapLoop(() => {
         //自动抬价
         // upPrice("5fd02fb409cc071d9eb725ba",880) //收pixel
 
-        // attactPosChechk();
-
         //清除禁止通行点
         clearRoomRestrictedPos();
+
+        // 自动pute
+        autoPute()
     }
 
     //位面漫步者

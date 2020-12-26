@@ -195,10 +195,6 @@ export default class TerminalExtension extends StructureTerminal {
             return false
         }
 
-        if (this.room.controller.level == 8 && this.room.storage.store[resource.type] >= 500000) {
-            return false;
-        }
-
         // 交易
         const dealResult = Game.market.deal(targetOrder.id, amount, this.room.name)
         // 检查返回值
@@ -211,7 +207,7 @@ export default class TerminalExtension extends StructureTerminal {
             this.setNextIndex()
             this.energyCheck()
 
-            return false // 把这个改成 true 可以加快交易速度
+            return true // 把这个改成 true 可以加快交易速度
         } else if (dealResult === ERR_INVALID_ARGS) delete this.room.memory.targetOrderId
         else {
             this.log(`${this.room.name} 处理订单异常 ${dealResult}`, 'yellow')

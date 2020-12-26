@@ -1,7 +1,9 @@
 // 查看当前终端资源
-let resources = ['XZHO2', 'XZH2O', "XLHO2", "XKHO2", 'XGHO2', 'energy', 'power'];
+let resources = ['XZHO2', 'XZH2O', "XLHO2", "XKHO2", 'XGHO2', "XGH2O", 'energy', 'power'];
 for (let r in Game.rooms) {
     let room = Game.rooms[r];
+    if (!room.controller) continue;
+    if (!room.controller.my) continue;
     if (!room.terminal) {
         continue
     }
@@ -37,18 +39,20 @@ for (let r in Game.rooms) {
     room.terminal.add('Z', 1000, 0, 1);
     room.terminal.add('U', 1000, 0, 1);
     room.terminal.add('X', 1000, 0, 1);
+    room.terminal.add('XGH2O', 10000, 0, 1);
 
     if (room.controller.level < 8) {
-        room.terminal.add('XGH2O', 10000, 0, 1);
+        room.terminal.add('energy', 100000, 0, 2);
         room.terminal.add('energy', 100000, 0, 1);
     } else {
-        room.terminal.add('energy', 60000, 0, 1);
+        room.terminal.add('energy', 10000, 1, 2);
+        room.terminal.add('energy', 10000, 1, 1)
     }
 }
 
 
 // 查看creep参数
-let room = "W16S17"
+let room = "W21S19"
 let rooms = {};
 for (let c in Game.creeps) {
     let creep = Game.creeps[c];
@@ -100,6 +104,7 @@ for (let c in Game.creeps) {
 }
 
 for (let room in rooms) {
+    if (!rooms[room]) continue;
     console.log(room + '\t' + rooms[room] + '\t' + builders[room])
 }
 
@@ -121,8 +126,7 @@ for (let r in Memory.rooms) {
 
 //生成补给搬运工
 let tasks = [
-    // {from: "W16S19", to: 'W15S18'},
-    {from: 'W17S17', to: 'W19S17'}
+    {from: 'W21S16', to: 'W21S15'}
 ];
 for (let t of tasks) {
     let fromRoom = Game.rooms[t.from];

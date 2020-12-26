@@ -115,6 +115,9 @@ export const planLayout = function (room: Room): OK | ERR_NOT_OWNER | ERR_NOT_FO
     const center = room.memory.center
     if (!center) return ERR_NOT_FOUND
 
+    //得到当前房间的地势
+    const terrain = Game.map.getRoomTerrain(room.name);
+
     let needBuild = false
     // 从 1 级开始检查
     planLevel.forEach((level: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8) => {
@@ -128,7 +131,14 @@ export const planLayout = function (room: Room): OK | ERR_NOT_OWNER | ERR_NOT_FO
                 // 为 null 说明在集中布局之外
                 if (pos == null) result = placeOutsideConstructionSite(room, structureType)
                 // 直接发布工地，通过返回值检查是否需要建造
-                else result = room.createConstructionSite(center[0] + pos[0], center[1] + pos[1], structureType)
+                else {
+                    // 是wall就不建了吧~
+                    if (terrain.get(center[0] + pos[0], center[1] + pos[1]) == TERRAIN_MASK_WALL) {
+                        result = ERR_INVALID_TARGET;
+                    } else {
+                        result = room.createConstructionSite(center[0] + pos[0], center[1] + pos[1], structureType)
+                    }
+                }
 
                 // 存在需要建造的建筑
                 if (result === OK) needBuild = true

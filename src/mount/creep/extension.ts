@@ -221,14 +221,16 @@ export default class CreepExtension extends Creep {
 
         let endCpuUsed = Game.cpu.getUsed();
 
-        console.log(
-            '远程寻路信息:\n' +
-            ' creep:' + this.name + ' \n' +
-            ' way:' + routeKey + ' \n' +
-            ' cpu:' + (endCpuUsed - startCpuUsed) + ' \n' +
-            ' route:' + route + ' \n' +
-            ' incomplete:' + result.incomplete
-        )
+        if (Memory['showFarmoveCpuUsed']) {
+            console.log(
+                '远程寻路信息:\n' +
+                ' creep:' + this.name + ' \n' +
+                ' way:' + routeKey + ' \n' +
+                ' cpu:' + (endCpuUsed - startCpuUsed) + ' \n' +
+                ' route:' + route + ' \n' +
+                ' incomplete:' + result.incomplete
+            )
+        }
         return route
     }
 

@@ -61,7 +61,7 @@ export const bodyConfigs: BodyConfigs = {
         {[WORK]: 4, [CARRY]: 4, [MOVE]: 4},
         {[WORK]: 6, [CARRY]: 6, [MOVE]: 6},
         {[WORK]: 9, [CARRY]: 9, [MOVE]: 9},
-        {[WORK]: 17, [CARRY]: 9, [MOVE]: 17},
+        {[WORK]: 17, [CARRY]: 10, [MOVE]: 17},
         {[WORK]: 15, [CARRY]: 15, [MOVE]: 15}
     ),
 
@@ -182,21 +182,21 @@ export const baseLayout: BaseLayout = {
     },
     3: {
         [STRUCTURE_EXTENSION]: [[-4, -5], [-3, -5], [-2, -5], [-1, -4], [-1, -3]],
-        // [STRUCTURE_TOWER]: [[-2, -1]],
+        [STRUCTURE_TOWER]: [[-2, -1]],
         [STRUCTURE_ROAD]: [[-1, -2], [-1, -1], [-2, -2], [-3, -3], [-2, -4], [-4, -2], [-4, -4]]
     },
     4: {
         [STRUCTURE_EXTENSION]: [[-3, -1], [-4, -1], [1, -4], [1, -3], [3, -4], [4, -3], [2, -5], [3, -5], [4, -5], [5, -4]],
         [STRUCTURE_STORAGE]: [[0, -1]],
         [STRUCTURE_ROAD]: [[0, -3], [1, -2], [2, -2], [3, -3], [2, -4], [4, -4]],
-        // [STRUCTURE_RAMPART]: [[-3, -2], [0, -1], [-2, -1]]
+        [STRUCTURE_RAMPART]: [[-3, -2], [0, -1], [-2, -1]]
     },
     5: {
         [STRUCTURE_EXTENSION]: [[5, -3], [5, -2], [4, -1], [3, -1], [-3, 1], [-4, 1], [-3, 2], [-4, 3], [-3, 4], [-2, 3]],
-        // [STRUCTURE_TOWER]: [[0, -2]],
+        [STRUCTURE_TOWER]: [[0, -2]],
         [STRUCTURE_LINK]: [[-1, 0], null],
         [STRUCTURE_ROAD]: [[4, -2], [-2, 0], [-1, 1], [-1, 2], [-2, 2], [-3, 3], [-4, 2], [0, 0]],
-        // [STRUCTURE_RAMPART]: [[0, -2]]
+        [STRUCTURE_RAMPART]: [[0, -2]]
     },
     6: {
         [STRUCTURE_EXTENSION]: [[-5, 2], [-5, 3], [-5, 4], [-4, 5], [-3, 5], [-2, 5], [-1, 3], [-1, 4], [3, 1], [4, 1]],
@@ -333,6 +333,10 @@ export const labTarget = [
     {target: RESOURCE_GHODIUM_OXIDE, number: 300},
     {target: RESOURCE_GHODIUM_ALKALIDE, number: 1000},
     {target: RESOURCE_CATALYZED_GHODIUM_ALKALIDE, number: 4000},
+    // XGH2O 生产线，强化 Upgrade
+    {target: RESOURCE_GHODIUM_HYDRIDE, number: 300},
+    {target: RESOURCE_GHODIUM_ACID, number: 1000},
+    {target: RESOURCE_CATALYZED_GHODIUM_ACID, number: 4000},
 ]
 
 /**
@@ -675,7 +679,8 @@ export const UPGRADE_WITH_TERMINAL = [
 export const UPGRADE_WITH_STORAGE = [
     {energy: 700000, num: 4},
     {energy: 500000, num: 3},
-    {energy: 100000, num: 2}
+    {energy: 100000, num: 2},
+    {energy: 50000, num: 2},
 ]
 
 // 用于维持房间能量正常运转的重要角色

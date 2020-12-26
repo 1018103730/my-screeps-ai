@@ -47,28 +47,29 @@ export function sharder() {
                 c.moveTo(Game.flags['door_address1'], {reusePath: reusePath});
             }
         }
-        if (Memory['showCpuUsed']) {
-            console.log(Game.cpu.getUsed())
-        }
     }
 }
 
+//修路
 export function buildRoad() {
-    if (Object.keys(Game.constructionSites).length >= 100 || !(Memory['buildUpdaterRoad'])) return
+    if (Object.keys(Game.constructionSites).length >= 100 || !(Memory['buildRoad'])) return
     for (let c in Game.creeps) {
         let creep = Game.creeps[c];
+        //不负重不修路
+        if (creep.store.getUsedCapacity() <= 0) continue
         if (creep.pos.x == 0 || creep.pos.y == 0) continue
         if (!creep.room.controller) continue
         if (!creep.room.controller.my) continue
 
         let creepRole = Memory.creeps[creep.name]['role'];
-        if (
-            (creepRole == "upgrader" && creep.room.controller.level >= 6)
-            || (creepRole != 'builder' && creepRole != "miner" && creep.room.controller.level == 8)
-        ) {
+        // 不需要造路的角色
+        const filterRole = ['builder', 'miner', 'collector', 'soldier'];
+
+        if (filterRole.indexOf(creepRole) < 0) {
             let ls = creep.pos.lookFor(LOOK_STRUCTURES);
+            let lcs = creep.pos.lookFor(LOOK_CONSTRUCTION_SITES);
             if (
-                creep.pos.lookFor(LOOK_CONSTRUCTION_SITES).length == 0 //不存在施工点
+                (lcs.length == 0) //不存在施工点
                 && (
                     (ls.length == 0)//不存在建筑
                     || (ls.length == 1 && ls[0].structureType == 'rampart') // 存在墙
@@ -146,27 +147,6 @@ export function upPrice(orderId, maxPrice = 10, step = 1) {
 
     //价格被人超过了且在合理范围内, 就抬价
     Game.market.changeOrderPrice(orderId, newPrice)
-}
-
-export function attactPosChechk() {
-    if (Game.rooms.W19S17 && Game.rooms.W19S17.controller.my) return;
-    if (Game.time % 500 == 0) {
-        Game.rooms.W17S17.addRoomTransferTask({
-            type: 'boostGetResource'
-        })
-        Game.rooms.W17S17.addRoomTransferTask({
-            type: 'boostGetEnergy'
-        })
-    }
-
-    let creeps = ['W17S17 apocalypse 23950166'];
-    for (let c of creeps) {
-        let creep = Game.creeps[c];
-        if (!creep) continue;
-        if (!creep.memory.massMode) {
-            creep.memory.massMode = true;
-        }
-    }
 }
 
 export function boostUpgrader() {
@@ -265,9 +245,35 @@ export function boostUpgrader() {
 }
 
 export function clearRoomRestrictedPos() {
-    if (Game.time % 1000) return;
+    // if (Game.time % 100) return;
+    //
+    // for (let r in Memory.rooms) {
+    //     Memory.rooms[r].restrictedPos = {};
+    // }
+}
 
-    for (let r in Memory.rooms) {
-        Memory.rooms[r].restrictedPos = {};
+export function autoPute() {
+    const storageEnergyThreshold = 200000;
+    if (Game.time % 200) return
+
+    for (let r in Game.rooms) {
+        let room = Game.rooms[r];
+        //小于等级取消
+        if (!room.controller || room.controller.level < 8) continue
+
+        // 兜底
+        if (room.storage.store['energy'] <= storageEnergyThreshold) continue
+
+        // 为零取消
+        let minPutEnergy: number = Math.min(room.terminal.store.getFreeCapacity(), room.storage.store['energy'] - storageEnergyThreshold);
+        if (!minPutEnergy) continue
+
+        room.addCenterTask({
+            submit: room.memory.centerTransferTasks.length,
+            target: STRUCTURE_TERMINAL,
+            source: STRUCTURE_STORAGE,
+            resourceType: RESOURCE_ENERGY,
+            amount: minPutEnergy
+        })
     }
 }
