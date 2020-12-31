@@ -1,5 +1,9 @@
 // 查看当前终端资源
-let resources = ['XZHO2', 'XZH2O', "XLHO2", "XKHO2", 'XGHO2', "XGH2O", 'energy', 'power'];
+let resources = ['XZHO2', 'XZH2O', "XLHO2", "XKHO2", 'XGHO2', "XGH2O", "energy"];
+let titles = ['房间', '终端占用', '仓库占用']
+let result = [];
+result.push(titles.join("\t") + "\t" + resources.join("\t"))
+
 for (let r in Game.rooms) {
     let room = Game.rooms[r];
     if (!room.controller) continue;
@@ -10,19 +14,15 @@ for (let r in Game.rooms) {
     if (!room.terminal.my) {
         continue
     }
-    console.log('-------------' + r + ':' + room.terminal.store.getUsedCapacity() + '|' + room.storage.store.getUsedCapacity() + '---------------')
-    for (let resource in room.terminal.store) {
-        if (resources.indexOf(resource) < 0) {
-            continue
-        }
-        let resourceValue = room.terminal.store[resource];
-        console.log(resource + '\t' + resourceValue)
-        // if (resource == 'XKHO2' && r != 'W16S18') {
-        //     console.log(room.name + "发送了" + resourceValue + '的' + resource)
-        //     room.terminal.send(resource, resourceValue, 'W16S18')
-        // }
+    let roomInfo = [room.name, room.terminal.store.getUsedCapacity(), room.storage.store.getUsedCapacity()];
+
+    let resourceValues = [];
+    for (let resource of resources) {
+        resourceValues.push(room.terminal.store[resource])
     }
+    result.push(roomInfo.join("\t") + "\t" + resourceValues.join("\t"))
 }
+console.log(result.join("\n"))
 
 // 重置终端自动任务
 for (let r in Game.rooms) {
@@ -31,6 +31,9 @@ for (let r in Game.rooms) {
         continue;
     }
     room.memory.terminalTasks = [];
+
+    if (!room.controller) continue
+    if (!room.controller.my) continue
 
     room.terminal.add('H', 1000, 0, 1);
     room.terminal.add('O', 1000, 0, 1);
@@ -42,44 +45,40 @@ for (let r in Game.rooms) {
     room.terminal.add('XGH2O', 10000, 0, 1);
 
     if (room.controller.level < 8) {
-        room.terminal.add('energy', 100000, 0, 2);
         room.terminal.add('energy', 100000, 0, 1);
+        room.terminal.add('energy', 100000, 0, 0);
     } else {
-        room.terminal.add('energy', 10000, 1, 2);
-        room.terminal.add('energy', 10000, 1, 1)
+        room.terminal.add('energy', 60000, 0, 1)
     }
 }
 
-
 // 查看creep参数
-let room = "W21S19"
-let rooms = {};
-for (let c in Game.creeps) {
-    let creep = Game.creeps[c];
-    if (creep.room.name != room) {
-        continue;
-    }
-    if (!rooms[creep.room.name]) {
-        rooms[creep.room.name] = []
-    }
-    let name = creep.name.padEnd(25, ' ');
+let room = Game.rooms.W15S18;
+let roomInfo = ['Room:' + room.name, "Level:" + room.controller.level, "Ext:" + room.energyAvailable, "Timeout:" + room.memory['boostUpgradeTimeout']];
+console.log(roomInfo.join("\t"))
+let creeps = room.find(FIND_MY_CREEPS).filter(creep => creep.room.name == room.name)
+for (let creep of creeps) {
+    let name = creep.name.padEnd(20, " ")
+    let ticksToLive = creep.ticksToLive
+    let workBodyAmount = 0;
+    let carryBodyAmount = 0;
     let isBoost = 'x';
-    for (let b in creep.body) {
-        let body = creep.body[b];
+
+    for (let body of creep.body) {
+        switch (body.type) {
+            case "carry":
+                carryBodyAmount += 50;
+                break;
+            case "work":
+                workBodyAmount++;
+                break;
+        }
         if (body.boost) {
-            isBoost = '√'
-            break;
+            isBoost = '√';
         }
     }
 
-    rooms[creep.room.name].push([name, creep.store.getCapacity(), creep.ticksToLive, isBoost])
-}
-
-for (let r in rooms) {
-    console.log('------------' + r + '-' + Game.rooms[r].controller.level + ':' + Game.rooms[r].energyAvailable + '-' + Game.rooms[r].memory['boostUpgradeTimeout'] + '--------------');
-    for (let record of rooms[r]) {
-        console.log(record.join('\t'))
-    }
+    console.log([name, carryBodyAmount, workBodyAmount, ticksToLive, isBoost].join("\t"))
 }
 
 // 每个房间的工程数量
@@ -98,7 +97,7 @@ for (let c in Game.constructionSites) {
 
 for (let c in Game.creeps) {
     let creep = Game.creeps[c];
-    if (creep.memory.role == "builder") {
+    if (creep.memory.role == "builder" || creep.memory.role == "remoteBuilder") {
         builders[creep.room.name]++;
     }
 }
@@ -116,17 +115,18 @@ for (let c in Memory.creepConfigs) {
 }
 
 //清除无用房间内存
-let rooms = Object.keys(Game.rooms)
+let rooms = [];
+Object.values(Game.rooms).filter(room => room.controller.my).map(room => rooms.push(room.name));
 for (let r in Memory.rooms) {
     if (rooms.indexOf(r) < 0) {
-        console.log(r)
-        delete Memory.rooms[r]
+        console.log(r);
+        delete Memory.rooms[r];
     }
 }
 
 //生成补给搬运工
 let tasks = [
-    {from: 'W21S16', to: 'W21S15'}
+    {from: 'W15S18', to: 'W14S18'}
 ];
 for (let t of tasks) {
     let fromRoom = Game.rooms[t.from];
@@ -157,4 +157,22 @@ if (result.incomplete) {
         return pos.getDirectionTo(positions[index + 1])
     }).join('')
     global.routeCache[routeKey] = wayRoute
+}
+
+
+//清除房间里不属于自己的建筑
+let builds = Game.rooms.W14S18.find(FIND_HOSTILE_STRUCTURES);
+for (let b in builds) {
+    if (builds[b].structureType == 'controller') continue
+    Game.flags['W16S19 to W14S18 soldier'].setPosition(builds[b].pos)
+    break
+}
+
+let room = Game.rooms.W15S18;
+let cs = room.find(FIND_MY_CONSTRUCTION_SITES).filter(c => {
+    return c.progress == 0 && [STRUCTURE_ROAD].indexOf(c.structureType) >= 0;
+});
+console.log('共清理工地:' + cs.length)
+for (let c of cs) {
+    c.remove();
 }

@@ -10,7 +10,7 @@ export function claimNewRoom(roomName, claimRoomName) {
         // if (!Game.rooms[roomName]) return; //房间里没有抗塔的 就取消操作
         // if (Game.rooms[roomName].controller.upgradeBlocked > 550) return; //距离下次claim还有会儿  就取消操作
         console.log('发布Claimer占领' + roomName)
-        Game.rooms[claimRoomName].claimRoom(roomName)
+        Game.rooms[claimRoomName].claimRoom(roomName, '星星之火可以燎原~')
     }
 }
 
@@ -37,14 +37,16 @@ export function sharder() {
         let reusePath = Memory['reusePath'] ?? 500;
         for (let creep in Game.creeps) {
             let c = Game.creeps[creep]
+            if (c.name == 'shard claimer') {
+                continue
+            }
             if (c.pos.roomName == Game.flags['door_address1'].pos.roomName) {
                 continue
             }
-            // c.moveByPath(Memory['path'])
             if (c.room.name.slice(0, 3) != "W30") {
-                c.moveTo(Game.flags['door_address0'], {reusePath: reusePath});
+                c.moveTo(Game.flags['door_address0'], {reusePath: reusePath, maxOps: 1000});
             } else {
-                c.moveTo(Game.flags['door_address1'], {reusePath: reusePath});
+                c.moveTo(Game.flags['door_address1'], {reusePath: reusePath, maxOps: 1000});
             }
         }
     }
@@ -253,17 +255,14 @@ export function clearRoomRestrictedPos() {
 }
 
 export function autoPute() {
-    const storageEnergyThreshold = 200000;
-    if (Game.time % 200) return
+    if (Game.time % 100) return
 
     for (let r in Game.rooms) {
         let room = Game.rooms[r];
-        //小于等级取消
-        if (!room.controller || room.controller.level < 8) continue
-
+        if (!room.controller) continue
+        let storageEnergyThreshold = 1100000 - room.controller.level * 100000;
         // 兜底
         if (room.storage.store['energy'] <= storageEnergyThreshold) continue
-
         // 为零取消
         let minPutEnergy: number = Math.min(room.terminal.store.getFreeCapacity(), room.storage.store['energy'] - storageEnergyThreshold);
         if (!minPutEnergy) continue
@@ -275,5 +274,22 @@ export function autoPute() {
             resourceType: RESOURCE_ENERGY,
             amount: minPutEnergy
         })
+    }
+}
+
+export function shardClaimer() {
+    let creepName = 'shard claimer';
+    let targetRoom = 'W21S28'
+    let controllerPos = new RoomPosition(16, 39, targetRoom)
+
+    if (Game.creeps[creepName]) {
+        if (Game.shard.name == 'shard3') {
+            Game.creeps[creepName].moveTo(Game.flags['door'])
+        } else if (Game.shard.name == 'shard2') {
+            Game.creeps[creepName].moveTo(controllerPos, {maxOps: 100000})
+            if (Game.rooms[targetRoom]) {
+                Game.creeps[creepName].claimController(Game.rooms[targetRoom].controller)
+            }
+        }
     }
 }

@@ -231,6 +231,7 @@ const boostPrepare = () => ({
      * @danger 该位置是 Room.memory.boost.pos 中定义的，并不是旗帜的实时位置，该逻辑有可能会导致迷惑
      */
     prepare: (creep: Creep) => {
+        console.log(creep.name);
         // 获取强化位置
         const boostTask = creep.room.memory.boost
         if (boostTask.state !== 'waitBoost') {

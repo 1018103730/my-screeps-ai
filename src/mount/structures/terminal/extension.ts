@@ -154,7 +154,13 @@ export default class TerminalExtension extends StructureTerminal {
      * 如果 terminal 中能量过多会返还至 storage
      */
     private energyCheck(): void {
-        if (this.store[RESOURCE_ENERGY] >= 30000) {
+        let thresholdEnergy = 0;
+        if (this.room.controller.level < 8) {
+            thresholdEnergy = 100000;
+        } else {
+            thresholdEnergy = 60000;
+        }
+        if (this.store[RESOURCE_ENERGY] > thresholdEnergy) {
             this.room.addCenterTask({
                 submit: STRUCTURE_TERMINAL,
                 source: STRUCTURE_TERMINAL,
@@ -201,7 +207,7 @@ export default class TerminalExtension extends StructureTerminal {
         if (dealResult === OK) {
             const crChange = (targetOrder.type == ORDER_BUY ? '+ ' : '- ') + (amount * targetOrder.price).toString() + ' Cr'
             const introduce = `${(targetOrder.type == ORDER_BUY ? '卖出' : '买入')} ${amount} ${targetOrder.resourceType} 单价: ${targetOrder.price}`
-            // this.log(`交易成功! ${introduce} ${crChange}`, 'green')
+            this.log(`交易成功! ${introduce} ${crChange}`, 'green')
             delete this.room.memory.targetOrderId
 
             this.setNextIndex()
@@ -402,6 +408,7 @@ export default class TerminalExtension extends StructureTerminal {
         }
 
         // 对序列化的任务进行重建
+        if (!this.room.memory.terminalTasks[index]) return null
         return this.unstringifyTask(this.room.memory.terminalTasks[index])
     }
 

@@ -1,8 +1,8 @@
-import { reactionSource, LAB_STATE, labTarget, BOOST_RESOURCE, ROOM_TRANSFER_TASK } from 'setting'
+import {reactionSource, LAB_STATE, labTarget, BOOST_RESOURCE, ROOM_TRANSFER_TASK} from 'setting'
 
 /**
  * Lab 原型拓展
- * 
+ *
  * 会自动监听 terminal 中的化合物是否足够
  * 不足的话会自行合成
  * 在房间启用战争状态时会完成本轮化合物合成后切入战争状态
@@ -39,30 +39,30 @@ export default class LabExtension extends StructureLab {
      */
     private runLab(): void {
         switch (this.room.memory.lab.state) {
-            case LAB_STATE.GET_TARGET: 
+            case LAB_STATE.GET_TARGET:
                 if (Game.time % 10) return
                 this.labGetTarget()
-            break
+                break
             case LAB_STATE.GET_RESOURCE:
                 if (Game.time % 15) return
                 this.labGetResource()
-            break
+                break
             case LAB_STATE.WORKING:
                 if (Game.time % 2) return
                 this.labWorking()
-            break
+                break
             case LAB_STATE.PUT_RESOURCE:
                 if (Game.time % 15) return
                 this.labPutResource()
-            break
+                break
             case LAB_STATE.BOOST:
                 if (Game.time % 5) return
                 this.boostController()
-            break
+                break
             default:
                 if (Game.time % 10) return
                 this.labGetTarget()
-            break
+                break
         }
     }
 
@@ -71,28 +71,28 @@ export default class LabExtension extends StructureLab {
      */
     private boostController(): void {
         switch (this.room.memory.boost.state) {
-            case 'boostGet': 
+            case 'boostGet':
                 this.boostGetResource()
-            break
+                break
             case 'labGetEnergy':
                 this.boostGetEnergy()
-            break
+                break
             case 'waitBoost':
                 // 感受宁静
-            break
+                break
             case 'boostClear':
                 this.boostClear()
-            break
+                break
             default:
                 this.boostGetResource()
-            break
+                break
         }
     }
 
     /**
      * boost 阶段：获取强化材料
      */
-    private boostGetResource(): void {        
+    private boostGetResource(): void {
         // 获取 boost 任务
         const boostTask = this.room.memory.boost
 
@@ -122,7 +122,7 @@ export default class LabExtension extends StructureLab {
     /**
      * boost 阶段：获取能量
      */
-    private boostGetEnergy(): void {        
+    private boostGetEnergy(): void {
         const boostTask = this.room.memory.boost
 
         // 遍历所有执行强化的 lab
@@ -186,7 +186,7 @@ export default class LabExtension extends StructureLab {
             this.room.memory.lab.state = LAB_STATE.BOOST
             return
         }
-        
+
         // 获取目标
         if (!this.room.memory.lab.targetIndex) this.room.memory.lab.targetIndex = 0
         const resource = labTarget[this.room.memory.lab.targetIndex]
@@ -204,7 +204,7 @@ export default class LabExtension extends StructureLab {
             this.setNextIndex()
             return
         }
-        
+
         // 确认是否可以合成
         const canReactionAmount = this.labAmountCheck(resource.target)
         // 可以合成
@@ -293,8 +293,7 @@ export default class LabExtension extends StructureLab {
             else if (runResult === ERR_NOT_ENOUGH_RESOURCES) {
                 this.room.memory.lab.state = LAB_STATE.PUT_RESOURCE
                 return
-            }
-            else if (runResult !== OK) {
+            } else if (runResult !== OK) {
                 this.log(`runReaction 异常，错误码 ${runResult}`, 'red')
             }
         }
@@ -324,20 +323,20 @@ export default class LabExtension extends StructureLab {
 
     /**
      * 将 lab.targetIndex 设置到下一个目标
-     * 
+     *
      * @returns 当前的目标索引
      */
     private setNextIndex(): number {
         this.room.memory.lab.targetIndex = (this.room.memory.lab.targetIndex + 1 >= labTarget.length) ?
             0 : this.room.memory.lab.targetIndex + 1
-        
+
         return this.room.memory.lab.targetIndex
     }
 
     /**
      * 查询目标资源可以合成的数量
      * 会查询 setting.ts 中的 reactionSource 来找到底物，然后在 terminal 中查找
-     * 
+     *
      * @param resourceType 要查询的资源类型
      * @returns 可以合成的数量，为 0 代表无法合成
      */
@@ -360,7 +359,7 @@ export default class LabExtension extends StructureLab {
     /**
      * 向房间物流队列推送任务
      * 任务包括：in(底物填充)、out(产物移出)
-     * 
+     *
      * @param taskType 要添加的任务类型
      * @returns 是否成功添加了物流任务
      */
@@ -400,7 +399,6 @@ export default class LabExtension extends StructureLab {
                 type: ROOM_TRANSFER_TASK.LAB_OUT,
                 resourceType: targetLab.mineralType
             }) == -1) ? false : true
-        }
-        else return false
+        } else return false
     }
 }

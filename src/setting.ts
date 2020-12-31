@@ -527,7 +527,7 @@ export const factoryBlacklist = [
 ]
 
 // 工厂在 storage 中能量低于该值时将暂停工作
-export const factoryEnergyLimit = 300000
+export const factoryEnergyLimit = 10000
 
 /**
  * 工厂不同沉积物 1-5 等级对应的顶级产物
@@ -677,10 +677,9 @@ export const UPGRADE_WITH_TERMINAL = [
  * storage 中的能量和对应发布的 upgrader 数量
  */
 export const UPGRADE_WITH_STORAGE = [
-    {energy: 700000, num: 4},
-    {energy: 500000, num: 3},
+    {energy: 200000, num: 4},
     {energy: 100000, num: 2},
-    {energy: 50000, num: 2},
+    {energy: 10000, num: 2},
 ]
 
 // 用于维持房间能量正常运转的重要角色

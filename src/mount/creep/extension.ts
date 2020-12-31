@@ -658,6 +658,7 @@ export default class CreepExtension extends Creep {
         else {
             // 没有的话再攻击 structure
             const structures = attackFlag.pos.lookFor(LOOK_STRUCTURES)
+                .filter(structure => !structure.my) // 只清楚不是我的建筑
             if (structures.length === 0) {
                 this.say('干谁？')
                 target = attackFlag

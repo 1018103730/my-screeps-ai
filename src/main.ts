@@ -8,51 +8,45 @@ import {
     boostUpgrader,
     buildRoad,
     claimNewRoom, clearRoomRestrictedPos,
-    dispatchGarrison,
+    dispatchGarrison, shardClaimer,
     sharder,
     startOp,
     upPrice
 } from './modules/myTools'
 
 export const loop = ErrorMapper.wrapLoop(() => {
-    if (Game.shard.name == 'shard3') {
-        if (Memory.showCost) console.log(`-------------------------- [${Game.time}] -------------------------- `)
-        // 挂载拓展
-        mountWork()
+    if (Memory.showCost) console.log(`-------------------------- [${Game.time}] -------------------------- `)
+    // 挂载拓展
+    mountWork()
 
-        // creep 数量控制
-        creepNumberListener()
+    // creep 数量控制
+    creepNumberListener()
 
-        // 所有建筑、creep、powerCreep 执行工作
-        doing(Game.structures, Game.creeps, Game.powerCreeps)
+    // 所有建筑、creep、powerCreep 执行工作
+    doing(Game.structures, Game.creeps, Game.powerCreeps)
 
-        // 统计全局资源使用
-        stateScanner()
+    // 统计全局资源使用
+    stateScanner()
 
-        // 造路机
-        buildRoad();
+    // 造路机
+    buildRoad();
 
-        // claimer
-        // claimNewRoom("W21S15", "W21S16");
+    // claimer
+    //claimNewRoom("W14S18", "W16S19");
 
-        //驻军
-        dispatchGarrison()
+    //驻军
+    dispatchGarrison()
 
-        //增强power能力
-        // startOp()
+    //增强upgrader
+    boostUpgrader();
 
-        //增强upgrader
-        boostUpgrader();
+    //清除禁止通行点
+    clearRoomRestrictedPos();
 
-        //自动抬价
-        // upPrice("5fd02fb409cc071d9eb725ba",880) //收pixel
+    // 自动pute
+    autoPute()
 
-        //清除禁止通行点
-        clearRoomRestrictedPos();
-
-        // 自动pute
-        autoPute()
-    }
+    shardClaimer()
 
     //位面漫步者
     sharder()

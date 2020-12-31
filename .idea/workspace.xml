@@ -8,12 +8,13 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frame.js" beforeDir="false" afterPath="$PROJECT_DIR$/frame.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/autoPlanning/planBaseLayout.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/autoPlanning/planBaseLayout.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modules/myTools.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/myTools.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/mount/creep/extension.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/mount/creep/extension.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mount/structures/lab.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/mount/structures/lab.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/mount/structures/terminal/extension.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/mount/structures/terminal/extension.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/role/remote.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/role/remote.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/role/war.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/role/war.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/setting.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/setting.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,7 +34,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="ts.external.directory.path" value="E:\screeps\my-screeps-ai\node_modules\typescript\lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -137,61 +138,17 @@
       <workItem from="1608794797254" duration="2055000" />
       <workItem from="1608800285957" duration="2203000" />
       <workItem from="1608855863790" duration="13417000" />
-      <workItem from="1608942514211" duration="17251000" />
+      <workItem from="1608942514211" duration="17916000" />
+      <workItem from="1608976184966" duration="38000" />
+      <workItem from="1609114827932" duration="211000" />
+      <workItem from="1609115137542" duration="22526000" />
+      <workItem from="1609200262296" duration="11221000" />
+      <workItem from="1609285702729" duration="22319000" />
+      <workItem from="1609373330337" duration="14015000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1607388814452">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1607388814452" />
-    <state x="640" y="255" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1608973749256">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="640" y="255" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1608973749256" />
-    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1608269939980">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1608269939980" />
-    <state width="1899" height="275" key="GridCell.Tab.0.bottom" timestamp="1607736058519">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1899" height="275" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1607736058519" />
-    <state width="1899" height="275" key="GridCell.Tab.0.center" timestamp="1607736058519">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1899" height="275" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1607736058519" />
-    <state width="1899" height="275" key="GridCell.Tab.0.left" timestamp="1607736058519">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1899" height="275" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1607736058519" />
-    <state width="1899" height="275" key="GridCell.Tab.0.right" timestamp="1607736058519">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1899" height="275" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1607736058519" />
-    <state x="461" y="164" key="SettingsEditor" timestamp="1606443750453">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="461" y="164" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1606443750453" />
-    <state x="578" y="170" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1608539700780">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="578" y="170" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1608539700780" />
-    <state x="648" y="103" width="594" height="835" key="find.popup" timestamp="1608964888043">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="648" y="103" width="594" height="835" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1608964888043" />
-    <state x="616" y="244" key="run.anything.popup" timestamp="1607999424858">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="616" y="244" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1607999424858" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1608694636733">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1608694636733" />
   </component>
 </project>
