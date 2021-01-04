@@ -9,11 +9,6 @@
       <change beforePath="$PROJECT_DIR$/frame.js" beforeDir="false" afterPath="$PROJECT_DIR$/frame.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modules/myTools.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/myTools.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mount/creep/extension.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/mount/creep/extension.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mount/structures/lab.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/mount/structures/lab.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mount/structures/terminal/extension.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/mount/structures/terminal/extension.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/role/remote.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/role/remote.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/role/war.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/role/war.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/setting.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/setting.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -144,7 +139,8 @@
       <workItem from="1609115137542" duration="22526000" />
       <workItem from="1609200262296" duration="11221000" />
       <workItem from="1609285702729" duration="22319000" />
-      <workItem from="1609373330337" duration="14015000" />
+      <workItem from="1609373330337" duration="15461000" />
+      <workItem from="1609724688117" duration="23709000" />
     </task>
     <servers />
   </component>

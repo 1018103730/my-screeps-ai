@@ -260,6 +260,7 @@ export function autoPute() {
     for (let r in Game.rooms) {
         let room = Game.rooms[r];
         if (!room.controller) continue
+        if (!room.storage) continue
         let storageEnergyThreshold = 1100000 - room.controller.level * 100000;
         // 兜底
         if (room.storage.store['energy'] <= storageEnergyThreshold) continue
@@ -277,14 +278,130 @@ export function autoPute() {
     }
 }
 
+export function shardWorker() {
+    let creeps = ['shard upgrader', 'shard builder'];
+    let targetRoom = 'W21S6';
+    let doorPos = new RoomPosition(30, 23, "W20S10");
+    let flag = Game.flags['W21S6 flag'];
+
+    // 生成
+    if (Game.shard.name == 'shard2') {
+        let data = JSON.parse(InterShardMemory.getLocal() || "{}");
+        if (!data.shardSupport) {
+            data.shardSupport = {};
+        }
+        for (let creepName of creeps) {
+            if (!Game.creeps[creepName]) continue;
+            let creep = Game.creeps[creepName];
+            data.shardSupport[creepName] = creep.ticksToLive;
+        }
+        InterShardMemory.setLocal(JSON.stringify(data));
+    }
+
+    if (Game.shard.name == 'shard3') {
+        let spawns = {'shard upgrader': 'Spawn25', 'shard builder': 'Spawn10'};
+        let data = JSON.parse(InterShardMemory.getRemote('shard2') || "{}")
+        for (let creepName of creeps) {
+            if (data.shardSupport[creepName] <= 350 && !Game.creeps[creepName]) {
+                let result = Game.spawns[spawns[creepName]].spawnCreep([
+                    WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK,
+                    CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY,
+                    MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE
+                ], creepName);
+
+                if (result == OK) {
+                    console.log('发布位面支援者' + creepName)
+                }
+            }
+        }
+    }
+
+    // 行为
+    for (let creepName of creeps) {
+        if (!Game.creeps[creepName]) continue;
+
+        let creep = Game.creeps[creepName];
+        if (Game.shard.name == 'shard3') {
+            if (creepName == 'shard builder') {
+                creep.moveTo(doorPos);
+            }
+
+            if (creepName == 'shard upgrader') {
+                let needBoost = true;
+                for (let b in creep.body) {
+                    let body = creep.body[b];
+                    if (body.boost) {
+                        needBoost = false;
+                        break;
+                    }
+                }
+                if (needBoost) {
+                    let labId = creep.room.memory['boostUpgradeLabId'];
+                    let lab: StructureLab = Game.getObjectById(labId);
+                    creep.goTo(lab.pos)
+                    lab.boostCreep(creep)
+                } else {
+                    Game.creeps[creepName].moveTo(doorPos)
+                }
+            }
+        }
+
+        if (Game.shard.name == 'shard2') {
+            if (creep.room.name != targetRoom) {
+                creep.moveTo(flag)
+            } else {
+                if (creep.memory['building'] && creep.store[RESOURCE_ENERGY] == 0) {
+                    creep.memory['building'] = false;
+                    creep.say('🔄 harvest');
+                }
+                if (!creep.memory['building'] && creep.store.getFreeCapacity() == 0) {
+                    creep.memory['building'] = true;
+                    creep.say('🚧 working');
+                }
+
+                if (creepName == 'shard upgrader') {
+                    if (creep.memory['building']) {
+                        let target = creep.room.controller;
+                        if (creep.upgradeController(target) == ERR_NOT_IN_RANGE) {
+                            creep.moveTo(target, {visualizePathStyle: {stroke: '#ffffff'}});
+                        }
+                    } else {
+                        let sources = creep.room.find(FIND_SOURCES);
+                        if (creep.harvest(sources[1]) == ERR_NOT_IN_RANGE) {
+                            creep.moveTo(sources[1], {visualizePathStyle: {stroke: '#ffaa00'}});
+                        }
+                    }
+                }
+
+                if (creepName == 'shard builder') {
+                    if (creep.memory['building']) {
+                        let targets = creep.room.find(FIND_CONSTRUCTION_SITES);
+                        if (targets.length) {
+                            if (creep.build(targets[0]) == ERR_NOT_IN_RANGE) {
+                                creep.moveTo(targets[0], {visualizePathStyle: {stroke: '#ffffff'}});
+                            }
+                        }
+                    } else {
+                        let sources = creep.room.find(FIND_SOURCES);
+                        if (creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
+                            creep.moveTo(sources[0], {visualizePathStyle: {stroke: '#ffaa00'}});
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 export function shardClaimer() {
     let creepName = 'shard claimer';
-    let targetRoom = 'W21S28'
-    let controllerPos = new RoomPosition(16, 39, targetRoom)
+    let targetRoom = 'W21S6'
+    let controllerPos = new RoomPosition(12, 14, targetRoom)
+    let doorPos = new RoomPosition(30, 23, "W20S10")
 
     if (Game.creeps[creepName]) {
         if (Game.shard.name == 'shard3') {
-            Game.creeps[creepName].moveTo(Game.flags['door'])
+            Game.creeps[creepName].moveTo(doorPos);
         } else if (Game.shard.name == 'shard2') {
             Game.creeps[creepName].moveTo(controllerPos, {maxOps: 100000})
             if (Game.rooms[targetRoom]) {
@@ -293,3 +410,4 @@ export function shardClaimer() {
         }
     }
 }
+

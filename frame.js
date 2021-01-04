@@ -116,7 +116,9 @@ for (let c in Memory.creepConfigs) {
 
 //清除无用房间内存
 let rooms = [];
-Object.values(Game.rooms).filter(room => room.controller.my).map(room => rooms.push(room.name));
+Object.values(Game.rooms).filter(room => {
+    return room.controller && room.controller.my;
+}).map(room => rooms.push(room.name));
 for (let r in Memory.rooms) {
     if (rooms.indexOf(r) < 0) {
         console.log(r);
@@ -176,3 +178,18 @@ console.log('共清理工地:' + cs.length)
 for (let c of cs) {
     c.remove();
 }
+
+// 全部房间gete()
+for (let r in Game.rooms) {
+    let room = Game.rooms[r];
+    if (!room.controller) continue;
+    if (!room.controller.my) continue;
+    if (!room.storage) continue;
+    if (!room.terminal) continue;
+
+    room.gete()
+}
+
+// 手动sign
+let creep = Game.creeps['shard upgrader'];
+creep.moveTo(creep.room.controller);creep.signController(creep.room.controller,'星星之火可以燎原~');

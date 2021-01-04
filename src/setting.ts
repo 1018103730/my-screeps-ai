@@ -316,27 +316,27 @@ export const labTarget = [
     // XKHO2 生产线，强化 RANGE_ATTACK
     {target: RESOURCE_KEANIUM_OXIDE, number: 300},
     {target: RESOURCE_KEANIUM_ALKALIDE, number: 1000},
-    {target: RESOURCE_CATALYZED_KEANIUM_ALKALIDE, number: 4000},
+    {target: RESOURCE_CATALYZED_KEANIUM_ALKALIDE, number: 400},
     // XLHO2 生产线，强化 HEAL
     {target: RESOURCE_LEMERGIUM_OXIDE, number: 300},
     {target: RESOURCE_LEMERGIUM_ALKALIDE, number: 1000},
-    {target: RESOURCE_CATALYZED_LEMERGIUM_ALKALIDE, number: 4000},
+    {target: RESOURCE_CATALYZED_LEMERGIUM_ALKALIDE, number: 400},
     // XZHO2 生产线，强化 MOVE
     {target: RESOURCE_ZYNTHIUM_OXIDE, number: 300},
     {target: RESOURCE_ZYNTHIUM_ALKALIDE, number: 1000},
-    {target: RESOURCE_CATALYZED_ZYNTHIUM_ALKALIDE, number: 4000},
+    {target: RESOURCE_CATALYZED_ZYNTHIUM_ALKALIDE, number: 400},
     // XZH2O 生产线，强化 WORK 的 dismantle
     {target: RESOURCE_ZYNTHIUM_HYDRIDE, number: 300},
     {target: RESOURCE_ZYNTHIUM_ACID, number: 1000},
-    {target: RESOURCE_CATALYZED_ZYNTHIUM_ACID, number: 4000},
+    {target: RESOURCE_CATALYZED_ZYNTHIUM_ACID, number: 400},
     // XGHO2 生产线，强化 TOUGH
     {target: RESOURCE_GHODIUM_OXIDE, number: 300},
     {target: RESOURCE_GHODIUM_ALKALIDE, number: 1000},
-    {target: RESOURCE_CATALYZED_GHODIUM_ALKALIDE, number: 4000},
+    {target: RESOURCE_CATALYZED_GHODIUM_ALKALIDE, number: 400},
     // XGH2O 生产线，强化 Upgrade
     {target: RESOURCE_GHODIUM_HYDRIDE, number: 300},
     {target: RESOURCE_GHODIUM_ACID, number: 1000},
-    {target: RESOURCE_CATALYZED_GHODIUM_ACID, number: 4000},
+    {target: RESOURCE_CATALYZED_GHODIUM_ACID, number: 50000},
 ]
 
 /**

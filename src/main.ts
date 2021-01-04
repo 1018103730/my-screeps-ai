@@ -9,7 +9,7 @@ import {
     buildRoad,
     claimNewRoom, clearRoomRestrictedPos,
     dispatchGarrison, shardClaimer,
-    sharder,
+    sharder, shardWorker,
     startOp,
     upPrice
 } from './modules/myTools'
@@ -44,13 +44,16 @@ export const loop = ErrorMapper.wrapLoop(() => {
     clearRoomRestrictedPos();
 
     // 自动pute
-    autoPute()
+    // autoPute()
 
     shardClaimer()
+    shardWorker()
 
     //位面漫步者
-    sharder()
+    // sharder()
 
     // 搓 pixel
-    generatePixel()
+    if (Game.shard.name != 'shard3') {
+        generatePixel()
+    }
 })
