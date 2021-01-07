@@ -25,7 +25,7 @@ export default function creepNumberListener(intrval: number = 5): void {
         const creepConfig = Memory.creepConfigs[name]
         // 获取配置项
         if (!creepConfig) {
-            log(`死亡 ${name} 未找到对应 creepConfig, 已删除`, [ 'creepController' ])
+            // log(`死亡 ${name} 未找到对应 creepConfig, 已删除`, [ 'creepController' ])
             delete Memory.creeps[name]
             return
         }

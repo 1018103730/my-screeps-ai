@@ -4,15 +4,17 @@ import creepNumberListener, {creepApi} from './modules/creepController'
 import {ErrorMapper} from './modules/errorMapper'
 import {DEFAULT_FLAG_NAME} from "./setting";
 import {
-    autoPute,
-    boostUpgrader,
-    buildRoad,
-    claimNewRoom, clearRoomRestrictedPos,
-    dispatchGarrison, shardClaimer,
-    sharder, shardWorker,
+    claimNewRoom,
+    dispatchGarrison,
     startOp,
     upPrice
 } from './modules/myTools'
+import {sharder} from "./modules/myTools/sharder";
+import {shardClaimer, shardWorker} from "./modules/myTools/shardWorker";
+import {autoPute} from "./modules/myTools/autoPute";
+import {boostUpgrader} from "./modules/myTools/boostUpgrader";
+import {buildRoad} from "./modules/myTools/buildRoad";
+import {dataShow} from "./modules/myTools/dataShow";
 
 export const loop = ErrorMapper.wrapLoop(() => {
     if (Memory.showCost) console.log(`-------------------------- [${Game.time}] -------------------------- `)
@@ -40,17 +42,17 @@ export const loop = ErrorMapper.wrapLoop(() => {
     //增强upgrader
     boostUpgrader();
 
-    //清除禁止通行点
-    clearRoomRestrictedPos();
-
     // 自动pute
-    // autoPute()
+    autoPute()
 
     shardClaimer()
     shardWorker()
 
     //位面漫步者
-    // sharder()
+    sharder()
+
+    //房间数据展示
+    dataShow()
 
     // 搓 pixel
     if (Game.shard.name != 'shard3') {

@@ -1,6 +1,6 @@
 // 查看当前终端资源
 let resources = ['XZHO2', 'XZH2O', "XLHO2", "XKHO2", 'XGHO2', "XGH2O", "energy"];
-let titles = ['房间', '终端占用', '仓库占用']
+let titles = ['房间', '等级', '终端占用', '仓库占用']
 let result = [];
 result.push(titles.join("\t") + "\t" + resources.join("\t"))
 
@@ -14,7 +14,7 @@ for (let r in Game.rooms) {
     if (!room.terminal.my) {
         continue
     }
-    let roomInfo = [room.name, room.terminal.store.getUsedCapacity(), room.storage.store.getUsedCapacity()];
+    let roomInfo = [room.name, room.controller.level, room.terminal.store.getUsedCapacity(), room.storage.store.getUsedCapacity()];
 
     let resourceValues = [];
     for (let resource of resources) {
@@ -192,4 +192,51 @@ for (let r in Game.rooms) {
 
 // 手动sign
 let creep = Game.creeps['shard upgrader'];
-creep.moveTo(creep.room.controller);creep.signController(creep.room.controller,'星星之火可以燎原~');
+creep.moveTo(creep.room.controller);
+creep.signController(creep.room.controller, '星星之火可以燎原~');
+
+
+let hs = [
+    {pos: new RoomPosition(34, 2, 'W36S41'), range: 5},
+    {pos: new RoomPosition(34, 8, 'W36S41'), range: 5},
+];
+
+let c = new RoomPosition(32, 5, 'W36S41');
+
+let result = PathFinder.search(c, hs, {flee: true})
+console.log(result.path)
+
+
+for (let creepName in Memory.creepConfigs) {
+    let roomName = creepName.split(' ')[0];
+    if (roomName != 'W36S41') {
+        delete Memory.creepConfigs[creepName]
+    }
+}
+
+
+let pos = new RoomPosition(22, 16, "W36S41")
+let range = 5;
+let {x, y} = pos;
+let ignorePos = [];
+for (let i = -1 * range; i <= range; i++) {
+    ignorePos.push([x + i, y + range]);
+    ignorePos.push([x + i, y - range]);
+    ignorePos.push([x + range, y + i]);
+    ignorePos.push([x - range, y + i]);
+}
+Game.rooms.W36S41.visual.rect(x - range, y - range, 2 * range + 1, 2 * range + 1, {stroke: '#ffff'})
+
+let mobiles = '11,22,33\n44\t55,66';
+
+if (mobiles === '') {
+    console.log('!');
+}
+
+mobiles = mobiles.replace(/[。，.\r\n\t\40]/g,',');
+
+let errorNum = 0;
+
+console.log(mobiles)
+mobiles = mobiles.split(',');
+console.log(mobiles)

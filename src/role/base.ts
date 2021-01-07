@@ -107,6 +107,12 @@ const roles: {
         },
         // 采集阶段会无脑采集，过量的能量会掉在 container 上然后被接住存起来
         target: creep => {
+            //脚下container已满则不再采集
+            let container = creep.pos.lookFor(LOOK_STRUCTURES).filter(object => {
+                return object.structureType == STRUCTURE_CONTAINER
+            })[0];
+            if (container['store'] >= 2000) return false;
+
             creep.getEngryFrom(Game.getObjectById(data.sourceId))
 
             // 快死了就把身上的能量丢出去，这样就会存到下面的 container 里，否则变成墓碑后能量无法被 container 自动回收

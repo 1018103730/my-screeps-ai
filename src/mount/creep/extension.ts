@@ -325,6 +325,7 @@ export default class CreepExtension extends Creep {
             reusePath: 20,
             ignoreCreeps: true,
             maxOps: 8000,
+            visualizePathStyle: {stroke: '#ffffff'},
             costCallback: (roomName, costMatrix) => {
                 if (roomName === this.room.name) {
                     // 避开房间中的禁止通行点
