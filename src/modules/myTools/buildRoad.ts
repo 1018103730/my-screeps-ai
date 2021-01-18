@@ -18,11 +18,27 @@ export function buildRoad() {
         })
         if (road.length > 0) continue
 
+        if (creep.name.split(' ')[0] == 'catalyze') {
+            creep.pos.createConstructionSite(STRUCTURE_ROAD)
+            continue
+        }
+
         // 不需要造路的角色
         let creepRole = creep.memory.role;
-        const filterRole = ['builder', 'miner', 'collector', 'soldier'];
-        if (filterRole.indexOf(creepRole) > 0) continue
+        const canBuildRoladRole = ['upgrader1', 'manager1'];
+        if (canBuildRoladRole.indexOf(creepRole) < 0) continue
 
         creep.pos.createConstructionSite(STRUCTURE_ROAD)
+    }
+
+    for (let r in Game.rooms) {
+        let room = Game.rooms[r];
+        if (!room.controller || !room.controller.my) continue;
+
+
+        let constructionSiteCount = room.find(FIND_CONSTRUCTION_SITES).length;
+        if (constructionSiteCount > 0) {
+            //判断当前房间是否存在builder 不存在就生成
+        }
     }
 }

@@ -388,7 +388,12 @@ export const transferTaskOperations: { [taskType: string]: transferTaskOperation
 
             let lab: StructureLab = Game.getObjectById(targetResource.id)
             // 获取能拿取的数量
-            const getAmount = Math.min(targetResource.amount, creep.store.getFreeCapacity(), lab.store.getFreeCapacity(targetResource.type));
+            const getAmount = Math.min(
+                targetResource.amount,
+                creep.store.getFreeCapacity(),
+                lab.store.getFreeCapacity(targetResource.type),
+                terminal.store[targetResource.type]
+            );
             if (getAmount <= 0) {
                 // creep.room.deleteCurrentRoomTransferTask()
                 // creep.log(`Lab 填充任务，${targetResource.type} 资源不足`)
@@ -396,7 +401,6 @@ export const transferTaskOperations: { [taskType: string]: transferTaskOperation
                 creep.room.handleLabInTask(targetResource.type, 0)
                 return false
             }
-
             creep.goTo(terminal.pos)
             const result = creep.withdraw(terminal, targetResource.type, getAmount)
             if (result === OK) return true

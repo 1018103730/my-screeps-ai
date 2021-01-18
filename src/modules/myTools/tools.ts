@@ -33,6 +33,18 @@ let defaultOpts = {
     maxOps: 1000,
     costCallback(roomName: string, costMatrix: CostMatrix): void | CostMatrix {
         return costMatrix
+    },
+    roomCallback(roomName: string): boolean | CostMatrix {
+        // 强调了不许走就不走
+        if (Memory.bypassRooms && Memory.bypassRooms.includes(roomName)) return false
+
+        const room = Game.rooms[roomName]
+        // 房间没有视野
+        if (!room) return
+
+        let costs = new PathFinder.CostMatrix;
+
+        return costs;
     }
 }
 let runRange = 5;
@@ -79,3 +91,11 @@ export function goMyWay(creep: Creep, pos: RoomPosition | Flag, opts = defaultOp
         creep.moveTo(pos, opts)
     }
 }
+
+//指定房间空闲spawn
+function selectSpawn(room: Room) {
+    return room.find(FIND_MY_SPAWNS, {filter: object => object.spawning == null})[0]
+}
+
+export {selectSpawn}
+

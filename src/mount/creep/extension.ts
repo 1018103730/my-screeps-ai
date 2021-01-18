@@ -11,7 +11,7 @@ export default class CreepExtension extends Creep {
         // 检查 creep 内存中的角色是否存在
         if (!(this.memory.role in roles)) {
             // this.log(`找不到对应的 creepConfig`, 'yellow')
-            this.say('我凉了！')
+            // this.say('我凉了！')
             return
         }
 
@@ -164,7 +164,6 @@ export default class CreepExtension extends Creep {
         const result = PathFinder.search(this.pos, {pos: target, range}, {
             plainCost: 2,
             swampCost: 10,
-            maxOps: 4000,
             roomCallback: roomName => {
                 // 强调了不许走就不走
                 if (Memory.bypassRooms && Memory.bypassRooms.includes(roomName)) return false
@@ -324,7 +323,8 @@ export default class CreepExtension extends Creep {
         const moveResult = this.moveTo(target, {
             reusePath: 20,
             ignoreCreeps: true,
-            maxOps: 8000,
+            plainCost: 2,
+            swampCost: 10,
             visualizePathStyle: {stroke: '#ffffff'},
             costCallback: (roomName, costMatrix) => {
                 if (roomName === this.room.name) {
@@ -336,6 +336,14 @@ export default class CreepExtension extends Creep {
 
                         const pos = this.room.unserializePos(restrictedPos[creepName])
                         costMatrix.set(pos.x, pos.y, 0xff)
+                    }
+
+                    //设置工地移动成本
+                    const constructionSites = this.room.find(FIND_CONSTRUCTION_SITES).filter(object => {
+                        return object.structureType == 'road';
+                    });
+                    for (let cs of constructionSites) {
+                        costMatrix.set(cs.pos.x, cs.pos.y, 1)
                     }
                 }
 

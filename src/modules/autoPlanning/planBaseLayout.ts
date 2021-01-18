@@ -127,6 +127,10 @@ export const planLayout = function (room: Room): OK | ERR_NOT_OWNER | ERR_NOT_FO
         // 遍历布局中所有建筑，检查是否又可建造的
         Object.keys(currentLevelLayout).forEach((structureType: BuildableStructureConstant) => {
             currentLevelLayout[structureType].forEach(pos => {
+                if (room.name == 'W15S19') {
+                    // console.log('跳过W15S19的自动规划')
+                    return
+                }
                 let result: ScreepsReturnCode
                 // 为 null 说明在集中布局之外
                 if (pos == null) result = placeOutsideConstructionSite(room, structureType)

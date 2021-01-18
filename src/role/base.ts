@@ -111,7 +111,6 @@ const roles: {
             let container = creep.pos.lookFor(LOOK_STRUCTURES).filter(object => {
                 return object.structureType == STRUCTURE_CONTAINER
             })[0];
-            if (container['store'] >= 2000) return false;
 
             creep.getEngryFrom(Game.getObjectById(data.sourceId))
 
@@ -387,7 +386,7 @@ const roles: {
     repairer: (data: WorkerData): ICreepConfig => ({
         // 根据敌人威胁决定是否继续生成
         isNeed: room => {
-            return room.controller.checkEnemyThreat() || room.memory['forceRepair'];
+            return room.controller.checkEnemyThreat();
         },
         source: creep => {
             creep.getEngryFrom(Game.getObjectById(data.sourceId) || creep.room.storage || creep.room.terminal)

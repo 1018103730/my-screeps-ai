@@ -47,7 +47,7 @@ export const bodyConfigs: BodyConfigs = {
         {[WORK]: 6, [CARRY]: 6, [MOVE]: 6},
         {[WORK]: 7, [CARRY]: 7, [MOVE]: 7},
         {[WORK]: 12, [CARRY]: 6, [MOVE]: 9},
-        {[WORK]: 20, [CARRY]: 8, [MOVE]: 14}
+        {[WORK]: 20, [CARRY]: 16, [MOVE]: 14}
     ),
 
     /**
@@ -316,27 +316,27 @@ export const labTarget = [
     // XKHO2 生产线，强化 RANGE_ATTACK
     {target: RESOURCE_KEANIUM_OXIDE, number: 300},
     {target: RESOURCE_KEANIUM_ALKALIDE, number: 1000},
-    {target: RESOURCE_CATALYZED_KEANIUM_ALKALIDE, number: 400},
+    {target: RESOURCE_CATALYZED_KEANIUM_ALKALIDE, number: 1000},
     // XLHO2 生产线，强化 HEAL
     {target: RESOURCE_LEMERGIUM_OXIDE, number: 300},
     {target: RESOURCE_LEMERGIUM_ALKALIDE, number: 1000},
-    {target: RESOURCE_CATALYZED_LEMERGIUM_ALKALIDE, number: 400},
+    {target: RESOURCE_CATALYZED_LEMERGIUM_ALKALIDE, number: 1000},
     // XZHO2 生产线，强化 MOVE
     {target: RESOURCE_ZYNTHIUM_OXIDE, number: 300},
     {target: RESOURCE_ZYNTHIUM_ALKALIDE, number: 1000},
-    {target: RESOURCE_CATALYZED_ZYNTHIUM_ALKALIDE, number: 400},
+    {target: RESOURCE_CATALYZED_ZYNTHIUM_ALKALIDE, number: 1000},
     // XZH2O 生产线，强化 WORK 的 dismantle
     {target: RESOURCE_ZYNTHIUM_HYDRIDE, number: 300},
     {target: RESOURCE_ZYNTHIUM_ACID, number: 1000},
-    {target: RESOURCE_CATALYZED_ZYNTHIUM_ACID, number: 400},
+    {target: RESOURCE_CATALYZED_ZYNTHIUM_ACID, number: 1000},
     // XGHO2 生产线，强化 TOUGH
     {target: RESOURCE_GHODIUM_OXIDE, number: 300},
     {target: RESOURCE_GHODIUM_ALKALIDE, number: 1000},
-    {target: RESOURCE_CATALYZED_GHODIUM_ALKALIDE, number: 400},
+    {target: RESOURCE_CATALYZED_GHODIUM_ALKALIDE, number: 1000},
     // XGH2O 生产线，强化 Upgrade
-    {target: RESOURCE_GHODIUM_HYDRIDE, number: 300},
+    {target: RESOURCE_GHODIUM_HYDRIDE, number: 30000},
     {target: RESOURCE_GHODIUM_ACID, number: 1000},
-    {target: RESOURCE_CATALYZED_GHODIUM_ACID, number: 50000},
+    {target: RESOURCE_CATALYZED_GHODIUM_ACID, number: 10000},
 ]
 
 /**
@@ -679,7 +679,6 @@ export const UPGRADE_WITH_TERMINAL = [
 export const UPGRADE_WITH_STORAGE = [
     {energy: 200000, num: 4},
     {energy: 100000, num: 2},
-    {energy: 10000, num: 2},
 ]
 
 // 用于维持房间能量正常运转的重要角色

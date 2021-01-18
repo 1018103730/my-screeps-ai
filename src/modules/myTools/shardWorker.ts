@@ -18,7 +18,7 @@ let ways = {
     ],
     'shard2': [
         {pos: new RoomPosition(44, 16, 'W20S20'), range: 0},
-        {pos: new RoomPosition(22, 16, 'W36S41'), range: 1},
+        {pos: new RoomPosition(41, 16, 'W37S42'), range: 0},
     ],
     'shard3': [
         {pos: new RoomPosition(10, 33, 'W20S20'), range: 0},
@@ -31,36 +31,68 @@ let logTime = 100;
 let maxOps = 5000;
 //参与跨shard工作的creeps以及他们的孵化母巢
 let creepsConfig = {
-    'shard upgrader': 'Spawn18',
+    // 'shard upgrader': 'Spawn31',
     'shard builder': 'Spawn24',
-    'shard garrison': 'Spawn31',
 };
 //目标shard
 let targetShard = 'shard2';
 //目标房间
-let targetRoom = 'W36S41';
+let targetRoom = 'W37S42';
 //creeps的组件
 let bodys = {
-    'shard upgrader': {"work": 17, "move": 17, "carry": 16},
+    // 'shard upgrader': {"work": 17, "move": 17, "carry": 16},
     'shard builder': {"work": 17, "move": 17, "carry": 16},
-    'shard garrison': {'move': 20, 'attack': 10, 'ranged_attack': 10},
 }
 
-export function shardClaimer() {
-    let creepName = 'shard claimer';
+function maintainStatus(creep: Creep) {
+    if (creep.memory['building'] && creep.store.getUsedCapacity() == 0) {
+        creep.memory['building'] = false;
+        creep.say('🔄 harvest');
+    }
+    if (!creep.memory['building'] && creep.store.getFreeCapacity() == 0) {
+        creep.memory['building'] = true;
+        creep.say('🚧 working');
+    }
+}
 
-    if (Game.creeps[creepName]) {
-        let creep: Creep = Game.creeps[creepName];
-        creep.say('冲鸭~');
-        if (creep.ticksToLive % logTime == 0) {
-            creep.log('我现在在' + Game.shard.name + '-' + creep.pos + ',我还能活' + creep.ticksToLive, 'green')
+//获取能量
+function getEnenrgy(creep, indexNum) {
+    if (creep.ticksToLive <= 20) return;
+
+    let ruins = Game.rooms[targetRoom].find(FIND_RUINS).filter(ruin => ruin.store['energy'] > 0).sort((a, b) => {
+        return b.store['energy'] - a.store['energy'];
+    });
+    let terminal = creep.room.terminal;
+    let storage = creep.room.storage;
+    let containers = creep.room.find(FIND_STRUCTURES, {
+        filter: object => {
+            return object.structureType == 'container'
         }
-        let way = ways[Game.shard.name];
-        let searchResult = PathFinder.search(creep.pos, way, {maxOps: maxOps});
-        let lastOne = searchResult.path.length - 1;
-        let result = creep.claimController(creep.room.controller);
-        if (result == ERR_NOT_IN_RANGE) {
-            goMyWay(creep, searchResult.path[lastOne]);
+    })
+
+    let sources = creep.room.find(FIND_SOURCES);
+
+    // 获取能量
+    if (ruins.length) {
+        let ruin = ruins[0]
+        if (creep.withdraw(ruin, 'energy') == ERR_NOT_IN_RANGE) {
+            creep.goTo(ruin.pos);
+        }
+    } else if (terminal && terminal.store['energy'] > 0) {
+        if (creep.withdraw(terminal, 'energy') == ERR_NOT_IN_RANGE) {
+            creep.goTo(terminal.pos);
+        }
+    } else if (storage && storage.store['energy'] > 0) {
+        if (creep.withdraw(storage, 'energy') == ERR_NOT_IN_RANGE) {
+            creep.goTo(storage.pos);
+        }
+    } else if (containers.length && containers[indexNum] && containers[indexNum].store['energy'] > 0) {
+        if (creep.withdraw(containers[indexNum], 'energy') == ERR_NOT_IN_RANGE) {
+            creep.goTo(containers[indexNum].pos);
+        }
+    } else {
+        if (creep.harvest(sources[indexNum]) == ERR_NOT_IN_RANGE) {
+            creep.goTo(sources[indexNum].pos);
         }
     }
 }
@@ -107,7 +139,7 @@ export function shardWorker() {
                     console.log('发布位面支援者' + creepName)
                     Memory['shardWaitTime'] = 0
                 } else {
-                    console.log(creepName + '出问题了' + result)
+                    // console.log(creepName + '出问题了' + result)
                 }
             }
         }
@@ -131,7 +163,7 @@ export function shardWorker() {
             if (needBoost) {
                 let labId = creep.room.memory['boostUpgradeLabId'];
                 let lab: StructureLab = Game.getObjectById(labId);
-                if (lab.store['XGH2O'] >= 100) {
+                if (lab && (lab.store['XGH2O'] >= 100 || lab.store['GH'] >= 100 || lab.store['GH2O'] >= 100)) {
                     creep.goTo(lab.pos)
                     lab.boostCreep(creep)
                     continue;
@@ -144,53 +176,36 @@ export function shardWorker() {
             let searchResult = PathFinder.search(creep.pos, way, {maxOps: 5000});
             let lastOne = searchResult.path.length - 1;
             goMyWay(creep, searchResult.path[lastOne])
+            //强制定位
+            if (Game.shard.name == 'shard2' && (creep.room.name == 'W40S40' || creep.room.name == 'W40S41')) {
+                goMyWay(creep, new RoomPosition(46, 10, "W40S42"));
+            }
+
             if (creep.ticksToLive % logTime == 0) {
-                creep.log('当前位置:\t' + creep.pos + '\t当前tick\t' + creep.ticksToLive)
+                creep.log('当前位置:\t' + Game.shard.name + '-' + creep.pos + '\t当前tick\t' + creep.ticksToLive)
             }
             creep.say('前往目标房间~')
         } else {
-            if (creep.memory['building'] && creep.store.getUsedCapacity() == 0) {
-                creep.memory['building'] = false;
-                creep.say('🔄 harvest');
-            }
-            if (!creep.memory['building'] && creep.store.getFreeCapacity() == 0) {
-                creep.memory['building'] = true;
-                creep.say('🚧 working');
-            }
+            maintainStatus(creep)
 
             creep.say('working');
-            let containers = creep.room.find(FIND_STRUCTURES, {
-                filter: object => {
-                    return object.structureType == 'container'
-                }
-            })
-
-            let sources = creep.room.find(FIND_SOURCES);
 
             if (creepName == 'shard upgrader') {
-                let shardUpgraderEnergyIndex = 1;
                 if (creep.memory['building']) {
                     let target = creep.room.controller;
                     if (creep.upgradeController(target) == ERR_NOT_IN_RANGE) {
                         creep.goTo(target.pos);
                     }
                 } else {
-                    if (containers.length) {
-                        if (creep.withdraw(containers[shardUpgraderEnergyIndex], 'energy') == ERR_NOT_IN_RANGE) {
-                            creep.goTo(containers[shardUpgraderEnergyIndex].pos);
-                        }
-                    } else {
-                        if (creep.harvest(sources[shardUpgraderEnergyIndex]) == ERR_NOT_IN_RANGE) {
-                            creep.goTo(sources[shardUpgraderEnergyIndex].pos);
-                        }
-                    }
+                    getEnenrgy(creep, 1)
                 }
             }
 
             if (creepName == 'shard builder') {
-                let shardBuilderEnergyIndex = 0;
                 if (creep.memory['building']) {
-                    let targets = creep.room.find(FIND_CONSTRUCTION_SITES);
+                    let targets = creep.room.find(FIND_CONSTRUCTION_SITES).sort((c1, c2) => {
+                        return c2.progress - c1.progress;
+                    });
                     if (targets.length) {
                         if (creep.build(targets[0]) == ERR_NOT_IN_RANGE) {
                             creep.goTo(targets[0].pos);
@@ -201,15 +216,7 @@ export function shardWorker() {
                         }
                     }
                 } else {
-                    if (containers.length) {
-                        if (creep.withdraw(containers[shardBuilderEnergyIndex], 'energy') == ERR_NOT_IN_RANGE) {
-                            creep.goTo(containers[shardBuilderEnergyIndex].pos);
-                        }
-                    } else {
-                        if (creep.harvest(sources[shardBuilderEnergyIndex]) == ERR_NOT_IN_RANGE) {
-                            creep.goTo(sources[shardBuilderEnergyIndex].pos);
-                        }
-                    }
+                    getEnenrgy(creep, 0)
                 }
             }
         }

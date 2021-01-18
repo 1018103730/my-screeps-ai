@@ -10,11 +10,14 @@ import {
     upPrice
 } from './modules/myTools'
 import {sharder} from "./modules/myTools/sharder";
-import {shardClaimer, shardWorker} from "./modules/myTools/shardWorker";
+import {shardWorker} from "./modules/myTools/shardWorker";
 import {autoPute} from "./modules/myTools/autoPute";
 import {boostUpgrader} from "./modules/myTools/boostUpgrader";
 import {buildRoad} from "./modules/myTools/buildRoad";
 import {dataShow} from "./modules/myTools/dataShow";
+import {shardClaimer} from "./modules/myTools/shardClaimer";
+import {reactor} from "./modules/myTools/reactor";
+import {showProgress} from "./modules/myTools/progress";
 
 export const loop = ErrorMapper.wrapLoop(() => {
     if (Memory.showCost) console.log(`-------------------------- [${Game.time}] -------------------------- `)
@@ -43,13 +46,13 @@ export const loop = ErrorMapper.wrapLoop(() => {
     boostUpgrader();
 
     // 自动pute
-    autoPute()
+    // autoPute()
 
     shardClaimer()
     shardWorker()
 
     //位面漫步者
-    sharder()
+    // sharder()
 
     //房间数据展示
     dataShow()
@@ -58,4 +61,7 @@ export const loop = ErrorMapper.wrapLoop(() => {
     if (Game.shard.name != 'shard3') {
         generatePixel()
     }
+
+    reactor()
+    showProgress();
 })
