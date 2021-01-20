@@ -2,44 +2,58 @@ let BoostResources: Array<ResourceConstant> = ['XGH2O', 'GH2O', 'GH'];
 
 export function boostUpgrader() {
     let canBoostUpgradeRoom = Object.values(Game.rooms).map(room => {
-        let labId = room.memory['boostUpgradeLabId'];
-        //减少冷却时间
-        if (labId) {
-            //初始化冷缺时间
-            if (!room.memory['boostUpgradeTimeout']) {
-                room.memory['boostUpgradeTimeout'] = 0;
-            }
-            room.memory['boostUpgradeTimeout']--;
-            if (room.memory['boostUpgradeTimeout'] < 0) {
-                room.memory['boostUpgradeTimeout'] = 0;
-            }
+            let labId = room.memory['boostUpgradeLabId'];
+            //减少冷却时间
+            if (labId) {
+                //初始化冷缺时间
+                if (!room.memory['boostUpgradeTimeout']) {
+                    room.memory['boostUpgradeTimeout'] = 0;
+                }
+                room.memory['boostUpgradeTimeout']--;
+                if (room.memory['boostUpgradeTimeout'] < 0) {
+                    room.memory['boostUpgradeTimeout'] = 0;
+                }
 
-            //定时发布任务
-            if (Game.time % 50 == 0) {
-                let lab: StructureLab = Game.getObjectById(labId)
-                for (let boostResource of BoostResources) {
-                    if (room.terminal.store[boostResource] > 0 && (lab.store[boostResource] >= 0)) {
-                        room.addRoomTransferTask({
-                            type: "labIn",
-                            resource: [
-                                {id: labId, type: 'energy', amount: 900},
-                                {id: labId, type: boostResource, amount: 900},
-                            ]
-                        })
+                //定时发布任务
+                if (Game.time % 50 == 0) {
+                    let lab: StructureLab = Game.getObjectById(labId);
+                    for (let boostResource of BoostResources) {
+                        // if (lab.store[boostResource] >= 3000) continue;
+
+                        if (room.terminal.store[boostResource] >= 30) {
+                            let needAddTask = true;
+                            BoostResources.forEach(resource => {
+                                if (resource == boostResource) return
+                                if (lab.store[resource] > 0) {
+                                    needAddTask = false
+                                }
+                            })
+
+                            if (needAddTask) {
+                                // console.log(room.name + '注入' + boostResource)
+                                room.addRoomTransferTask({
+                                    type: "labIn",
+                                    resource: [
+                                        {id: labId, type: 'energy', amount: 900},
+                                        {id: labId, type: boostResource, amount: 900},
+                                    ]
+                                })
+                            }
+                        }
                         break;
                     }
                 }
             }
-        }
 
-        return room;
-    }).filter(room => {
+            return room;
+        }
+    ).filter(room => {
         if (room['boostUpgradeTimeout'] > 0) return false;
         let labId = room.memory['boostUpgradeLabId'];
         if (!labId) return false;
         let lab: StructureLab = Game.getObjectById(labId);
 
-        if ((lab.store['energy'] <= 500) || (lab.store['XGH2O'] <= 500)) return false;
+        if (lab.store['energy'] < 20 && (lab.store['XGH2O'] < 30 || lab.store['GH2O'] < 30 || lab.store['GH'] < 30)) return false;
 
         return true;
     }).map(room => room.name)

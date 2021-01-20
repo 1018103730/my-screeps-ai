@@ -1,4 +1,4 @@
-import {buildBodyFromConfig, goMyWay} from "./tools";
+import {buildBodyFromConfig, goMyWay, maintainStatus} from "./tools";
 
 let ways = {
     'shard0': [
@@ -18,7 +18,7 @@ let ways = {
     ],
     'shard2': [
         {pos: new RoomPosition(44, 16, 'W20S20'), range: 0},
-        {pos: new RoomPosition(41, 16, 'W37S42'), range: 0},
+        {pos: new RoomPosition(41, 16, 'W36S41'), range: 0},
     ],
     'shard3': [
         {pos: new RoomPosition(10, 33, 'W20S20'), range: 0},
@@ -31,7 +31,7 @@ let logTime = 100;
 let maxOps = 5000;
 //参与跨shard工作的creeps以及他们的孵化母巢
 let creepsConfig = {
-    // 'shard upgrader': 'Spawn31',
+    'shard upgrader': 'Spawn31',
     'shard builder': 'Spawn24',
 };
 //目标shard
@@ -40,19 +40,8 @@ let targetShard = 'shard2';
 let targetRoom = 'W37S42';
 //creeps的组件
 let bodys = {
-    // 'shard upgrader': {"work": 17, "move": 17, "carry": 16},
+    'shard upgrader': {"work": 17, "move": 17, "carry": 16},
     'shard builder': {"work": 17, "move": 17, "carry": 16},
-}
-
-function maintainStatus(creep: Creep) {
-    if (creep.memory['building'] && creep.store.getUsedCapacity() == 0) {
-        creep.memory['building'] = false;
-        creep.say('🔄 harvest');
-    }
-    if (!creep.memory['building'] && creep.store.getFreeCapacity() == 0) {
-        creep.memory['building'] = true;
-        creep.say('🚧 working');
-    }
 }
 
 //获取能量
@@ -177,9 +166,9 @@ export function shardWorker() {
             let lastOne = searchResult.path.length - 1;
             goMyWay(creep, searchResult.path[lastOne])
             //强制定位
-            if (Game.shard.name == 'shard2' && (creep.room.name == 'W40S40' || creep.room.name == 'W40S41')) {
-                goMyWay(creep, new RoomPosition(46, 10, "W40S42"));
-            }
+            // if (Game.shard.name == 'shard2' && (creep.room.name == 'W40S40' || creep.room.name == 'W40S41')) {
+            //     goMyWay(creep, new RoomPosition(46, 10, "W40S42"));
+            // }
 
             if (creep.ticksToLive % logTime == 0) {
                 creep.log('当前位置:\t' + Game.shard.name + '-' + creep.pos + '\t当前tick\t' + creep.ticksToLive)

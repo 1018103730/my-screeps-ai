@@ -1,4 +1,4 @@
-let recordNum = 100;
+let intervalTicks = 10;
 
 export function showProgress() {
     if (!Memory.stats['progress'] || Game.gcl.progress <= 100) {
@@ -6,15 +6,15 @@ export function showProgress() {
     }
     let progress = Memory.stats['progress'];
 
-    if (progress.progressRecord.length >= recordNum) {
-        progress.progressRecord = progress.progressRecord.slice(progress.progressRecord.length - recordNum)
-    }
+    if (Game.time % intervalTicks) return
 
-    progress.progressRecord.push(Game.gcl.progress)
+    let nowProgressRecord = [progress.progressRecord[progress.progressRecord.length - 1], Game.gcl.progress];
+    progress.progressRecord = nowProgressRecord;
+
     if (progress.progressRecord.length > 1) {
         progress.avg = ((
-            progress.progressRecord[progress.progressRecord.length - 1] -
+            progress.progressRecord[1] -
             progress.progressRecord[0]
-        ) / (progress.progressRecord.length - 1)).toFixed(2)
+        ) / intervalTicks).toFixed(2)
     }
 }

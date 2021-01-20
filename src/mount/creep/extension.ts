@@ -160,7 +160,6 @@ export default class CreepExtension extends Creep {
         if (route) {
             return route
         }
-
         const result = PathFinder.search(this.pos, {pos: target, range}, {
             plainCost: 2,
             swampCost: 10,
@@ -323,8 +322,8 @@ export default class CreepExtension extends Creep {
         const moveResult = this.moveTo(target, {
             reusePath: 20,
             ignoreCreeps: true,
-            plainCost: 2,
-            swampCost: 10,
+            plainCost: 3,
+            swampCost: 15,
             visualizePathStyle: {stroke: '#ffffff'},
             costCallback: (roomName, costMatrix) => {
                 if (roomName === this.room.name) {
@@ -343,7 +342,7 @@ export default class CreepExtension extends Creep {
                         return object.structureType == 'road';
                     });
                     for (let cs of constructionSites) {
-                        costMatrix.set(cs.pos.x, cs.pos.y, 1)
+                        costMatrix.set(cs.pos.x, cs.pos.y, 2)
                     }
                 }
 

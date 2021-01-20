@@ -126,16 +126,17 @@ const releasePlans: CreepReleasePlans = {
         },
         // 发布计划
         plans: [
-            // 排除unclaim后存在视野的房间
+            // 排除一些情况
             ({room}: UpgraderPlanStats) => {
                 if (!room.controller) return true;
                 if (!room.controller.my) return true;
+                if (room.name == 'W15S19') return true;
             },
             // 8 级时的特殊判断
             ({room, controllerLevel, ticksToDowngrade, upgradeLinkId}: UpgraderPlanStats) => {
                 if (controllerLevel < 8) return false
                 // 掉级还早，不发布 upgrader 了
-                // if (ticksToDowngrade >= 100000) return true
+                if (ticksToDowngrade >= 100000) return true
 
                 // 快掉级了就发布一个
                 addUpgrader(room.name, [0], upgradeLinkId)

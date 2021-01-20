@@ -335,8 +335,8 @@ export const labTarget = [
     {target: RESOURCE_CATALYZED_GHODIUM_ALKALIDE, number: 1000},
     // XGH2O 生产线，强化 Upgrade
     {target: RESOURCE_GHODIUM_HYDRIDE, number: 30000},
-    {target: RESOURCE_GHODIUM_ACID, number: 1000},
-    {target: RESOURCE_CATALYZED_GHODIUM_ACID, number: 10000},
+    // {target: RESOURCE_GHODIUM_ACID, number: 1000},
+    // {target: RESOURCE_CATALYZED_GHODIUM_ACID, number: 4000},
 ]
 
 /**

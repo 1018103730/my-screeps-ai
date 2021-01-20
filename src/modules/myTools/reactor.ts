@@ -1,5 +1,6 @@
 //帮助反应的房间
-import {buildBodyFromConfig, ignoreRange, selectSpawn} from "./tools";
+import {buildBodyFromConfig, ignoreRange, maintainStatus, selectSpawn} from "./tools";
+import {creepApi} from "../creepController";
 
 const helpRooms = ['W16S18', 'W15S18', 'W16S19'];
 //目标房间
@@ -13,7 +14,7 @@ const upgraderBodyConfigWithoutEnergy = {
     'work': 20, 'carry': 20, 'move': 10
 }
 const upgraderBodyConfigWithEnergy = {
-    'work': 30, 'carry': 10, 'move': 10
+    'work': 20, 'carry': 20, 'move': 10
 }
 
 //生成身体部件
@@ -57,14 +58,16 @@ function getEnergy(creep: Creep, targetRoom: Room) {
     }
 }
 
-function maintainStatus(creep: Creep) {
-    if (creep.memory['building'] && creep.store.getUsedCapacity() == 0) {
-        creep.memory['building'] = false;
-        creep.say('🔄 harvest');
-    }
-    if (!creep.memory['building'] && creep.store.getFreeCapacity() == 0) {
-        creep.memory['building'] = true;
-        creep.say('🚧 working');
+// reclaimer
+function reClaimer(targetRoom) {
+    if (targetRoom.controller.level == 8) {
+        targetRoom.controller.unclaim()
+
+        creepApi.add(`${targetRoomName} Claimer`, 'claimer', {
+            targetRoomName,
+            spawnRoom: "W16S19",
+            signText: "Luerdog的反应堆~" + (new Date).toString().split(" GMT")[0]
+        }, "W16S19");
     }
 }
 
@@ -72,9 +75,11 @@ export function reactor() {
     if (Game.shard.name != "shard3") return
 
     const targetRoom = Game.rooms[targetRoomName];
-    if (Game.time % 50 == 0) {
-        targetRoom.memory.restrictedPos = {}
-    }
+    // if (Game.time % 50 == 0) {
+    //     targetRoom.memory.restrictedPos = {}
+    // }
+    if (!targetRoom.controller || !targetRoom.controller.my) return
+    reClaimer(targetRoom)
 
     //建立控制器范围道路工地
     if (Game.time % 1000 == 0) {
@@ -114,6 +119,7 @@ export function reactor() {
     });
     let creepIndex = 0;
     for (let creep of catalyzers) {
+        //boost
         let needBoost = true;
         for (let b in creep.body) {
             let body = creep.body[b];
@@ -122,6 +128,9 @@ export function reactor() {
                 break;
             }
         }
+        if (!targetRoom.terminal || !targetRoom.terminal.isActive()){
+            needBoost =false;
+        }
         if (needBoost && creep.room.memory['boostUpgradeLabId']) {
             let labId = creep.room.memory['boostUpgradeLabId'];
             let lab: StructureLab = Game.getObjectById(labId);
@@ -129,7 +138,7 @@ export function reactor() {
                 console.log(creep.room.name + '未找到Boost Lab ,请设置');
                 continue;
             }
-            if (lab && (lab.store['XGH2O'] >= 100 || lab.store['GH'] >= 100 || lab.store['GH2O'] >= 100)) {
+            if (lab && (lab.store['XGH2O'] >= 30 || lab.store['GH'] >= 30 || lab.store['GH2O'] >= 30) && lab.store['energy'] > 0) {
                 creep.goTo(lab.pos)
                 lab.boostCreep(creep)
                 continue;
@@ -156,7 +165,7 @@ export function reactor() {
                 let controller = targetRoom.controller;
                 let result = creep.upgradeController(controller);
                 // creep.room.addRestrictedPos(creep.name, creep.pos)
-                creep.goTo(new RoomPosition(20, 10, 'W15S19'))
+                creep.goTo(new RoomPosition(19, 8, 'W15S19'))
             }
         } else {
             getEnergy(creep, targetRoom)

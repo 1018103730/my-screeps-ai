@@ -25,20 +25,9 @@ export function buildRoad() {
 
         // 不需要造路的角色
         let creepRole = creep.memory.role;
-        const canBuildRoladRole = ['upgrader1', 'manager1'];
+        const canBuildRoladRole = ['upgrader', 'manager'];
         if (canBuildRoladRole.indexOf(creepRole) < 0) continue
 
         creep.pos.createConstructionSite(STRUCTURE_ROAD)
-    }
-
-    for (let r in Game.rooms) {
-        let room = Game.rooms[r];
-        if (!room.controller || !room.controller.my) continue;
-
-
-        let constructionSiteCount = room.find(FIND_CONSTRUCTION_SITES).length;
-        if (constructionSiteCount > 0) {
-            //判断当前房间是否存在builder 不存在就生成
-        }
     }
 }

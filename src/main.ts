@@ -5,7 +5,6 @@ import {ErrorMapper} from './modules/errorMapper'
 import {DEFAULT_FLAG_NAME} from "./setting";
 import {
     claimNewRoom,
-    dispatchGarrison,
     startOp,
     upPrice
 } from './modules/myTools'
@@ -18,8 +17,10 @@ import {dataShow} from "./modules/myTools/dataShow";
 import {shardClaimer} from "./modules/myTools/shardClaimer";
 import {reactor} from "./modules/myTools/reactor";
 import {showProgress} from "./modules/myTools/progress";
+import {dispatchGarrison} from "./modules/myTools/dispatchGarrison";
 
 export const loop = ErrorMapper.wrapLoop(() => {
+    // if (Game.shard.name == 'shard3') return
     if (Memory.showCost) console.log(`-------------------------- [${Game.time}] -------------------------- `)
     // 挂载拓展
     mountWork()
@@ -30,9 +31,6 @@ export const loop = ErrorMapper.wrapLoop(() => {
     // 所有建筑、creep、powerCreep 执行工作
     doing(Game.structures, Game.creeps, Game.powerCreeps)
 
-    // 统计全局资源使用
-    stateScanner()
-
     // 造路机
     buildRoad();
 
@@ -40,7 +38,7 @@ export const loop = ErrorMapper.wrapLoop(() => {
     //claimNewRoom("W14S18", "W16S19");
 
     //驻军
-    dispatchGarrison()
+    dispatchGarrison('shard3', 'W15S19', 'W16S19')
 
     //增强upgrader
     boostUpgrader();
@@ -49,13 +47,11 @@ export const loop = ErrorMapper.wrapLoop(() => {
     // autoPute()
 
     shardClaimer()
-    shardWorker()
+    // shardWorker()
 
     //位面漫步者
     // sharder()
 
-    //房间数据展示
-    dataShow()
 
     // 搓 pixel
     if (Game.shard.name != 'shard3') {
@@ -64,4 +60,10 @@ export const loop = ErrorMapper.wrapLoop(() => {
 
     reactor()
     showProgress();
+
+    //房间数据展示
+    dataShow()
+
+    // 统计全局资源使用
+    stateScanner()
 })

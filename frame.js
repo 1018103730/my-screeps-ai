@@ -1,5 +1,5 @@
 // 查看当前终端资源
-let resources = ["GH", "GH2O", "XGH2O", "energy", "power", "metal"];
+let resources = ["G", "GH", "GH2O", "XGH2O", "energy", "metal", "tube", "fixtures","frame","hydraulics"];
 let titles = ['房间', '等级', '终端占用', '仓库占用']
 let result = [];
 result.push(titles.join("\t") + "\t" + resources.join("\t"))
@@ -31,21 +31,24 @@ for (let r in Game.rooms) {
     if (!room.terminal) {
         continue;
     }
-    room.memory.terminalTasks = [];
 
     if (!room.controller) continue
     if (!room.controller.my) continue
 
-    room.terminal.add('H', 1000, 0, 1);
+    room.terminal.add('H', 1000, 0, 2);
+    room.terminal.add('O', 1000, 0, 2);
+    room.terminal.add('L', 1000, 0, 2);
+    room.terminal.add('K', 1000, 0, 2);
+    room.terminal.add('Z', 1000, 0, 2);
+    room.terminal.add('U', 1000, 0, 2);
+    room.terminal.add('X', 1000, 0, 2);
+    room.terminal.add('H', 1000, 0, 2);
     room.terminal.add('O', 1000, 0, 1);
     room.terminal.add('L', 1000, 0, 1);
     room.terminal.add('K', 1000, 0, 1);
     room.terminal.add('Z', 1000, 0, 1);
     room.terminal.add('U', 1000, 0, 1);
     room.terminal.add('X', 1000, 0, 1);
-    room.terminal.add('GH', 20000, 0, 1);
-    room.terminal.add('GH2O', 20000, 0, 1);
-    room.terminal.add('XGH2O', 40000, 0, 1);
 
     if (room.controller.level < 8) {
         room.terminal.add('energy', 100000, 0, 1);
@@ -146,7 +149,7 @@ for (let r in Game.rooms) {
     room.releaseCreep('upgrader')
 }
 
-Game.rooms.W16S19.spawnReiver('W15S19 reiver', Game.rooms.W15S19.storage.id)
+Game.rooms.W15S19.spawnReiver('W15S19 reiver', Game.rooms.W15S19.storage.id)
 
 let creep = Game.creeps['W19S17 upgrader0']
 let lab = Game.getObjectById('60024d2c0163977239bd6dc2');
@@ -157,3 +160,22 @@ if (result == OK) {
 }
 creep.drop('K')
 
+//共享bar
+let bars = {
+    'O': "oxidant",
+    'H': 'reductant',
+    'Z': 'zynthium_bar',
+    'L': 'lemergium_bar',
+    'U': 'utrium_bar',
+    'K': 'keanium_bar',
+    'X': 'purifier'
+}
+for (let r in Game.rooms) {
+    let room = Game.rooms[r];
+    if (!room.controller || !room.controller.my) continue;
+
+    let mt = room.mineral.mineralType
+    console.log(room.name, mt)
+    room.shareAddSource(mt)
+    room.shareAddSource(bars[mt])
+}

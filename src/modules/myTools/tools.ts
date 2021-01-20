@@ -99,3 +99,16 @@ function selectSpawn(room: Room) {
 
 export {selectSpawn}
 
+//切换工作状态
+function maintainStatus(creep: Creep) {
+    if (creep.memory['building'] && creep.store.getUsedCapacity() == 0) {
+        creep.memory['building'] = false;
+        creep.say('🔄 harvest');
+    }
+    if (!creep.memory['building'] && creep.store.getFreeCapacity() == 0) {
+        creep.memory['building'] = true;
+        creep.say('🚧 working');
+    }
+}
+
+export {maintainStatus}

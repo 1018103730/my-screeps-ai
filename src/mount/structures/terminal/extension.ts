@@ -158,7 +158,7 @@ export default class TerminalExtension extends StructureTerminal {
         if (this.room.controller.level < 8) {
             thresholdEnergy = 100000;
         } else {
-            thresholdEnergy = 30000;
+            thresholdEnergy = 60000;
         }
         if (this.store[RESOURCE_ENERGY] > thresholdEnergy) {
             this.room.addCenterTask({
