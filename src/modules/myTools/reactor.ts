@@ -60,15 +60,14 @@ function getEnergy(creep: Creep, targetRoom: Room) {
 
 // reclaimer
 function reClaimer(targetRoom) {
-    if (targetRoom.controller.level == 8) {
-        targetRoom.controller.unclaim()
+    if (targetRoom.controller.level < 8) return
+    targetRoom.controller.unclaim()
 
-        creepApi.add(`${targetRoomName} Claimer`, 'claimer', {
-            targetRoomName,
-            spawnRoom: "W16S19",
-            signText: "Luerdog的反应堆~" + (new Date).toString().split(" GMT")[0]
-        }, "W16S19");
-    }
+    creepApi.add(`${targetRoomName} Claimer`, 'claimer', {
+        targetRoomName,
+        spawnRoom: "W16S19",
+        signText: "Luerdog的反应堆~" + (new Date).toString().split(" GMT")[0]
+    }, "W16S19");
 }
 
 export function reactor() {
@@ -128,8 +127,8 @@ export function reactor() {
                 break;
             }
         }
-        if (!targetRoom.terminal || !targetRoom.terminal.isActive()){
-            needBoost =false;
+        if (!targetRoom.terminal || !targetRoom.terminal.isActive()) {
+            needBoost = false;
         }
         if (needBoost && creep.room.memory['boostUpgradeLabId']) {
             let labId = creep.room.memory['boostUpgradeLabId'];

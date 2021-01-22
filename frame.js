@@ -1,5 +1,5 @@
 // 查看当前终端资源
-let resources = ["G", "GH", "GH2O", "XGH2O", "energy", "metal", "tube", "fixtures","frame","hydraulics"];
+let resources = ["G", "GH", "GH2O", "XGH2O", "energy", "metal", "tube", "fixtures", "frame", "hydraulics"];
 let titles = ['房间', '等级', '终端占用', '仓库占用']
 let result = [];
 result.push(titles.join("\t") + "\t" + resources.join("\t"))
@@ -59,7 +59,7 @@ for (let r in Game.rooms) {
 }
 
 // 查看creep参数
-let room = Game.rooms.W15S19;
+let room = Game.rooms.W36S41;
 let roomInfo = ['Room:' + room.name, "Level:" + room.controller.level, "Ext:" + room.energyAvailable, "Timeout:" + room.memory['boostUpgradeTimeout']];
 console.log(roomInfo.join("\t"))
 let creeps = room.find(FIND_MY_CREEPS).filter(creep => creep.room.name == room.name)
@@ -136,29 +136,19 @@ for (let t of tasks) {
 
 //清除道路工地
 let roadcs = Object.values(Game.constructionSites).filter(object => {
-    return object.structureType == 'road'
+    return object.structureType == 'road' && object.room.name == 'W16S19';
 })
 for (let road of roadcs) {
-    road.remove()
+    road.remove();
 }
 
+//重置upgrader
 for (let r in Game.rooms) {
     let room = Game.rooms[r];
     if (!room.controller) continue
 
     room.releaseCreep('upgrader')
 }
-
-Game.rooms.W15S19.spawnReiver('W15S19 reiver', Game.rooms.W15S19.storage.id)
-
-let creep = Game.creeps['W19S17 upgrader0']
-let lab = Game.getObjectById('60024d2c0163977239bd6dc2');
-let result = creep.withdraw(lab, 'K')
-if (result == OK) {
-} else {
-    creep.goTo(lab.pos)
-}
-creep.drop('K')
 
 //共享bar
 let bars = {
@@ -179,3 +169,16 @@ for (let r in Game.rooms) {
     room.shareAddSource(mt)
     room.shareAddSource(bars[mt])
 }
+
+//统计资源
+let resourceType = 'XGH2O';
+let count = 0;
+for (let r in Game.rooms) {
+    let room = Game.rooms[r];
+    if (!room.controller || !room.controller.my) continue;
+    if (!room.terminal || !room.storage) continue;
+
+    count += room.storage.store[resourceType];
+    count += room.terminal.store[resourceType];
+}
+console.log(resourceType + '数量:' + count)

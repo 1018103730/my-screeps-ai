@@ -1,3 +1,5 @@
+import {creepApi} from "../creepController";
+
 export function buildRoad() {
     if (Object.keys(Game.constructionSites).length >= 100 || !(Memory['buildRoad'])) return
     for (let c in Game.creeps) {
@@ -29,5 +31,23 @@ export function buildRoad() {
         if (canBuildRoladRole.indexOf(creepRole) < 0) continue
 
         creep.pos.createConstructionSite(STRUCTURE_ROAD)
+    }
+
+    //生成道路建设者
+    for (let r in Game.rooms) {
+        let room = Game.rooms[r];
+        if (!room.controller || !room.controller.my) continue;
+
+        let cs = room.find(FIND_CONSTRUCTION_SITES, {
+            filter: object => {
+                return object.structureType == 'road'
+            }
+        })
+        let roadBuilderName = room.name + ' road builder';
+        if (cs.length >= 5 && !creepApi.has(roadBuilderName)) {
+            creepApi.add(roadBuilderName, 'builder', {
+                sourceId: room.getAvailableSource().id
+            }, room.name);
+        }
     }
 }

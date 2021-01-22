@@ -5,20 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="10d41954-e381-4121-a946-d325cd5560c6" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/modules/myTools/fillBoostLab.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frame.js" beforeDir="false" afterPath="$PROJECT_DIR$/frame.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/autoPlanning/planCreep.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/autoPlanning/planCreep.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modules/myTools/boostUpgrader.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/myTools/boostUpgrader.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modules/myTools/buildRoad.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/myTools/buildRoad.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/myTools/dataShow.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/myTools/dataShow.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/myTools/progress.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/myTools/progress.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modules/myTools/reactor.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/myTools/reactor.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/myTools/shardWorker.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/myTools/shardWorker.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/myTools/tools.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/myTools/tools.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/mount/creep/extension.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/mount/creep/extension.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mount/structures/terminal/extension.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/mount/structures/terminal/extension.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/role/advanced.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/role/advanced.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/setting.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/setting.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -170,7 +164,11 @@
       <workItem from="1611017626375" duration="7195000" />
       <workItem from="1611027015961" duration="16390000" />
       <workItem from="1611102557754" duration="2940000" />
-      <workItem from="1611112924214" duration="1642000" />
+      <workItem from="1611112924214" duration="5841000" />
+      <workItem from="1611130175408" duration="2195000" />
+      <workItem from="1611188677388" duration="12057000" />
+      <workItem from="1611216885716" duration="3585000" />
+      <workItem from="1611273428857" duration="2841000" />
     </task>
     <servers />
   </component>

@@ -161,8 +161,8 @@ export default class CreepExtension extends Creep {
             return route
         }
         const result = PathFinder.search(this.pos, {pos: target, range}, {
-            plainCost: 2,
-            swampCost: 10,
+            plainCost: 3,
+            swampCost: 15,
             roomCallback: roomName => {
                 // 强调了不许走就不走
                 if (Memory.bypassRooms && Memory.bypassRooms.includes(roomName)) return false
@@ -192,6 +192,13 @@ export default class CreepExtension extends Creep {
                     // if (this.memory.role == 'upgrader') continue
                     const pos = room.unserializePos(restrictedPos[creepName])
                     costs.set(pos.x, pos.y, 0xff)
+                }
+                //设置工地移动成本
+                const constructionSites = room.find(FIND_CONSTRUCTION_SITES).filter(object => {
+                    return object.structureType == 'road';
+                });
+                for (let cs of constructionSites) {
+                    costs.set(cs.pos.x, cs.pos.y, 2)
                 }
 
                 return costs

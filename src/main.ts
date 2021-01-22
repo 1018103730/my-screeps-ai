@@ -18,6 +18,7 @@ import {shardClaimer} from "./modules/myTools/shardClaimer";
 import {reactor} from "./modules/myTools/reactor";
 import {showProgress} from "./modules/myTools/progress";
 import {dispatchGarrison} from "./modules/myTools/dispatchGarrison";
+import {fillBoostLab} from "./modules/myTools/fillBoostLab";
 
 export const loop = ErrorMapper.wrapLoop(() => {
     // if (Game.shard.name == 'shard3') return
@@ -51,7 +52,8 @@ export const loop = ErrorMapper.wrapLoop(() => {
 
     //位面漫步者
     // sharder()
-
+    //填充boostLab
+    fillBoostLab()
 
     // 搓 pixel
     if (Game.shard.name != 'shard3') {
