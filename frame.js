@@ -177,8 +177,23 @@ for (let r in Game.rooms) {
     let room = Game.rooms[r];
     if (!room.controller || !room.controller.my) continue;
     if (!room.terminal || !room.storage) continue;
-
+    console.log(room.name + ':' + (room.storage.store[resourceType] + room.terminal.store[resourceType]))
     count += room.storage.store[resourceType];
     count += room.terminal.store[resourceType];
 }
 console.log(resourceType + '数量:' + count)
+
+let towers = Game.rooms.W15S19.find(FIND_STRUCTURES, {filter: object => object.structureType == 'tower'});
+for (let tower of towers) {
+    console.log(tower.structureType)
+}
+
+for (let r in Game.rooms) {
+    let room = Game.rooms[r];
+    if (!room.terminal || !room.terminal.my) continue;
+    room.ctadd('terminal', 'storage', 'XGH2O', room.storage.store['XGH2O'])
+}
+
+for (let flag of Object.values(Game.flags)) {
+    console.log(flag.name)
+}

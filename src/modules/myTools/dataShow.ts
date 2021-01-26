@@ -4,15 +4,17 @@ export function dataShow() {
         if (!room.controller) continue;
         if (!room.controller.my) continue;
         // 数据展示区
-        room.visual.rect(0, 0, 15, 4, {fill: '#000000', opacity: .3})
+        room.visual.rect(0, 0, 15, 5, {fill: '#000000', opacity: .3})
 
         // let x = 1;
         // let y = 1;
 
         //当前gcl增速
         room.visual.text('当前gcl增速:' + Memory.stats['progress'].avg + '/tick', 1, 1, {font: .8, align: "left"})
-        room.visual.text('当前cpu使用:' + Game.cpu.getUsed().toFixed(4), 1, 2, {font: .8, align: "left"})
-        room.visual.text('当前bucket:' + Game.cpu.bucket, 1, 3, {font: .8, align: "left"})
+        let catalyzeNum = Object.values(Game.creeps).filter(creep => creep.name.split(' ')[0] == 'catalyze').length
+        room.visual.text('当前催化者:' + catalyzeNum, 1, 2, {font: .8, align: "left"})
+        room.visual.text('当前cpu使用:' + Game.cpu.getUsed().toFixed(4), 1, 3, {font: .8, align: "left"})
+        room.visual.text('当前bucket:' + Game.cpu.bucket, 1, 4, {font: .8, align: "left"})
 
         // //房间概要
         // let roomData = {

@@ -40,6 +40,7 @@ export const loop = ErrorMapper.wrapLoop(() => {
 
     //驻军
     dispatchGarrison('shard3', 'W15S19', 'W16S19')
+    dispatchGarrison('shard3', 'W15S19', 'W15S18')
 
     //增强upgrader
     boostUpgrader();
@@ -55,11 +56,6 @@ export const loop = ErrorMapper.wrapLoop(() => {
     //填充boostLab
     fillBoostLab()
 
-    // 搓 pixel
-    if (Game.shard.name != 'shard3') {
-        generatePixel()
-    }
-
     reactor()
     showProgress();
 
@@ -68,4 +64,9 @@ export const loop = ErrorMapper.wrapLoop(() => {
 
     // 统计全局资源使用
     stateScanner()
+
+    // 搓 pixel
+    if (Game.shard.name != 'shard3') {
+        generatePixel()
+    }
 })
