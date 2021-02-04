@@ -71,15 +71,24 @@ function getEnergy(creep: Creep, targetRoom: Room) {
 }
 
 // reclaimer
-function reClaimer(targetRoom) {
-    if (targetRoom.controller.level < 8) return
-    targetRoom.controller.unclaim()
+function reClaimer(targetRoomName) {
+    let targetRoom = Game.rooms[targetRoomName];
+    let claimCreepName = `${targetRoomName} Claimer`;
+    if (targetRoom.controller && targetRoom.controller.my) {
+        if ((targetRoom.controller.level >= 8) && !creepApi.has(claimCreepName)) {
+            creepApi.add(claimCreepName, 'claimer', {
+                targetRoomName,
+                spawnRoom: targetRoomName,
+                signText: "Luerdog的反应堆~" + (new Date).toString().split(" GMT")[0]
+            }, targetRoomName);
+        }
 
-    creepApi.add(`${targetRoomName} Claimer`, 'claimer', {
-        targetRoomName,
-        spawnRoom: "W16S19",
-        signText: "Luerdog的反应堆~" + (new Date).toString().split(" GMT")[0]
-    }, "W16S19");
+        let claimCreep = Game.creeps[claimCreepName];
+        if (claimCreep && claimCreep.ticksToLive <= 600) {
+            targetRoom.controller.unclaim()
+        }
+    }
+
 }
 
 //terminal不可用时,添加搬运工
@@ -178,16 +187,33 @@ function setConstructionSiteForController(targetRoom: Room) {
     }
 }
 
+//自动填充storage
+function fillStorage(targetRoom: Room) {
+    if (!targetRoom.terminal || !targetRoom.terminal.isActive()) return;
+    if (!targetRoom.storage || !targetRoom.storage.isActive()) return;
+    if (targetRoom.storage.store.getFreeCapacity() == 0) return;
+    let amount = Math.min(targetRoom.storage.store.getFreeCapacity(), targetRoom.terminal.store['energy'])
+    targetRoom.addCenterTask({
+        submit: 7,
+        target: STRUCTURE_STORAGE,
+        source: STRUCTURE_TERMINAL,
+        resourceType: RESOURCE_ENERGY,
+        amount
+    });
+}
+
 export function reactor() {
-    if (Game.shard.name != "shard3") return
+    if (Game.shard.name != "shard3") return;
+    if (Game.cpu.bucket <= 100) return;
+    reClaimer(targetRoomName);
 
     const targetRoom = Game.rooms[targetRoomName];
     // if (Game.time % 50 == 0) {
     //     targetRoom.memory.restrictedPos = {}
     // }
     if (!targetRoom.controller || !targetRoom.controller.my) return
-    reClaimer(targetRoom);
     hamal(targetRoom);
+    fillStorage(targetRoom);
 
     setConstructionSiteForController(targetRoom)
 
@@ -254,9 +280,9 @@ export function reactor() {
                 let controller = targetRoom.controller;
                 let result = creep.upgradeController(controller);
 
-                let destination = new RoomPosition(19, 9, targetRoom.name);
-                // let destination = targetRoom.controller.pos;
-                let num = parseInt(creep.name.split(' ')[2]);
+                let destination = targetRoom.controller.pos;
+                let creepData = creep.name.split(' ');
+                let num = parseInt(creepData[2]);
                 let range = null;
                 if (num <= 1) {
                     range = 1;

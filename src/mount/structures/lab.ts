@@ -212,7 +212,7 @@ export default class LabExtension extends StructureLab {
             this.room.memory.lab.state = LAB_STATE.GET_RESOURCE
             // 单次作业数量不能超过 lab 容量上限
             this.room.memory.lab.targetAmount = canReactionAmount > LAB_MINERAL_CAPACITY ? LAB_MINERAL_CAPACITY : canReactionAmount
-            // this.log(`指定目标：${resource.target}`)
+            this.log(`指定目标：${resource.target}`)
         }
         // 合成不了
         else {

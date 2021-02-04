@@ -1,5 +1,5 @@
 // 查看当前终端资源
-let resources = ["G", "GH", "GH2O", "XGH2O", "energy", "metal", "tube", "fixtures", "frame", "hydraulics"];
+let resources = ["composite", "metal", "alloy", "tube", "fixtures", "frame", "hydraulics"];
 let titles = ['房间', '等级', '终端占用', '仓库占用']
 let result = [];
 result.push(titles.join("\t") + "\t" + resources.join("\t"))
@@ -35,31 +35,27 @@ for (let r in Game.rooms) {
     if (!room.controller) continue
     if (!room.controller.my) continue
 
-    room.terminal.add('H', 1000, 0, 2);
-    room.terminal.add('O', 1000, 0, 2);
-    room.terminal.add('L', 1000, 0, 2);
-    room.terminal.add('K', 1000, 0, 2);
-    room.terminal.add('Z', 1000, 0, 2);
-    room.terminal.add('U', 1000, 0, 2);
-    room.terminal.add('X', 1000, 0, 2);
-    room.terminal.add('H', 1000, 0, 2);
     room.terminal.add('O', 1000, 0, 1);
     room.terminal.add('L', 1000, 0, 1);
     room.terminal.add('K', 1000, 0, 1);
     room.terminal.add('Z', 1000, 0, 1);
     room.terminal.add('U', 1000, 0, 1);
     room.terminal.add('X', 1000, 0, 1);
+    room.terminal.add('power', 1000, 0, 1);
+    room.terminal.add('power', 1000, 0, 0);
 
     if (room.controller.level < 8) {
         room.terminal.add('energy', 100000, 0, 1);
         room.terminal.add('energy', 100000, 0, 0);
+        room.terminal.add('XGH2O', 10000, 0, 1);
+        room.terminal.add('XGH2O', 10000, 0, 0);
     } else {
         room.terminal.add('energy', 60000, 0, 1)
     }
 }
 
 // 查看creep参数
-let room = Game.rooms.W36S41;
+let room = Game.rooms.W15S19;
 let roomInfo = ['Room:' + room.name, "Level:" + room.controller.level, "Ext:" + room.energyAvailable, "Timeout:" + room.memory['boostUpgradeTimeout']];
 console.log(roomInfo.join("\t"))
 let creeps = room.find(FIND_MY_CREEPS).filter(creep => creep.room.name == room.name)
@@ -136,7 +132,7 @@ for (let t of tasks) {
 
 //清除道路工地
 let roadcs = Object.values(Game.constructionSites).filter(object => {
-    return object.structureType == 'road' && object.room.name == 'W16S19';
+    return object.structureType == 'road' && object.room.name == 'W41S41';
 })
 for (let road of roadcs) {
     road.remove();
@@ -196,4 +192,10 @@ for (let r in Game.rooms) {
 
 for (let flag of Object.values(Game.flags)) {
     console.log(flag.name)
+}
+
+
+let builds = Game.rooms.W41S39.find(FIND_HOSTILE_STRUCTURES, {filter: object => object.structureType == 'tower'})
+for (let build of builds) {
+    build.destroy()
 }

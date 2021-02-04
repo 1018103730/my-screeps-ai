@@ -21,7 +21,6 @@ import {dispatchGarrison} from "./modules/myTools/dispatchGarrison";
 import {fillBoostLab} from "./modules/myTools/fillBoostLab";
 
 export const loop = ErrorMapper.wrapLoop(() => {
-    // if (Game.shard.name == 'shard3') return
     if (Memory.showCost) console.log(`-------------------------- [${Game.time}] -------------------------- `)
     // 挂载拓展
     mountWork()
@@ -57,16 +56,17 @@ export const loop = ErrorMapper.wrapLoop(() => {
     fillBoostLab()
 
     reactor()
-    showProgress();
 
     //房间数据展示
     dataShow()
-
-    // 统计全局资源使用
-    stateScanner()
 
     // 搓 pixel
     if (Game.shard.name != 'shard3') {
         generatePixel()
     }
+
+    // 统计全局资源使用
+    stateScanner()
+
+    showProgress();
 })

@@ -28,7 +28,6 @@ export {buildBodyFromConfig}
 
 let defaultOpts = {
     visualizePathStyle: {stroke: '#ffffff'},
-    ignoreRoads: true,
     maxRooms: 40,
     maxOps: 1000,
     costCallback(roomName: string, costMatrix: CostMatrix): void | CostMatrix {

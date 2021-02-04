@@ -23,8 +23,7 @@ export function boostUpgrader() {
         if (!labId) return false;
         let lab: StructureLab = Game.getObjectById(labId);
 
-        if (lab.store['energy'] < 20 && (lab.store['XGH2O'] < 30 || lab.store['GH2O'] < 30 || lab.store['GH'] < 30)) return false;
-
+        if (lab.store['energy'] < 20 || (lab.store['XGH2O'] < 30 && lab.store['GH2O'] < 30 && lab.store['GH'] < 30)) return false;
         return true;
     }).map(room => room.name)
 

@@ -1,5 +1,6 @@
 import {PB_HARVESTE_STATE, DEPOSIT_MAX_COOLDOWN} from 'setting'
 import {calcBodyPart, getName} from 'utils'
+import {goMyWay} from "../modules/myTools/tools";
 
 /**
  * 多房间角色组
@@ -321,14 +322,19 @@ const roles: {
         },
         // 向指定房间移动
         prepare: creep => {
-            // 只要进入房间则准备结束
             if (creep.room.name !== data.targetRoomName) {
-                creep.farMoveTo(new RoomPosition(25, 25, data.targetRoomName))
-                return false
-            } else {
-                delete creep.memory.farMove
-                return true
+                goMyWay(creep, new RoomPosition(25, 25, data.targetRoomName));
+                return false;
             }
+            return true;
+            // 只要进入房间则准备结束
+            // if (creep.room.name !== data.targetRoomName) {
+            //     creep.farMoveTo(new RoomPosition(25, 25, data.targetRoomName))
+            //     return false
+            // } else {
+            //     delete creep.memory.farMove
+            //     return true
+            // }
         },
         // 下面是正常的建造者逻辑
         source: creep => {
@@ -338,11 +344,7 @@ const roles: {
             let source: StructureStorage | StructureTerminal | StructureContainer | Source
             if (!creep.memory.sourceId) {
                 source = creep.room.getAvailableSource()
-                if (Memory.creepConfigs[creep.name].data['sourceId'] == source.id) {
-                    creep.memory.sourceId = source.id
-                } else {
-                    creep.memory.sourceId = Memory.creepConfigs[creep.name].data['sourceId'];
-                }
+                creep.memory.sourceId = source.id
             } else source = Game.getObjectById(creep.memory.sourceId)
 
             // 之前用的能量来源没能量了就更新来源（如果来源已经是 source 的话就改了）
@@ -375,14 +377,19 @@ const roles: {
         },
         // 向指定房间移动
         prepare: creep => {
-            // 只要进入房间则准备结束
             if (creep.room.name !== data.targetRoomName) {
-                creep.farMoveTo(new RoomPosition(25, 25, data.targetRoomName))
-                return false
-            } else {
-                delete creep.memory.farMove
-                return true
+                goMyWay(creep, new RoomPosition(25, 25, data.targetRoomName));
+                return false;
             }
+            return true;
+            // 只要进入房间则准备结束
+            // if (creep.room.name !== data.targetRoomName) {
+            //     creep.farMoveTo(new RoomPosition(25, 25, data.targetRoomName))
+            //     return false
+            // } else {
+            //     delete creep.memory.farMove
+            //     return true
+            // }
         },
         // 下面是正常的升级者逻辑
         source: creep => {

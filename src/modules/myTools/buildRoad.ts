@@ -27,7 +27,7 @@ export function buildRoad() {
 
         // 不需要造路的角色
         let creepRole = creep.memory.role;
-        const canBuildRoladRole = ['upgrader', 'manager'];
+        const canBuildRoladRole = ['upgrader', 'remoteUpgrader', 'manager'];
         if (canBuildRoladRole.indexOf(creepRole) < 0) continue
 
         creep.pos.createConstructionSite(STRUCTURE_ROAD)

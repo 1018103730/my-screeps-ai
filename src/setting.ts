@@ -334,9 +334,9 @@ export const labTarget = [
     {target: RESOURCE_GHODIUM_ALKALIDE, number: 1000},
     {target: RESOURCE_CATALYZED_GHODIUM_ALKALIDE, number: 1000},
     // XGH2O 生产线，强化 Upgrade
-    {target: RESOURCE_GHODIUM_HYDRIDE, number: 30000},
-    // {target: RESOURCE_GHODIUM_ACID, number: 1000},
-    // {target: RESOURCE_CATALYZED_GHODIUM_ACID, number: 4000},
+    {target: RESOURCE_GHODIUM_HYDRIDE, number: 300},
+    {target: RESOURCE_GHODIUM_ACID, number: 1000},
+    {target: RESOURCE_CATALYZED_GHODIUM_ACID, number: 50000},
 ]
 
 /**
@@ -604,7 +604,7 @@ export const commodityMax = {
  * miner 的矿物采集上限
  * 当 terminal 中的资源多余这个值时，miner 将不再继续采矿
  */
-export const minerHervesteLimit = 200000
+export const minerHervesteLimit = 20000
 
 /**
  * 交易时的购买区间限制
