@@ -1,5 +1,5 @@
 // 查看当前终端资源
-let resources = ["composite", "metal", "alloy", "tube", "fixtures", "frame", "hydraulics"];
+let resources = ['metal', 'alloy', 'tube', 'fixtures', 'frame', 'hydraulics', 'machine'];
 let titles = ['房间', '等级', '终端占用', '仓库占用']
 let result = [];
 result.push(titles.join("\t") + "\t" + resources.join("\t"))
@@ -35,27 +35,30 @@ for (let r in Game.rooms) {
     if (!room.controller) continue
     if (!room.controller.my) continue
 
-    room.terminal.add('O', 1000, 0, 1);
-    room.terminal.add('L', 1000, 0, 1);
-    room.terminal.add('K', 1000, 0, 1);
-    room.terminal.add('Z', 1000, 0, 1);
-    room.terminal.add('U', 1000, 0, 1);
-    room.terminal.add('X', 1000, 0, 1);
-    room.terminal.add('power', 1000, 0, 1);
-    room.terminal.add('power', 1000, 0, 0);
+    room.terminal.add('O',1000,0,1);
+    room.terminal.add('H',1000,0,1);
+    room.terminal.add('Z',1000,0,1);
+    room.terminal.add('L',1000,0,1);
+    room.terminal.add('K',1000,0,1);
+    room.terminal.add('X',1000,0,1);
+    room.terminal.add('U',1000,0,1);
 
     if (room.controller.level < 8) {
-        room.terminal.add('energy', 100000, 0, 1);
-        room.terminal.add('energy', 100000, 0, 0);
-        room.terminal.add('XGH2O', 10000, 0, 1);
-        room.terminal.add('XGH2O', 10000, 0, 0);
+        room.terminal.add('energy', 60000, 0, 2);
+        room.terminal.add('energy', 60000, 0, 1);
+        room.terminal.add('energy', 60000, 0, 0);
     } else {
-        room.terminal.add('energy', 60000, 0, 1)
+        room.terminal.add('energy', 10000, 0, 1);
+        room.terminal.add('energy', 10000, 0, 0);
+        room.terminal.add('energy', 50000, 1, 1);
+        room.terminal.add('energy', 50000, 1, 0);
+        room.terminal.add('power', 1000, 1, 1);
+        room.terminal.add('ops', 1000, 1, 1);
     }
 }
 
 // 查看creep参数
-let room = Game.rooms.W15S19;
+let room = Game.rooms.W38S37;
 let roomInfo = ['Room:' + room.name, "Level:" + room.controller.level, "Ext:" + room.energyAvailable, "Timeout:" + room.memory['boostUpgradeTimeout']];
 console.log(roomInfo.join("\t"))
 let creeps = room.find(FIND_MY_CREEPS).filter(creep => creep.room.name == room.name)
@@ -132,7 +135,7 @@ for (let t of tasks) {
 
 //清除道路工地
 let roadcs = Object.values(Game.constructionSites).filter(object => {
-    return object.structureType == 'road' && object.room.name == 'W41S41';
+    return object.structureType == 'road'
 })
 for (let road of roadcs) {
     road.remove();
@@ -161,9 +164,15 @@ for (let r in Game.rooms) {
     if (!room.controller || !room.controller.my) continue;
 
     let mt = room.mineral.mineralType
-    console.log(room.name, mt)
-    room.shareAddSource(mt)
-    room.shareAddSource(bars[mt])
+    if (room.terminal.store[mt] > 5000) {
+        console.log(room, mt, room.terminal.store[mt]);
+        room.terminal.add(mt, 5000, 1, 1);
+    }
+
+    if (room.terminal.store[bars[mt]] > 1000) {
+        console.log(room, bars[mt], room.terminal.store[bars[mt]]);
+        room.terminal.add(bars[mt], 1000, 1, 1);
+    }
 }
 
 //统计资源
@@ -199,3 +208,37 @@ let builds = Game.rooms.W41S39.find(FIND_HOSTILE_STRUCTURES, {filter: object => 
 for (let build of builds) {
     build.destroy()
 }
+
+for (let r in Game.rooms) {
+    let builds = Game.rooms[r].find(FIND_MY_STRUCTURES, {
+        filter: function (object) {
+            return object.structureType != 'rampart';
+        }
+    });
+
+    for (let b in builds) {
+        let build = builds[b];
+        let pos = build.pos;
+        let result = pos.look();
+        for (let r in result) {
+            let object = result[r];
+            if (object.type == 'structure') {
+                if (object.structure.structureType == 'road') {
+                    console.log(object.structure.id)
+                    object.structure.destroy()
+                }
+            }
+        }
+    }
+}
+
+let roomName = 'W21S19';
+let center = Game.rooms[roomName].memory.center;
+let formPos = new RoomPosition(center[0], center[1], roomName);
+let toPos = new RoomPosition(7, 21, 'W20S23');
+let result = PathFinder.search(formPos, toPos, {
+    maxOps: 40000,
+});
+
+console.log(result.incomplete)
+

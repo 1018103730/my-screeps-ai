@@ -1,7 +1,7 @@
-import { DEPOSIT_MAX_COOLDOWN, observerInterval } from 'setting'
-import { creepApi } from 'modules/creepController'
-import { colorful } from 'utils'
-import { createHelp } from 'modules/help'
+import {DEPOSIT_MAX_COOLDOWN, observerInterval} from 'setting'
+import {creepApi} from 'modules/creepController'
+import {colorful} from 'utils'
+import {createHelp} from 'modules/help'
 
 /**
  * Observer 拓展
@@ -49,13 +49,13 @@ export class ObserverExtension extends StructureObserver {
                 if (deposit.lastCooldown >= DEPOSIT_MAX_COOLDOWN) return
                 const flags = deposit.pos.lookFor(LOOK_FLAGS)
                 if (flags.length > 0) return
-                
+
                 // 确认完成，插旗
                 this.newHarvesteTask(deposit)
                 this.log(`${this.room.memory.observer.checkRoomName} 检测到新 deposit, 已插旗`, 'green')
             })
         }
-        
+
         // 还没插旗的话就继续查找 pb
         if (memory.pbNumber < memory.pbMax) {
             // pb 的存活时间大于 3000 / power 足够大的才去采集
@@ -66,10 +66,10 @@ export class ObserverExtension extends StructureObserver {
             powerBanks.forEach(powerBank => {
                 const flags = powerBank.pos.lookFor(LOOK_FLAGS)
                 if (flags.length > 0) return
-    
+
                 // 确认完成，插旗
                 this.newHarvesteTask(powerBank)
-                this.log(`${this.room.memory.observer.checkRoomName} 检测到新 pb, 已插旗`, 'green')  
+                this.log(`${this.room.memory.observer.checkRoomName} 检测到新 pb, 已插旗`, 'green')
             })
         }
 
@@ -80,7 +80,7 @@ export class ObserverExtension extends StructureObserver {
     /**
      * 发布新的采集任务
      * 会自行插旗并发布角色组
-     * 
+     *
      * @param target 要采集的资源
      */
     private newHarvesteTask(target: StructurePowerBank | Deposit): OK | ERR_INVALID_TARGET {
@@ -92,7 +92,7 @@ export class ObserverExtension extends StructureObserver {
             this.room.memory.observer.pbNumber += 1
             // 计算应该发布的采集小组数量，最高两组
             const groupNumber = target.pos.getFreeSpace().length > 1 ? 2 : 1
-            
+
             // 发布 attacker 和 healer，搬运者由 attacker 在后续任务中自行发布
             for (let i = 0; i < groupNumber; i++) {
                 const attackerName = `${targetFlagName} attacker${i}`
@@ -108,8 +108,7 @@ export class ObserverExtension extends StructureObserver {
                     creepName: `${targetFlagName} attacker${i}`
                 }, this.room.name)
             }
-        }
-        else if (target instanceof Deposit) {
+        } else if (target instanceof Deposit) {
             const targetFlagName = `deposit ${this.room.name} ${Game.time}`
             target.pos.createFlag(targetFlagName)
 
@@ -121,10 +120,9 @@ export class ObserverExtension extends StructureObserver {
                 sourceFlagName: targetFlagName,
                 spawnRoom: this.room.name
             }, this.room.name)
-        }
-        else return ERR_INVALID_TARGET
+        } else return ERR_INVALID_TARGET
 
-        
+
         return OK
     }
 
@@ -168,8 +166,8 @@ export class ObserverConsole extends ObserverExtension {
      */
     public stats(): string {
         if (!this.room.memory.observer) return `[${this.room.name} observer] 未启用，使用 .help() 来查看更多用法`
-        
-        let stats = [ `[${this.room.name} observer] 当前状态`, this.showList() ]
+
+        let stats = [`[${this.room.name} observer] 当前状态`, this.showList()]
         // 这里并没有直接用 memory 里的信息，是因为为了保证准确性，并且下面会用 Game.flags 进行统计，所以也不用多费什么事情
         let pbNumber = 0
         let pbDetail = ''
@@ -202,7 +200,7 @@ export class ObserverConsole extends ObserverExtension {
 
     /**
      * 设置 observer 对 pb、deposit 的搜索上限
-     * 
+     *
      * @param type 要设置的类型
      * @param max 要设置的最大值
      */
@@ -219,21 +217,21 @@ export class ObserverConsole extends ObserverExtension {
 
     /**
      * 用户操作 - 新增监听房间
-     * 
+     *
      * @param roomNames 要进行监听的房间名称
      */
     public add(...roomNames: string[]): string {
         if (!this.room.memory.observer) this.init()
 
         // 确保新增的房间名不会重复
-        this.room.memory.observer.watchRooms = _.uniq([ ...this.room.memory.observer.watchRooms, ...roomNames])
+        this.room.memory.observer.watchRooms = _.uniq([...this.room.memory.observer.watchRooms, ...roomNames])
 
         return `[${this.room.name} observer] 已添加，${this.showList()}`
     }
 
     /**
      * 用户操作 - 移除监听房间
-     * 
+     *
      * @param roomNames 不在监听的房间名
      */
     public remove(...roomNames: string[]): string {
@@ -241,7 +239,7 @@ export class ObserverConsole extends ObserverExtension {
 
         // 移除指定房间
         this.room.memory.observer.watchRooms = _.difference(this.room.memory.observer.watchRooms, roomNames)
-        
+
         return `[${this.room.name} observer] 已移除，${this.showList()}`
     }
 
@@ -280,16 +278,16 @@ export class ObserverConsole extends ObserverExtension {
 
     /**
      * 用户操作 - 显示当前监听的房间列表
-     * 
+     *
      * @param noTitle 该参数为 true 则不显示前缀
      */
     public showList(): string {
-        const result = this.room.memory.observer ? 
-        `监听中的房间列表: ${this.room.memory.observer.watchRooms.map((room, index) => {
-            if (index === this.room.memory.observer.watchIndex) return colorful(room, 'green')
-            else return room
-        }).join(' ')}` :
-        `未启用`
+        const result = this.room.memory.observer ?
+            `监听中的房间列表: ${this.room.memory.observer.watchRooms.map((room, index) => {
+                if (index === this.room.memory.observer.watchIndex) return colorful(room, 'green')
+                else return room
+            }).join(' ')}` :
+            `未启用`
 
         return result
     }
@@ -305,14 +303,14 @@ export class ObserverConsole extends ObserverExtension {
                 {
                     title: '新增监听房间',
                     params: [
-                        { name: '...roomNames', desc: '要监听的房间名列表' }
+                        {name: '...roomNames', desc: '要监听的房间名列表'}
                     ],
                     functionName: 'add'
                 },
                 {
                     title: '移除监听房间',
                     params: [
-                        { name: '...roomNames', desc: '要移除的房间名列表' }
+                        {name: '...roomNames', desc: '要移除的房间名列表'}
                     ],
                     functionName: 'remove'
                 },
@@ -320,8 +318,8 @@ export class ObserverConsole extends ObserverExtension {
                     title: '设置上限',
                     describe: '设置对 pb、deposit 的搜索上限，默认为 1（每种同时只采集一个）',
                     params: [
-                        { name: 'type', desc: 'powerbank 或 deposit 字符串之一' },
-                        { name: 'max', desc: '查找的最大值' }
+                        {name: 'type', desc: 'powerbank 或 deposit 字符串之一'},
+                        {name: 'max', desc: '查找的最大值'}
                     ],
                     functionName: 'setmax'
                 },

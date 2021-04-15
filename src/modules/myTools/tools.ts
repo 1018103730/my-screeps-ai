@@ -29,7 +29,7 @@ export {buildBodyFromConfig}
 let defaultOpts = {
     visualizePathStyle: {stroke: '#ffffff'},
     maxRooms: 40,
-    maxOps: 1000,
+    maxOps: 10000,
     costCallback(roomName: string, costMatrix: CostMatrix): void | CostMatrix {
         return costMatrix
     },
@@ -46,7 +46,8 @@ let defaultOpts = {
         return costs;
     }
 }
-let runRange = 5;
+//规避范围
+let runRange = 3;
 
 
 export function goMyWay(creep: Creep, pos: RoomPosition | Flag, opts = defaultOpts) {

@@ -66,6 +66,12 @@ export function fillBoostLab() {
 
     for (let room of rooms) {
         if (Game.time % fillIntervalTime) return
+        //如果当前房间已经存在labIn任务 就放弃
+        for (let task of room.memory.transferTasks) {
+            if (task.type == "labIn") {
+                continue;
+            }
+        }
         fillBoostLabWithRoom(room)
     }
 }

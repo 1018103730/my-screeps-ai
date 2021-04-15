@@ -1,5 +1,6 @@
 import {maxOps} from 'setting'
 import {log} from 'utils'
+import {ignoreRange} from "../../modules/myTools/tools";
 
 /**
  * PowerCreep 原型拓展
@@ -442,6 +443,33 @@ const PowerTasks: IPowerTaskConfigs = {
             else {
                 creep.log(`[${creep.room.name} ${creep.name}] 执行 PWR_OPERATE_POWER target 时出错，错误码 ${actionResult}`, 'red')
                 return OK
+            }
+        }
+    },
+    [PWR_OPERATE_LAB]: {
+        source: creep => creep.getOps(POWER_INFO[PWR_OPERATE_LAB].ops),
+        target: creep => {
+            if (creep.store[RESOURCE_OPS] < POWER_INFO[PWR_OPERATE_LAB].ops) return ERR_NOT_ENOUGH_RESOURCES
+
+            let address = creep.room.find(FIND_MY_STRUCTURES, {
+                filter: object => {
+                    return (object.structureType == STRUCTURE_LAB) && !object.effects
+                }
+            })[0]
+
+            if (!address) {
+                console.log(creep.room.name + '未设置 Boost 旗帜!');
+                return OK
+            }
+            if (address.pos.x == creep.pos.x && address.pos.y == creep.pos.y) {
+                const actionResult = creep.usePower(PWR_OPERATE_LAB, address)
+                if (actionResult === OK) return OK
+                else if (actionResult === ERR_NOT_IN_RANGE) {
+                    creep.log(`[${creep.room.name} ${creep.name}] 执行 PWR_OPERATE_LAB target 时出错，错误码 ${actionResult}`, 'red')
+                    return OK
+                }
+            } else {
+                creep.goTo(address.pos)
             }
         }
     }

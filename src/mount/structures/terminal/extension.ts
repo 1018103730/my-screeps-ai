@@ -154,20 +154,38 @@ export default class TerminalExtension extends StructureTerminal {
      * 如果 terminal 中能量过多会返还至 storage
      */
     private energyCheck(): void {
-        let thresholdEnergy = 0;
         if (this.room.controller.level < 8) {
-            thresholdEnergy = 100000;
+            let thresholdEnergy = 100000;
+            if (this.store[RESOURCE_ENERGY] > thresholdEnergy) {
+                this.room.addCenterTask({
+                    submit: STRUCTURE_TERMINAL,
+                    source: STRUCTURE_TERMINAL,
+                    target: STRUCTURE_STORAGE,
+                    resourceType: RESOURCE_ENERGY,
+                    amount: this.store[RESOURCE_ENERGY]
+                })
+                console.log(this.room.name + '资源自动t->s:' + this.store[RESOURCE_ENERGY]);
+            }
         } else {
-            thresholdEnergy = 60000;
-        }
-        if (this.store[RESOURCE_ENERGY] > thresholdEnergy) {
-            this.room.addCenterTask({
-                submit: STRUCTURE_TERMINAL,
-                source: STRUCTURE_TERMINAL,
-                target: STRUCTURE_STORAGE,
-                resourceType: RESOURCE_ENERGY,
-                amount: this.store[RESOURCE_ENERGY]
-            })
+            let thresholdEnergy = 30000;
+            //存底20万能量
+            if (this.room.storage.store[RESOURCE_ENERGY] <= 200000) {
+                return;
+            }
+            if (
+                (this.room.storage.store[RESOURCE_ENERGY] >= thresholdEnergy) &&
+                (this.store[RESOURCE_ENERGY] < thresholdEnergy)
+            ) {
+                let amount = Math.min(30000, this.store.getFreeCapacity());
+                this.room.addCenterTask({
+                    submit: STRUCTURE_TERMINAL,
+                    source: STRUCTURE_STORAGE,
+                    target: STRUCTURE_TERMINAL,
+                    resourceType: RESOURCE_ENERGY,
+                    amount: amount,
+                })
+                console.log(this.room.name + '资源自动s->t:' + amount);
+            }
         }
     }
 
@@ -205,7 +223,7 @@ export default class TerminalExtension extends StructureTerminal {
         const dealResult = Game.market.deal(targetOrder.id, amount, this.room.name)
         // 检查返回值
         if (dealResult === OK) {
-            const crChange = (targetOrder.type == ORDER_BUY ? '+ ' : '- ') + (amount * targetOrder.price).toString() + ' Cr'
+            const crChange = (targetOrder.type == ORDER_BUY ? '+ ' : '- ') + (amount * targetOrder.price).toFixed(4).toString() + ' Cr'
             const introduce = `${(targetOrder.type == ORDER_BUY ? '卖出' : '买入')} ${amount} ${targetOrder.resourceType} 单价: ${targetOrder.price}`
             this.log(`交易成功! ${introduce} ${crChange}`, 'green')
             delete this.room.memory.targetOrderId
@@ -216,6 +234,7 @@ export default class TerminalExtension extends StructureTerminal {
             return true // 把这个改成 true 可以加快交易速度
         } else if (dealResult === ERR_INVALID_ARGS) delete this.room.memory.targetOrderId
         else {
+            delete this.room.memory.targetOrderId;
             this.log(`${this.room.name} 处理订单异常 ${dealResult}`, 'yellow')
         }
     }

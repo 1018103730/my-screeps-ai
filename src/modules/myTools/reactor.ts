@@ -187,12 +187,12 @@ function setConstructionSiteForController(targetRoom: Room) {
     }
 }
 
-//自动填充storage
+//反应堆房间自动填充storage
 function fillStorage(targetRoom: Room) {
     if (!targetRoom.terminal || !targetRoom.terminal.isActive()) return;
     if (!targetRoom.storage || !targetRoom.storage.isActive()) return;
     if (targetRoom.storage.store.getFreeCapacity() == 0) return;
-    let amount = Math.min(targetRoom.storage.store.getFreeCapacity(), targetRoom.terminal.store['energy'])
+    let amount = Math.min(targetRoom.storage.store.getFreeCapacity(), targetRoom.terminal.store['energy']);
     targetRoom.addCenterTask({
         submit: 7,
         target: STRUCTURE_STORAGE,
@@ -202,9 +202,28 @@ function fillStorage(targetRoom: Room) {
     });
 }
 
+function fillSourceRoomStorage() {
+    if (Game.time % 100) return
+    for (let r of helpRooms) {
+        let room = Game.rooms[r];
+        if (room.storage.store['energy'] > 300000) {
+            continue;
+        }
+        let amount = Math.min(room.storage.store.getFreeCapacity(), room.terminal.store['energy']);
+        room.addCenterTask({
+            submit: 10,
+            target: STRUCTURE_STORAGE,
+            source: STRUCTURE_TERMINAL,
+            resourceType: RESOURCE_ENERGY,
+            amount
+        })
+    }
+}
+
 export function reactor() {
     if (Game.shard.name != "shard3") return;
     if (Game.cpu.bucket <= 100) return;
+    fillSourceRoomStorage()
     reClaimer(targetRoomName);
 
     const targetRoom = Game.rooms[targetRoomName];
@@ -252,7 +271,15 @@ export function reactor() {
                 console.log(creep.room.name + '未找到Boost Lab ,请设置');
                 continue;
             }
-            if (lab && (lab.store['XGH2O'] >= 30 || lab.store['GH'] >= 30 || lab.store['GH2O'] >= 30) && lab.store['energy'] > 0) {
+            if (
+                lab &&
+                (
+                    lab.store['XGH2O'] >= 30 ||
+                    lab.store['GH'] >= 30 ||
+                    lab.store['GH2O'] >= 30
+                ) &&
+                lab.store['energy'] > 0
+            ) {
                 creep.goTo(lab.pos)
                 lab.boostCreep(creep)
                 continue;
@@ -290,6 +317,7 @@ export function reactor() {
                     range = 2;
                 } else {
                     range = 3;
+                    destination = new RoomPosition(19, 9, targetRoomName)
                 }
                 if (!creep.pos.inRangeTo(destination, range)) {
                     creep.goTo(destination)

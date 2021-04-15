@@ -7,8 +7,6 @@ export function buildRoad() {
         //不负重不修路
         if (creep.store.getUsedCapacity() <= 0) continue
         if (creep.pos.x == 0 || creep.pos.y == 0) continue
-        if (!creep.room.controller) continue
-        if (!creep.room.controller.my) continue
 
         //已经存在施工点
         let lcs = creep.pos.lookFor(LOOK_CONSTRUCTION_SITES);
@@ -27,7 +25,7 @@ export function buildRoad() {
 
         // 不需要造路的角色
         let creepRole = creep.memory.role;
-        const canBuildRoladRole = ['upgrader', 'remoteUpgrader', 'manager'];
+        const canBuildRoladRole = ['upgrader', 'remoteUpgrader', 'manager','remoteHarvester'];
         if (canBuildRoladRole.indexOf(creepRole) < 0) continue
 
         creep.pos.createConstructionSite(STRUCTURE_ROAD)

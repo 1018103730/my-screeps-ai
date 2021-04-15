@@ -1,4 +1,4 @@
-import { ROOM_TRANSFER_TASK } from "setting"
+import {ROOM_TRANSFER_TASK} from "setting"
 
 // nuker 拓展
 export default class NukerExtension extends StructureNuker {
@@ -7,10 +7,10 @@ export default class NukerExtension extends StructureNuker {
 
         if (Game.time % 30) return
 
-        // G 矿不满并且 terminal 中有 G 矿则开始填充 G
-        if (!this.keepResource(RESOURCE_GHODIUM, NUKER_GHODIUM_CAPACITY, this.room.terminal, 0)) return 
         // 能量不满并且 storage 能量大于 300k 则开始填充能量
-        if (!this.keepResource(RESOURCE_ENERGY, NUKER_ENERGY_CAPACITY, this.room.storage, 300000)) return
+        if (!this.keepResource(RESOURCE_ENERGY, NUKER_ENERGY_CAPACITY, this.room.storage, 100000)) return
+        // G 矿不满并且 terminal 中有 G 矿则开始填充 G
+        if (!this.keepResource(RESOURCE_GHODIUM, NUKER_GHODIUM_CAPACITY, this.room.terminal, 0)) return
     }
 
     // 在房间基础服务中注册自己
@@ -20,7 +20,7 @@ export default class NukerExtension extends StructureNuker {
 
     /**
      * 将自身存储的资源维持在指定容量之上
-     * 
+     *
      * @param resource 要检查的资源
      * @param amount 当资源余量少于该值时会发布搬运任务
      * @param source 资源不足时从哪里获取资源
@@ -36,7 +36,7 @@ export default class NukerExtension extends StructureNuker {
                 type: ROOM_TRANSFER_TASK.FILL_NUKER,
                 id: this.id,
                 resourceType: resource
-            })    
+            })
         }
 
         return false

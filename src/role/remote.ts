@@ -165,7 +165,8 @@ const roles: {
         prepare: creep => {
             // 只要进入房间则准备结束
             if (creep.room.name !== data.targetRoomName) {
-                creep.farMoveTo(new RoomPosition(25, 25, data.targetRoomName))
+                // creep.farMoveTo(new RoomPosition(25, 25, data.targetRoomName))
+                goMyWay(creep, new RoomPosition(25, 25, data.targetRoomName))
                 return false
             }
             // 进入房间之后运行基地选址规划
@@ -343,8 +344,12 @@ const roles: {
             // 获取有效的能量来源
             let source: StructureStorage | StructureTerminal | StructureContainer | Source
             if (!creep.memory.sourceId) {
-                source = creep.room.getAvailableSource()
-                creep.memory.sourceId = source.id
+                if (creep.room.sourceContainers.length > 1) {
+                    source = creep.room.getAvailableSource()
+                    creep.memory.sourceId = source.id
+                } else {
+                    creep.memory.sourceId = Memory.creepConfigs[creep.name].data['sourceId'];
+                }
             } else source = Game.getObjectById(creep.memory.sourceId)
 
             // 之前用的能量来源没能量了就更新来源（如果来源已经是 source 的话就改了）
@@ -398,8 +403,12 @@ const roles: {
             // 获取有效的能量来源
             let source: StructureStorage | StructureTerminal | StructureContainer | Source
             if (!creep.memory.sourceId) {
-                source = creep.room.getAvailableSource()
-                creep.memory.sourceId = source.id
+                if (creep.room.sourceContainers.length > 1) {
+                    source = creep.room.getAvailableSource()
+                    creep.memory.sourceId = source.id
+                } else {
+                    creep.memory.sourceId = Memory.creepConfigs[creep.name].data['sourceId'];
+                }
             } else source = Game.getObjectById(creep.memory.sourceId)
 
             // 之前用的能量来源没能量了就更新来源（如果来源已经是 source 的话就改了）

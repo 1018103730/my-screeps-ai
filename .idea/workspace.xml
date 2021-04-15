@@ -5,18 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="10d41954-e381-4121-a946-d325cd5560c6" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/modules/myTools/autoEnergy.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/myTools/autoPowerTask.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/myTools/dealPixel.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/myTools/labClear.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frame.js" beforeDir="false" afterPath="$PROJECT_DIR$/frame.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screeps.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/screeps.d.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/myTools/boostUpgrader.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/myTools/boostUpgrader.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modules/myTools/buildRoad.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/myTools/buildRoad.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/myTools/fillBoostLab.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/myTools/fillBoostLab.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modules/myTools/reactor.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/myTools/reactor.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modules/myTools/tools.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/myTools/tools.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/mount/creep/extension.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/mount/creep/extension.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mount/structures/lab.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/mount/structures/lab.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mount/powerCreep/mount.powerCreep.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/mount/powerCreep/mount.powerCreep.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mount/room/extension.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/mount/room/extension.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mount/structures/nuker.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/mount/structures/nuker.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mount/structures/observer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/mount/structures/observer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mount/structures/terminal/extension.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/mount/structures/terminal/extension.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/role/remote.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/role/remote.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/setting.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/setting.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,7 +43,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/模板" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="ts.external.directory.path" value="E:\screeps\my-screeps-ai\node_modules\typescript\lib" />
@@ -196,6 +204,48 @@
       <workItem from="1612158488607" duration="3143000" />
       <workItem from="1612311837920" duration="8392000" />
       <workItem from="1612404564147" duration="8650000" />
+      <workItem from="1613692663062" duration="741000" />
+      <workItem from="1613717537295" duration="468000" />
+      <workItem from="1613719733756" duration="1919000" />
+      <workItem from="1613723218748" duration="1790000" />
+      <workItem from="1613785769265" duration="1641000" />
+      <workItem from="1613866552431" duration="2025000" />
+      <workItem from="1613871930678" duration="6495000" />
+      <workItem from="1613893369550" duration="1405000" />
+      <workItem from="1613902021283" duration="5000" />
+      <workItem from="1614159278193" duration="1123000" />
+      <workItem from="1614211869573" duration="1374000" />
+      <workItem from="1614303657230" duration="1298000" />
+      <workItem from="1614389990251" duration="11000" />
+      <workItem from="1614473076665" duration="128000" />
+      <workItem from="1614818337317" duration="12931000" />
+      <workItem from="1614837578882" duration="6454000" />
+      <workItem from="1615249662117" duration="1565000" />
+      <workItem from="1615256471632" duration="498000" />
+      <workItem from="1615260692069" duration="880000" />
+      <workItem from="1615335281545" duration="4533000" />
+      <workItem from="1615346326718" duration="391000" />
+      <workItem from="1615357504705" duration="1424000" />
+      <workItem from="1615775330924" duration="337000" />
+      <workItem from="1615968619271" duration="2567000" />
+      <workItem from="1615971274142" duration="2240000" />
+      <workItem from="1616026633084" duration="2506000" />
+      <workItem from="1616055586072" duration="2053000" />
+      <workItem from="1616114107187" duration="26000" />
+      <workItem from="1617326409319" duration="54000" />
+      <workItem from="1617763965683" duration="10435000" />
+      <workItem from="1617841790747" duration="14724000" />
+      <workItem from="1617867175281" duration="2129000" />
+      <workItem from="1617873778851" duration="994000" />
+      <workItem from="1618015045507" duration="5986000" />
+      <workItem from="1618025610305" duration="9718000" />
+      <workItem from="1618196648987" duration="15661000" />
+      <workItem from="1618290004491" duration="9100000" />
+      <workItem from="1618301842918" duration="7000" />
+      <workItem from="1618359049934" duration="16693000" />
+      <workItem from="1618446749028" duration="2198000" />
+      <workItem from="1618463951402" duration="4009000" />
+      <workItem from="1618473428680" duration="3280000" />
     </task>
     <servers />
   </component>
@@ -207,7 +257,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/modules/myTools/reactor.ts</url>
-          <line>204</line>
+          <line>222</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
